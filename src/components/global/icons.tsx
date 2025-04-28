@@ -2,13 +2,13 @@
 import { LucideProps } from "lucide-react";
 import { HTMLAttributes } from "react";
 
-// Separate Logo component with its own props
+// Define a type for the logo component props
 interface LogoProps extends HTMLAttributes<HTMLImageElement> {
   size?: number;
 }
 
-// Create a standalone Logo component
-export const Logo = ({ size, className, ...props }: LogoProps) => (
+// Create a separate Logo component
+const Logo = ({ size, className, ...props }: LogoProps) => (
   <img
     src="/assets/nocapl.png"
     alt="NoCap Logo"
@@ -26,11 +26,14 @@ type IconType = {
 };
 
 const Icons: IconType = {
-  // Use a wrapper function that only passes the necessary props to Logo
   logo: (props: LucideProps) => {
-    // Only extract the props we need and ignore SVG-specific props
-    const { size, className } = props;
-    return <Logo size={size as number} className={className} />;
+    // Convert LucideProps to LogoProps
+    const logoProps: LogoProps = {
+      className: props.className,
+      size: typeof props.size === 'number' ? props.size : undefined,
+    };
+    
+    return <Logo {...logoProps} />;
   },
   astra: (props: LucideProps) => (
         <svg {...props} width="120" height="36" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
