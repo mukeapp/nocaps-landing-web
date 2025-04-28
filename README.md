@@ -9,10 +9,6 @@
 
 Astra is a modern, fully responsive website built with a powerful tech stack. This project showcases the use of Next.js for server-side rendering, TailwindCSS for sleek styling, shadcn UI for elegant components, and Clerk for secure authentication.
 
-## Watch Tutorial on YouTube
-
-Check out the preivew to see how this website was built: [Astra Website Tutorial](https://youtu.be/zSz67kLPbZY?si=mVBTTh23pv_roRHQ)
-
 ## Tech Stack
 
 - **Next.js**: For building the React-based website.
