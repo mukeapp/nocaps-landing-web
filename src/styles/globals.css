@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  scroll-padding-top: 80px;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: scroll; /* Always show vertical scrollbar to prevent layout shift */
+}
+
 @layer base {
   :root {
     /* Name: custom color palette

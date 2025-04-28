@@ -1,6 +1,10 @@
 import Icons from "@/components/global/icons"
 import { Heart } from 'lucide-react'
 import Link from 'next/link'
+import dynamic from "next/dynamic";
+
+// Dynamically import the FooterLinks component with no SSR
+const FooterLinks = dynamic(() => import("./footer-links"), { ssr: false });
 
 const Footer = () => {
     return (
@@ -30,28 +34,7 @@ const Footer = () => {
                             <h3 className="text-base font-medium text-white">
                                 Product
                             </h3>
-                            <ul className="mt-4 text-sm text-muted-foreground">
-                                <li className="mt-2">
-                                    <Link href="" className="hover:text-foreground transition-all duration-300">
-                                        Features
-                                    </Link>
-                                </li>
-                                <li className="mt-2">
-                                    <Link href="" className="hover:text-foreground transition-all duration-300">
-                                        Pricing
-                                    </Link>
-                                </li>
-                                <li className="mt-2">
-                                    <Link href="" className="hover:text-foreground transition-all duration-300">
-                                        Testimonials
-                                    </Link>
-                                </li>
-                                <li className="mt-2">
-                                    <Link href="" className="hover:text-foreground transition-all duration-300">
-                                        Integration
-                                    </Link>
-                                </li>
-                            </ul>
+                            <FooterLinks />
                         </div>
                         <div className="mt-10 md:mt-0 flex flex-col">
                             <h3 className="text-base font-medium text-white">

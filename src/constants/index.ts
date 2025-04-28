@@ -75,7 +75,7 @@ export const pricingCards = [
     {
         title: "Enterprise",
         description: "Contact Us for Partnership",
-        price: "$399",
+        price: "Contact Us",
         duration: "month",
         highlight: "Everything in Starter, plus",
         buttonText: "Upgrade to Enterprise",
@@ -113,33 +113,64 @@ export const bentoCards = [
 
 export const reviews = [
     {
-        name: "Jack",
-        username: "@jack",
-        body: "I've never seen anything like this before. It's amazing. I love it.",
+      name: "Ava",
+      username: "@ava",
+      body: "This AI habit tracker is on another level. It feels like it knows me better than I know myself!",
     },
     {
-        name: "Jill",
-        username: "@jill",
-        body: "I don't know what to say. I'm speechless. This is amazing.",
+      name: "Ethan",
+      username: "@ethan",
+      body: "Honestly, I’ve tried a lot of apps, but this one actually keeps me consistent without feeling forced.",
     },
     {
-        name: "John",
-        username: "@john",
-        body: "I'm at a loss for words. This is amazing. I love it.",
+      name: "Mia",
+      username: "@mia",
+      body: "NoCap completely changed my daily routine. The AI suggestions are shockingly accurate!",
     },
     {
-        name: "Jane",
-        username: "@jane",
-        body: "I'm at a loss for words. This is amazing. I love it.",
+      name: "Liam",
+      username: "@liam",
+      body: "This is exactly what I needed. The AI feels like a personal coach pushing me in the right direction.",
     },
     {
-        name: "Jenny",
-        username: "@jenny",
-        body: "I'm at a loss for words. This is amazing. I love it.",
+      name: "Sophia",
+      username: "@sophia",
+      body: "Every day feels easier to stay on track. I love how smart and supportive the app feels.",
     },
     {
-        name: "James",
-        username: "@james",
-        body: "I'm at a loss for words. This is amazing. I love it.",
+      name: "Noah",
+      username: "@noah",
+      body: "The AI-powered tracking makes building habits actually fun. I can’t imagine going back to old methods.",
     },
-];
+    {
+      name: "Olivia",
+      username: "@olivia",
+      body: "Tracking my grocery spending has never been easier. NoCap literally helped me cut my monthly bills by 20%.",
+    },
+    {
+      name: "Lucas",
+      username: "@lucas",
+      body: "I started using NoCap for calorie tracking and I’m finally seeing consistent progress with my fitness goals.",
+    },
+    {
+      name: "Isabella",
+      username: "@isabella",
+      body: "NoCap made it simple to build better spending habits. The weekly reports are a total game changer.",
+    },
+    {
+      name: "Mason",
+      username: "@mason",
+      body: "I used to overspend without realizing it. Now with NoCap, I get smart nudges that actually help me save money.",
+    },
+    {
+      name: "Amelia",
+      username: "@amelia",
+      body: "I’ve tried finance apps before, but the AI in NoCap feels way more personalized and actually motivates me.",
+    },
+    {
+      name: "Logan",
+      username: "@logan",
+      body: "From grocery lists to budgeting, NoCap keeps me organized without overwhelming me. Super clean experience.",
+    },
+  ];
+  
