@@ -11,28 +11,40 @@ type LogoProps = {
   [key: string]: any; // Allow other props to pass through
 };
 
+// Create a separate LogoIcon component
+const LogoIcon = (props: LogoProps) => {
+  const { className, size, color, strokeWidth, ...rest } = props;
+  
+  return (
+    <img
+      src="/assets/nocapl.png"
+      alt="NoCap Logo"
+      style={{ 
+        width: size ? `${size}px` : '100px', 
+        height: size ? `${size}px` : '50px',
+        color: color || 'inherit'
+      }}
+      className={className}
+      {...rest}
+    />
+  );
+};
+
 type IconType = {
   [key: string]: (props: LucideProps) => JSX.Element;
 };
 
 const Icons: IconType = {
   logo: (props: LucideProps) => {
-    // Extract only the props we need for the img element
-    const { className, size, color, strokeWidth, ...rest } = props as unknown as LogoProps;
+    // Convert LucideProps to LogoProps
+    const logoProps: LogoProps = {
+      className: props.className,
+      size: typeof props.size === 'number' ? props.size : undefined,
+      color: props.color,
+      strokeWidth: props.strokeWidth,
+    };
     
-    return (
-      <img
-        src="/assets/nocapl.png"
-        alt="NoCap Logo"
-        style={{ 
-          width: size ? `${size}px` : '100px', 
-          height: size ? `${size}px` : '50px',
-          color: color || 'inherit'
-        }}
-        className={className}
-        {...rest}
-      />
-    );
+    return <LogoIcon {...logoProps} />;
   },
   astra: (props: LucideProps) => (
         <svg {...props} width="120" height="36" viewBox="0 0 120 36" fill="none" xmlns="http://www.w3.org/2000/svg">
