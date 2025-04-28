@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { LucideProps } from "lucide-react";
+import { ImgHTMLAttributes } from "react";
 
 type IconType = {
     [key: string]: (props: LucideProps) => JSX.Element;
@@ -8,10 +9,10 @@ type IconType = {
 const Icons: IconType = {
     logo: (props: LucideProps) => (
         <img
-            {...props}
             src="/assets/nocapl.png" // Path to your logo image
             alt="NoCap Logo"
             style={{ width: '100px', height: '50px' }} // Adjust size as needed
+            {...(props as unknown as ImgHTMLAttributes<HTMLImageElement>)}
         />
     ),
     astra: (props: LucideProps) => (
