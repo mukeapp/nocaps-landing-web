@@ -13,27 +13,9 @@
 
 
 import { NextResponse } from "next/server";
-import { authMiddleware } from "@clerk/nextjs";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-export default authMiddleware({
-    publicRoutes: ["/"],
-    afterAuth(auth, req) {
-        const { userId } = auth;
-        const isHomeRoute = req.nextUrl.pathname === "/";
-
-        // If user is not authenticated and trying to access protected routes
-        if (!userId && !isHomeRoute) {
-            return NextResponse.redirect(new URL("/", req.url));
-        }
-
-        // If user is authenticated and trying to access home route
-        if (userId && isHomeRoute) {
-            return NextResponse.redirect(new URL("/dashboard", req.url));
-        }
-
-        return NextResponse.next();
-    },
-});
+export default clerkMiddleware();
 
 export const config = {
     matcher: [
