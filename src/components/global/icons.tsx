@@ -1,23 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import { LucideProps } from "lucide-react";
 import Image from "next/image";
+import { LucideProps } from "lucide-react";
 
-type IconType = {
-    [key: string]: (props: LucideProps) => JSX.Element;
-};
-
-const LogoIcon = () => (
-    <Image
-        src="/assets/nocapl.png"
-        alt="NoCap Logo"
-        width={100}
-        height={50}
-        style={{ width: '100px', height: '50px' }}
-    />
-);
-
-const Icons: IconType = {
-    logo: () => <LogoIcon />,
+const Icons = {
+    logo: () => (
+        <img
+            src="/assets/nocapl.png"
+            alt="NoCap Logo"
+            style={{ width: '100px', height: '50px' }}
+        />
+    ),
     auth: (props: LucideProps) => (
         <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 16C9.85038 16.6303 10.8846 17 12 17C13.1154 17 14.1496 16.6303 15 16" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
