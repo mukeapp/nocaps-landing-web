@@ -13,19 +13,32 @@
 
 
 import { NextResponse } from "next/server";
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { authMiddleware } from "@clerk/nextjs";
 
-const isHomeRoute = createRouteMatcher(["/"]);
+export default authMiddleware({
+    publicRoutes: ["/"],
+    afterAuth(auth, req) {
+        const { userId } = auth;
+        const isHomeRoute = req.nextUrl.pathname === "/";
 
-export default clerkMiddleware((auth, req) => {
-    const { userId } = auth();
+        // If user is not authenticated and trying to access protected routes
+        if (!userId && !isHomeRoute) {
+            return NextResponse.redirect(new URL("/", req.url));
+        }
 
-    // if there is user and home route is accessed, redirect to dashboard or any other protected route
-    if (userId && isHomeRoute(req)) {
-        return NextResponse.rewrite(new URL("/", req.url));
-    }
+        // If user is authenticated and trying to access home route
+        if (userId && isHomeRoute) {
+            return NextResponse.redirect(new URL("/dashboard", req.url));
+        }
+
+        return NextResponse.next();
+    },
 });
 
 export const config = {
-    matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+    matcher: [
+        "/((?!.*\\..*|_next).*)",
+        "/",
+        "/(api|trpc)(.*)",
+    ],
 };
