@@ -1,4 +1,5 @@
-import { Container, Icons, Wrapper } from "@/components";
+import { Container, Wrapper } from "@/components";
+import Icons from "@/components/global/icons";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";

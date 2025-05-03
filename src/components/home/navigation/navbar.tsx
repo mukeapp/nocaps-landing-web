@@ -1,4 +1,5 @@
-import { Container, Icons } from "@/components";
+import { Container } from "@/components";
+import Icons from "@/components/global/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { UserButton, } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";

@@ -1,4 +1,4 @@
-import { Icons } from "@/components";
+import Icons from "@/components/global/icons";
 
 export const perks = [
     {
@@ -27,7 +27,7 @@ export const features = [
     {
         icon: Icons.palette,
         title: "Responsive Design",
-        info: "Your habit tracker looks great on any device, whether you’re at home or on the go.",
+        info: "Your habit tracker looks great on any device, whether you're at home or on the go.",
     },
     {
         icon: Icons.seo,
@@ -120,7 +120,7 @@ export const reviews = [
     {
       name: "Ethan",
       username: "@ethan",
-      body: "Honestly, I’ve tried a lot of apps, but this one actually keeps me consistent without feeling forced.",
+      body: "Honestly, I've tried a lot of apps, but this one actually keeps me consistent without feeling forced.",
     },
     {
       name: "Mia",
@@ -140,7 +140,7 @@ export const reviews = [
     {
       name: "Noah",
       username: "@noah",
-      body: "The AI-powered tracking makes building habits actually fun. I can’t imagine going back to old methods.",
+      body: "The AI-powered tracking makes building habits actually fun. I can't imagine going back to old methods.",
     },
     {
       name: "Olivia",
@@ -150,7 +150,7 @@ export const reviews = [
     {
       name: "Lucas",
       username: "@lucas",
-      body: "I started using NoCap for calorie tracking and I’m finally seeing consistent progress with my fitness goals.",
+      body: "I started using NoCap for calorie tracking and I'm finally seeing consistent progress with my fitness goals.",
     },
     {
       name: "Isabella",
@@ -165,7 +165,7 @@ export const reviews = [
     {
       name: "Amelia",
       username: "@amelia",
-      body: "I’ve tried finance apps before, but the AI in NoCap feels way more personalized and actually motivates me.",
+      body: "I've tried finance apps before, but the AI in NoCap feels way more personalized and actually motivates me.",
     },
     {
       name: "Logan",
