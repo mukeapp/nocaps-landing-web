@@ -1,8 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import Image from "next/image";
 import { LucideProps } from "lucide-react";
 
-const Icons = {
+type IconType = {
+    [key: string]: (props: LucideProps) => JSX.Element;
+};
+
+const Icons: IconType = {
     logo: () => (
         <img
             src="/assets/nocapl.png"
