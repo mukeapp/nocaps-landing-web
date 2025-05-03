@@ -2,19 +2,13 @@
 import Image from "next/image";
 import { LucideProps } from "lucide-react";
 
-interface LogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-    size?: string | number;
-    absoluteStrokeWidth?: boolean;
-}
-
 const Icons = {
-    logo: (props: LogoProps) => (
+    logo: () => (
         <img
             src="/assets/nocapl.png"
             alt="NoCap Logo"
-            width={100}
-            height={50}
-            {...props}
+            width="100"
+            height="50"
         />
     ),
     auth: (props: LucideProps) => (
