@@ -78,6 +78,45 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
+            {/* the problem */}
+            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+                <Container>
+                    <div className="max-w-md mx-auto text-start md:text-center">
+                        <SectionBadge title="The Problem" />
+                    </div>
+                </Container>
+                <Container>
+                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-8">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div className="flex flex-col gap-2">
+                                <h3 className="text-lg font-bold text-foreground">No real guidance</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    Apps track habits but never tell you if they&apos;re actually good or bad for you.
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <h3 className="text-lg font-bold text-foreground">Search engines exploit you</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    You spend hours searching for better routines — ads win, you don&apos;t.
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <h3 className="text-lg font-bold text-foreground">Isolated progress</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    Social media is noise. There&apos;s nowhere to share meaningful habit growth.
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <h3 className="text-lg font-bold text-foreground">One-size-fits-all</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    Rigid habit systems don&apos;t adapt to your unique goals and constraints.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* how it works */}
             <Wrapper id="about" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <Container>
