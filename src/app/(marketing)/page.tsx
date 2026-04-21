@@ -166,7 +166,7 @@ const HomePage = () => {
                             Unlock the right plan for your business
                         </h2>
                         <p className="text-muted-foreground mt-6">
-                            Choose the best plan for your business and start building your dream website today
+                            Choose the best plan and start building better habits today
                         </p>
                     </div>
                 </Container>
@@ -176,15 +176,16 @@ const HomePage = () => {
                             <Card
                                 key={card.title}
                                 className={cn("flex flex-col w-full border-neutral-700",
-                                    card.title === "Unlimited feature" && "border-2 border-primary"
+                                    card.title === "Monthly" && "border-2 border-primary"
                                 )}
                             >
                                 <CardHeader className="border-b border-border">
                                     <span>
                                         {card.title}
                                     </span>
-                                    <CardTitle className={cn(card.title !== "Unlimited Saas" && "text-muted-foreground")}>
+                                    <CardTitle className={cn(card.title === "Monthly" && "text-foreground")}>
                                         {card.price}
+                                        {card.duration && <span className="text-sm font-normal text-muted-foreground"> /{card.duration}</span>}
                                     </CardTitle>
                                     <CardDescription>
                                         {card.description}
@@ -203,7 +204,7 @@ const HomePage = () => {
                                         href="#"
                                         className={cn(
                                             "w-full text-center text-primary-foreground bg-primary p-2 rounded-md text-sm font-medium",
-                                            card.title !== "Unlimited Saas" && "!bg-foreground !text-background"
+                                            card.title !== "Monthly" && "!bg-foreground !text-background"
                                         )}
                                     >
                                         {card.buttonText}
@@ -328,7 +329,7 @@ const HomePage = () => {
                                 </form>
                                 <p className="text-xs text-muted-foreground">
                                     By subscribing you agree with our{" "}
-                                    <Link href="#" className="text-red-500 underline">
+                                    <Link href="/privacy-policy" className="text-red-500 underline">
                                         Privacy Policy
                                     </Link>
                                 </p>
