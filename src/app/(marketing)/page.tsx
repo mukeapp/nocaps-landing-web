@@ -193,6 +193,49 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
+            {/* how it works */}
+            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+                <Container>
+                    <div className="max-w-md mx-auto text-start md:text-center">
+                        <SectionBadge title="How It Works" />
+                    </div>
+                </Container>
+                <Container>
+                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-10">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-4xl font-bold text-primary">1</span>
+                                <h3 className="text-base font-bold text-foreground">Build your HabitStack</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    Organize life into Sectors → Habits → HabitLinks → Items
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <span className="text-4xl font-bold text-primary">2</span>
+                                <h3 className="text-base font-bold text-foreground">Get AI scored</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    Each component is rated 0–100% across six categories from Bad to Excellent
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <span className="text-4xl font-bold text-primary">3</span>
+                                <h3 className="text-base font-bold text-foreground">Swap &amp; upgrade</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    AI suggests proven replacements for low-scoring habits using collective wisdom
+                                </p>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <span className="text-4xl font-bold text-primary">4</span>
+                                <h3 className="text-base font-bold text-foreground">Track &amp; share</h3>
+                                <p className="text-muted-foreground text-sm">
+                                    Log daily/weekly/monthly, post progress, and inspire your community
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* pricing */}
             <Wrapper id="pricing" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <div className="hidden md:block absolute top-0 -right-1/3 w-72 h-72 bg-blue-500 rounded-full blur-[10rem] -z-10"></div>
