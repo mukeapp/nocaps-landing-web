@@ -176,14 +176,14 @@ const HomePage = () => {
                     <div className="flex flex-col items-center justify-center py-10 md:py-20 w-full">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-8">
                             {features.map((feature) => (
-                                <div key={feature.title} className="flex flex-col items-start lg:items-start px-0 md:px-0">
+                                <div key={feature.title} className="flex flex-col items-start px-0 md:px-0">
                                     <div className="flex items-center justify-center">
                                         <feature.icon className="w-8 h-8" />
                                     </div>
                                     <h3 className="text-lg font-medium mt-4">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-muted-foreground mt-2 text-start lg:text-start">
+                                    <p className="text-muted-foreground mt-2 text-start">
                                         {feature.info}
                                     </p>
                                 </div>

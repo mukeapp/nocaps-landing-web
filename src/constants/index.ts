@@ -30,11 +30,6 @@ export const features = [
         info: "Your habit tracker looks great on any device, whether you're at home or on the go.",
     },
     {
-        icon: Icons.seo,
-        title: "SEO Optimized",
-        info: "Built-in SEO features ensure your website ranks well on search engines.",
-    },
-    {
         icon: Icons.monitor,
         title: "Customizable Tracking",
         info: "Select from various tracking categories—nutrition, fitness, finance—and personalize them to suit your goals.",
@@ -48,6 +43,26 @@ export const features = [
         icon: Icons.server,
         title: "AI-Powered Insights",
         info: "Leverage AI to receive personalized suggestions based on your tracking data, helping you refine your habits and stay on course.",
+    },
+    {
+        icon: Icons.sparkles,
+        title: "AI Habit Scoring",
+        info: "Every habit gets scored 0–100%. AI tells you what's Good, Bad, or needs a Swap.",
+    },
+    {
+        icon: Icons.customize,
+        title: "Reverse Search Engine",
+        info: "Instead of you searching, NoCap searches for you — continuously, automatically.",
+    },
+    {
+        icon: Icons.auth,
+        title: "Purposeful Social",
+        info: "Every post is tied to a habit. Share growth, not noise.",
+    },
+    {
+        icon: Icons.launch,
+        title: "Habit Marketplace",
+        info: "Discover, share, and adopt proven habit stacks from the community.",
     },
 ];
 
