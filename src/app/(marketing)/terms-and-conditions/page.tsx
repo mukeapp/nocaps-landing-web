@@ -80,7 +80,7 @@ const TermsAndConditionsPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">6. Intellectual Property</h2>
                             <p>
                                 All content, features, and functionality of the Service — including but not limited
-                                to text, graphics, logos, and software — are the exclusive property of NoCap and
+                                to text, graphics, logos, and software — are the exclusive property of MUKEAPPS LLC and
                                 are protected by applicable intellectual property laws. You may not reproduce,
                                 distribute, or create derivative works without our express written consent.
                             </p>
@@ -90,7 +90,7 @@ const TermsAndConditionsPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">7. User Content</h2>
                             <p>
                                 You retain ownership of any content you create within the Service (e.g., habits,
-                                stacks, notes). By submitting content, you grant NoCap a non-exclusive, worldwide,
+                                stacks, notes). By submitting content, you grant MUKEAPPS LLC a non-exclusive, worldwide,
                                 royalty-free license to use, store, and display that content solely to provide the
                                 Service to you.
                             </p>
@@ -100,7 +100,7 @@ const TermsAndConditionsPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">8. Disclaimer of Warranties</h2>
                             <p>
                                 The Service is provided &quot;as is&quot; and &quot;as available&quot; without warranties of any kind,
-                                express or implied. NoCap does not warrant that the Service will be uninterrupted,
+                                express or implied. MUKEAPPS LLC does not warrant that the Service will be uninterrupted,
                                 error-free, or free of viruses or other harmful components.
                             </p>
                         </div>
@@ -108,7 +108,7 @@ const TermsAndConditionsPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">9. Limitation of Liability</h2>
                             <p>
-                                To the fullest extent permitted by law, NoCap shall not be liable for any indirect,
+                                To the fullest extent permitted by law, MUKEAPPS LLC shall not be liable for any indirect,
                                 incidental, special, consequential, or punitive damages arising from your use of
                                 the Service, even if we have been advised of the possibility of such damages.
                             </p>
