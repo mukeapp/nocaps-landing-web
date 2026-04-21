@@ -146,7 +146,7 @@ const TermsAndConditionsPage = () => {
                             <p>
                                 If you have any questions about these Terms &amp; Conditions, please contact us at:
                             </p>
-                            <p className="text-foreground font-medium">support@nocap.app</p>
+                            <p className="text-foreground font-medium">franck@donocap.com</p>
                         </div>
 
                     </div>
