@@ -124,7 +124,7 @@ const HomePage = () => {
                     <div className="max-w-md mx-auto text-start md:text-center">
                         <SectionBadge title="The Process" />
                         <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                        Transform Your Habits in Three Steps
+                        Transform Your Life Portfolio in Three Steps
                         </h2>
                         <p className="text-muted-foreground mt-6">
                             Bring your vision to life in just three easy steps:
