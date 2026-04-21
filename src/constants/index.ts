@@ -167,6 +167,22 @@ export const pricingCards = [
         ],
         priceId: "",
     },
+    {
+        title: "Enterprise",
+        description: "Built for organizations that demand the best",
+        price: "$10,000",
+        duration: "month",
+        highlight: "Everything in Business, plus",
+        buttonText: "Contact Us",
+        features: [
+            "Everything in Business",
+            "Private HabitStacks from Professionals",
+            "Dedicated account manager",
+            "SLA-backed uptime guarantee",
+            "100,000 AI credits / month",
+        ],
+        priceId: "",
+    },
 ];
 
 export const bentoCards = [
