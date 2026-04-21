@@ -252,19 +252,24 @@ const HomePage = () => {
                     </div>
                 </Container>
                 <Container className="flex items-center justify-center">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 w-full md:gap-8 py-10 md:py-20 flex-wrap max-w-4xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full md:gap-6 py-10 md:py-20 flex-wrap max-w-5xl">
                         {pricingCards.map((card) => (
                             <Card
                                 key={card.title}
                                 className={cn("flex flex-col w-full border-neutral-700",
-                                    card.title === "Monthly" && "border-2 border-primary"
+                                    card.title === "Plus" && "border-2 border-primary"
                                 )}
                             >
                                 <CardHeader className="border-b border-border">
-                                    <span>
-                                        {card.title}
-                                    </span>
-                                    <CardTitle className={cn(card.title === "Monthly" && "text-foreground")}>
+                                    <div className="flex items-center justify-between">
+                                        <span>{card.title}</span>
+                                        {card.title === "Plus" && (
+                                            <span className="text-xs font-semibold bg-primary text-primary-foreground px-2 py-1 rounded-md uppercase tracking-wide">
+                                                Popular
+                                            </span>
+                                        )}
+                                    </div>
+                                    <CardTitle className={cn(card.title === "Plus" && "text-foreground")}>
                                         {card.price}
                                         {card.duration && <span className="text-sm font-normal text-muted-foreground"> /{card.duration}</span>}
                                     </CardTitle>
@@ -285,7 +290,7 @@ const HomePage = () => {
                                         href="#"
                                         className={cn(
                                             "w-full text-center text-primary-foreground bg-primary p-2 rounded-md text-sm font-medium",
-                                            card.title !== "Monthly" && "!bg-foreground !text-background"
+                                            card.title !== "Plus" && "!bg-foreground !text-background"
                                         )}
                                     >
                                         {card.buttonText}
