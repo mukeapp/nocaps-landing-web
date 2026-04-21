@@ -315,7 +315,7 @@ const HomePage = () => {
                                     <div className="w-5 h-5 rounded-full bg-primary z-10" />
                                     <span className="text-xs font-semibold text-primary uppercase tracking-wide mt-1">Now</span>
                                     <h3 className="text-base font-bold text-foreground">Alpha live</h3>
-                                    <p className="text-muted-foreground text-sm">Core habit stack + AI scoring functional</p>
+                                    <p className="text-muted-foreground text-sm">Core HabitStack + Habit Market</p>
                                 </div>
                                 {/* Step 2 - Q2 2026 */}
                                 <div className="flex flex-col items-center text-center gap-2">
@@ -335,7 +335,8 @@ const HomePage = () => {
                                 <div className="flex flex-col items-center text-center gap-2">
                                     <div className="w-5 h-5 rounded-full bg-muted-foreground/30 z-10" />
                                     <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q4 2026</span>
-                                    <p className="text-muted-foreground text-sm">NOCAP Habit AI Features</p>
+                                    <h3 className="text-base font-bold text-foreground">AI Features</h3>
+                                    <p className="text-muted-foreground text-sm">Habit Intelligence</p>
                                 </div>
                             </div>
                         </div>
