@@ -42,22 +42,20 @@ const HomePage = () => {
                         </button>
 
                         <div className="flex flex-col items-center mt-8 max-w-3xl w-11/12 md:w-full">
-                            <h1 className="text-4xl md:text-6xl lg:textxl md:!leading-snug font-semibold text-center bg-clip-text bg-gradient-to-b from-gray-50 to-gray-50 text-transparent">
-                            Transform your life with the ultimate habit tracker!
+                            <h1 className="text-4xl md:text-6xl lg:text-7xl md:!leading-snug font-semibold text-center">
+                                <span className="text-foreground">Your life has a portfolio.</span>
+                                <br />
+                                <span className="text-primary">Start managing it.</span>
                             </h1>
                             <p className="text-base md:text-lg text-foreground/80 mt-6 text-center">
-                            Effortlessly track your habits, boost productivity, and achieve your goals. With NoCap, transforming your life has never been easier!
+                                NoCap is AI habit tracking + social sharing + a reverse search engine that works for your life — not against it.
                             </p>
-                            <div className="hidden md:flex relative items-center justify-center mt-8 md:mt-12 w-full">
-                                <Link href="#" className="flex items-center justify-center w-max rounded-full border-t border-foreground/30 bg-white/20 backdrop-blur-lg px-2 py-1 md:py-2 gap-2 md:gap-8 shadow-3xl shadow-background/40 cursor-pointer select-none">
-                                    <p className="text-foreground text-sm text-center md:text-base font-medium pl-4 pr-4 lg:pr-0">
-                                        ✨ {"  "} Redefine your habits, reshape your future!
-                                    </p>
-                                    <Button size="sm" className="rounded-full hidden lg:flex border border-foreground/20">
-                                        Get Started
-                                        <ArrowRight className="w-4 h-4 ml-1" />
-                                    </Button>
-                                </Link>
+                            <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
+                                {["AI Habit Scoring", "Reverse Search Engine", "Social + Community", "Habit Marketplace"].map((tag) => (
+                                    <span key={tag} className="rounded-full border border-foreground/20 bg-foreground/5 px-4 py-1.5 text-sm text-foreground/80">
+                                        {tag}
+                                    </span>
+                                ))}
                             </div>
                         </div>
 
