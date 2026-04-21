@@ -335,8 +335,7 @@ const HomePage = () => {
                                 <div className="flex flex-col items-center text-center gap-2">
                                     <div className="w-5 h-5 rounded-full bg-muted-foreground/30 z-10" />
                                     <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q4 2026</span>
-                                    <h3 className="text-base font-bold text-foreground">Marketplace</h3>
-                                    <p className="text-muted-foreground text-sm">Full habit marketplace + advanced AI</p>
+                                    <p className="text-muted-foreground text-sm">NOCAP Habit AI Features</p>
                                 </div>
                             </div>
                         </div>
