@@ -329,7 +329,7 @@ const HomePage = () => {
                                 </form>
                                 <p className="text-xs text-muted-foreground">
                                     By subscribing you agree with our{" "}
-                                    <Link href="#" className="text-red-500 underline">
+                                    <Link href="/privacy-policy" className="text-red-500 underline">
                                         Privacy Policy
                                     </Link>
                                 </p>
