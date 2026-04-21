@@ -297,6 +297,53 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
+            {/* roadmap */}
+            <Wrapper id="roadmap" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
+                <Container>
+                    <div className="max-w-md mx-auto text-start md:text-center">
+                        <SectionBadge title="Roadmap" />
+                    </div>
+                </Container>
+                <Container>
+                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-10">
+                        {/* timeline line */}
+                        <div className="relative">
+                            <div className="hidden lg:block absolute top-3 left-[12.5%] right-[12.5%] h-px bg-border" />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                                {/* Step 1 - NOW */}
+                                <div className="flex flex-col items-center text-center gap-2">
+                                    <div className="w-5 h-5 rounded-full bg-primary z-10" />
+                                    <span className="text-xs font-semibold text-primary uppercase tracking-wide mt-1">Now</span>
+                                    <h3 className="text-base font-bold text-foreground">Alpha live</h3>
+                                    <p className="text-muted-foreground text-sm">Core habit stack + AI scoring functional</p>
+                                </div>
+                                {/* Step 2 - Q2 2026 */}
+                                <div className="flex flex-col items-center text-center gap-2">
+                                    <div className="w-5 h-5 rounded-full bg-amber-500 z-10" />
+                                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q2 2026</span>
+                                    <h3 className="text-base font-bold text-foreground">Beta launch</h3>
+                                    <p className="text-muted-foreground text-sm">Community beta with early users</p>
+                                </div>
+                                {/* Step 3 - Q3 2026 */}
+                                <div className="flex flex-col items-center text-center gap-2">
+                                    <div className="w-5 h-5 rounded-full bg-amber-400 z-10" />
+                                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q3 2026</span>
+                                    <h3 className="text-base font-bold text-foreground">iOS + Android</h3>
+                                    <p className="text-muted-foreground text-sm">Public app store launch</p>
+                                </div>
+                                {/* Step 4 - Q4 2026 */}
+                                <div className="flex flex-col items-center text-center gap-2">
+                                    <div className="w-5 h-5 rounded-full bg-muted-foreground/30 z-10" />
+                                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q4 2026</span>
+                                    <h3 className="text-base font-bold text-foreground">Marketplace</h3>
+                                    <p className="text-muted-foreground text-sm">Full habit marketplace + advanced AI</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* testimonials */}
             <Wrapper id="feedback" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <div className="hidden md:block absolute -top-1/4 -left-1/3 w-72 h-72 bg-indigo-500 rounded-full blur-[10rem] -z-10"></div>
