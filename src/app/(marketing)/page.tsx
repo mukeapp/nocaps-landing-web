@@ -308,7 +308,7 @@ const HomePage = () => {
                     <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-10">
                         {/* timeline line */}
                         <div className="relative">
-                            <div className="hidden lg:block absolute top-3 left-[12.5%] right-[12.5%] h-px bg-border" />
+                            <div className="hidden lg:block absolute top-3 left-[12.5%] right-[12.5%] h-px bg-neutral-600" />
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
                                 {/* Step 1 - NOW */}
                                 <div className="flex flex-col items-center text-center gap-2">
