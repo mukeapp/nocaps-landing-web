@@ -46,7 +46,7 @@ const HomePage = () => {
                                 <span className="text-foreground">Build the future</span>
                                 <br />
                                 <span className="text-foreground">of </span>
-                                <span className="text-blue-500">Habit Intelligence</span>
+                                <span className="text-blue-500">Habit Intelligence </span>
                             </h1>
                             <p className="text-base md:text-lg text-foreground/80 mt-6 text-center">
                                 NoCap is AI habit tracking + social sharing + a reverse search engine that works for your life — not against it.
