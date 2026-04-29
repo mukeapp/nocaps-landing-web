@@ -61,6 +61,11 @@ const Footer = () => {
                                         LinkedIn
                                     </Link>
                                 </li>
+                                <li className="mt-2">
+                                    <Link href="https://discord.gg/v9NDUZVD" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-all duration-300">
+                                        Discord
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
