@@ -330,7 +330,7 @@ export default function BlogPage() {
                         marginBottom: 16,
                     }}
                 >
-                    // our journey
+                    {"// our journey"}
                 </div>
                 <h1
                     style={{
