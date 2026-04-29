@@ -247,7 +247,7 @@ const PostCard = ({ post, index }: { post: Post; index: number }) => {
 
 export default function BlogPage() {
     const [filter, setFilter] = useState("ALL");
-    const tags = ["ALL", ...new Set(posts.map((p) => p.tag))];
+    const tags = ["ALL", ...Array.from(new Set(posts.map((p) => p.tag)))];
     const filtered = filter === "ALL" ? posts : posts.filter((p) => p.tag === filter);
 
     return (
