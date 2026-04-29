@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "date": "Apr 28, 2026",
+    "tag": "LAUNCH",
+    "tagColor": "#00e5a0",
+    "title": "Introducing NoCap Swap",
+    "excerpt": "When your habit score dips, NoCap Swap steps in — surfacing AI-ranked alternatives so you can upgrade any weak component in one tap.",
+    "readTime": "4 min read",
+    "status": "live"
+  },
+  {
+    "id": 2,
+    "date": "Apr 14, 2026",
+    "tag": "ENGINEERING",
+    "tagColor": "#6c8aff",
+    "title": "How We Built the Reverse Search Engine",
+    "excerpt": "Instead of you searching for better habits, NoCap searches for you — continuously and automatically. Here's how the engine works under the hood.",
+    "readTime": "7 min read",
+    "status": "live"
+  },
+  {
+    "id": 3,
+    "date": "Mar 30, 2026",
+    "tag": "PRODUCT",
+    "tagColor": "#ff6cdf",
+    "title": "Habit Stacks — A New Way to Build Routines",
+    "excerpt": "Stack habits together into powerful routines with shared goals, budgets, and AI scoring. Built for people who want to change more than one thing at a time.",
+    "readTime": "5 min read",
+    "status": "live"
+  },
+  {
+    "id": 4,
+    "date": "Mar 10, 2026",
+    "tag": "DESIGN",
+    "tagColor": "#ffc46c",
+    "title": "Designing for Accountability Without Guilt",
+    "excerpt": "A look inside the design principles behind NoCap — how we built an interface that shows you the truth without making you feel bad about it.",
+    "readTime": "6 min read",
+    "status": "live"
+  },
+  {
+    "id": 5,
+    "date": "Feb 20, 2026",
+    "tag": "CASE STUDY",
+    "tagColor": "#6cf0ff",
+    "title": "How One User Cut Grocery Spend by 30% in 60 Days",
+    "excerpt": "A deep dive into how a NoCap user used HabitLinks and AI Swap suggestions to dramatically reduce their weekly food costs without changing what they eat.",
+    "readTime": "8 min read",
+    "status": "live"
+  },
+  {
+    "id": 6,
+    "date": "Feb 01, 2026",
+    "tag": "AI",
+    "tagColor": "#ff6c6c",
+    "title": "AI Habit Scoring: 0 to 100%",
+    "excerpt": "Every habit in NoCap gets a live AI score. Here's how the model works, what Good vs. Bad vs. Swap means, and how scores update as you track.",
+    "readTime": "6 min read",
+    "status": "live"
+  }
+]
