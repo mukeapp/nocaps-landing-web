@@ -322,10 +322,10 @@
   {
     "id": 33,
     "date": "Dec 30, 2026",
-    "tag": "DESIGN",
-    "tagColor": "#6cf0ff",
-    "title": "UI Clean Up — Final Polish",
-    "excerpt": "A full design pass across every screen — refining spacing, typography, and interactions to bring the NoCap experience to its v1 visual standard.",
+    "tag": "LAUNCH",
+    "tagColor": "#ffc46c",
+    "title": "NoCap v1.0 — Production Release",
+    "excerpt": "The full production release of NoCap. Every feature shipped, every screen polished, every AI system live. This is the version we've been building toward.",
     "readTime": "3 min read",
     "status": "upcoming"
   }
