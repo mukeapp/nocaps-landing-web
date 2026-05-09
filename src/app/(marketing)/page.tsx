@@ -79,6 +79,51 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
+            {/* what is nocap */}
+            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+                <Container>
+                    <div className="max-w-2xl mx-auto text-start md:text-center">
+                        <SectionBadge title="What is NoCap?" />
+                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                            A habit intelligence platform
+                        </h2>
+                        <p className="text-muted-foreground mt-6">
+                            NoCap combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones.
+                        </p>
+                    </div>
+                </Container>
+                <Container>
+                    <div className="max-w-3xl mx-auto mt-8 space-y-8">
+                        <p className="text-muted-foreground text-base leading-relaxed">
+                            NoCap lets users track habits across every area of life — finance, health, fitness, personal growth, relationships, and more — then uses AI to score those habits and suggest smarter alternatives. Users can share what works through our built-in Habit Marketplace, creating a community-driven library of proven routines and strategies.
+                        </p>
+                        <div>
+                            <h3 className="text-lg font-semibold text-foreground mb-4">
+                                What makes us different
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {[
+                                    "AI-powered Habit Swap Engine — finds better alternatives for your current habits across any sector",
+                                    "AI-powered Habit Scoring — rates your habits so you always know where you stand",
+                                    "AI-powered Habit Generating — creates personalized habit plans tailored to your goals",
+                                    "AI-powered Habit Chat — select any habit for instant, context-aware AI guidance",
+                                    "A social marketplace where users share and copy each other's habit systems",
+                                    "Tracks in real units that matter — USD, calories, kilograms, percentages, hours",
+                                ].map((item) => (
+                                    <div key={item} className="flex items-start gap-3">
+                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
+                                        <p className="text-muted-foreground text-sm leading-relaxed">{item}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="rounded-xl border border-border bg-foreground/[0.03] px-6 py-4 text-sm text-muted-foreground">
+                            We&apos;re currently in alpha, launching our KickStarter at the end of this month, with Android and iOS beta to follow.
+                        </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* the problem */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
