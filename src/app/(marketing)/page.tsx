@@ -107,8 +107,10 @@ const HomePage = () => {
                                     "AI-powered Habit Scoring — rates your habits so you always know where you stand",
                                     "AI-powered Habit Generating — creates personalized habit plans tailored to your goals",
                                     "AI-powered Habit Chat — select any habit for instant, context-aware AI guidance",
-                                    "A social marketplace where users share and copy each other's habit systems",
-                                    "Tracks in real units that matter — USD, calories, kilograms, percentages, hours",
+                                    "Habit Marketplace — where users share and copy each other's habit systems",
+                                    "Habit Stacks — organize habits into nested, interlinked systems that reflect real life complexity",
+                                    "Friends and Community — share your progress, swap habits, and learn from others in a supportive social environment",
+                                    "Tracks in real units that matter — USD, calories, kilograms, percentages, hours ...",
                                 ].map((item) => (
                                     <div key={item} className="flex items-start gap-3">
                                         <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
