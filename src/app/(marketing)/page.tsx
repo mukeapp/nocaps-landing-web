@@ -52,7 +52,16 @@ const HomePage = () => {
                                 NoCap is AI habit tracking + social sharing + a reverse search engine that works for your life — not against it.
                             </p>
                             <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-                                {["AI Habit Scoring", "Reverse Search Engine", "Social + Community", "Habit Marketplace"].map((tag) => (
+                                {[
+                                    "AI-powered Habit Swap Engine",
+                                    "AI-powered Habit Scoring",
+                                    "AI-powered Habit Generating",
+                                    "AI-powered Habit Chat",
+                                    "Habit Marketplace",
+                                    "Habit Stacks",
+                                    "Friends & Community",
+                                    "Tracks in real units",
+                                ].map((tag) => (
                                     <span key={tag} className="rounded-full border border-foreground/20 bg-foreground/5 px-4 py-1.5 text-sm text-foreground/80">
                                         {tag}
                                     </span>
