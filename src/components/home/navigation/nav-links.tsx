@@ -1,37 +1,32 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+
 const NavLinks = () => {
+  const pathname = usePathname();
+
+  const href = (anchor: string) =>
+    pathname === '/' ? `#${anchor}` : `/#${anchor}`;
+
   return (
     <ul className="flex items-center justify-center gap-8">
-      <a 
-        href="#pricing"
-        className="hover:text-foreground/80 text-sm cursor-pointer"
-      >
+      <a href={href('pricing')} className="hover:text-foreground/80 text-sm cursor-pointer">
         Pricing
       </a>
-      <a 
-        href="#about"
-        className="hover:text-foreground/80 text-sm cursor-pointer"
-      >
+      <a href={href('about')} className="hover:text-foreground/80 text-sm cursor-pointer">
         About
       </a>
-      <a 
-        href="#features"
-        className="hover:text-foreground/80 text-sm cursor-pointer"
-      >
+      <a href={href('features')} className="hover:text-foreground/80 text-sm cursor-pointer">
         Features
       </a>
-      <a 
-        href="#roadmap"
-        className="hover:text-foreground/80 text-sm cursor-pointer"
-      >
+      <a href={href('roadmap')} className="hover:text-foreground/80 text-sm cursor-pointer">
         Roadmap
       </a>
-      <a 
-        href="#feedback"
-        className="hover:text-foreground/80 text-sm cursor-pointer"
-      >
+      <a href={href('feedback')} className="hover:text-foreground/80 text-sm cursor-pointer">
         Feedback
+      </a>
+      <a href="/tech-demo" className="hover:text-foreground/80 text-sm cursor-pointer">
+        Tech Demo
       </a>
     </ul>
   );
