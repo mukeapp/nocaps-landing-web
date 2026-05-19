@@ -1,10 +1,12 @@
 import { Container, Wrapper } from "@/components";
 import SectionBadge from "@/components/ui/section-badge";
+import Image from "next/image";
 
 const team = [
     {
         initials: "FM",
         avatarColor: "bg-emerald-600",
+        photo: "/assets/team/franck.jpg",
         name: "Franck Mukendi",
         role: "CEO",
         location: "Atlanta, GA",
@@ -51,11 +53,21 @@ const TeamPage = () => {
                                 key={member.name}
                                 className="flex flex-col items-center text-center rounded-xl border border-border bg-foreground/[0.03] p-8 gap-4"
                             >
-                                <div className={`w-16 h-16 rounded-full ${member.avatarColor} flex items-center justify-center`}>
-                                    <span className="text-white font-bold text-lg tracking-wide">
-                                        {member.initials}
-                                    </span>
-                                </div>
+                                {'photo' in member && member.photo ? (
+                                    <Image
+                                        src={member.photo}
+                                        alt={member.name}
+                                        width={80}
+                                        height={80}
+                                        className="rounded-full object-cover object-top w-20 h-20"
+                                    />
+                                ) : (
+                                    <div className={`w-16 h-16 rounded-full ${member.avatarColor} flex items-center justify-center`}>
+                                        <span className="text-white font-bold text-lg tracking-wide">
+                                            {member.initials}
+                                        </span>
+                                    </div>
+                                )}
                                 <div>
                                     <h2 className="text-lg font-semibold text-foreground">{member.name}</h2>
                                     <p className="text-sm font-medium text-primary">{member.role}</p>
