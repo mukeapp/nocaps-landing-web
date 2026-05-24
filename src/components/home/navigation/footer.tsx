@@ -108,6 +108,16 @@ const Footer = () => {
                                     </Link>
                                 </li>
                                 <li className="mt-2">
+                                    <Link
+                                        href="/assets/Nocap-Picth-Deck/nocap_pitch_deck.pdf"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-foreground transition-all duration-300"
+                                    >
+                                        Pitch Deck
+                                    </Link>
+                                </li>
+                                <li className="mt-2">
                                     <Link href="/privacy-policy" className="hover:text-foreground transition-all duration-300">
                                         Privacy Policy
                                     </Link>
