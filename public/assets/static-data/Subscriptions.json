@@ -1,0 +1,137 @@
+[
+  {
+    "id": "free",
+    "name": "Free",
+    "price": 0,
+    "tagline": "See what AI can do",
+    "description": "Get started with NoCap at no cost. Build and track unlimited habit stacks, copy habits from friends and the marketplace, and stay on track with the NoCap Habit Calendar.",
+    "credits": 0,
+    "isPopular": false,
+    "isVisible": true,
+    "billingType": "personal",
+    "features": [
+      "Copy Habits from Friends & Family",
+      "Unlimited habitStacks, Habits, HabitLinks & HabitLinksItem",
+      "Copy Habits from Marketplace",
+      "NOCAP Habit Calendar"
+    ],
+    "footerNote": "Have an existing plan? See billing help"
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "price": 10,
+    "tagline": "Keep chatting with expanded access",
+    "description": "Step up your habit game with 1,000 AI credits per month. Score your habits, swap underperforming ones, generate new stacks with AI, and chat with your personal AI habit assistant.",
+    "credits": 1000,
+    "isPopular": false,
+    "isVisible": true,
+    "billingType": "personal",
+    "features": [
+      "Copy Habits from Friends & Family",
+      "Unlimited habitStacks, Habits, HabitLinks & HabitLinksItem",
+      "Copy Habits from Marketplace",
+      "NOCAP Habit Calendar",
+      "NOCAP AI Score Analysis",
+      "NOCAP AI Habit Swap",
+      "NOCAP AI Habit Generator",
+      "NOCAP AI Habit Chat & Assistant",
+      "1,000 AI credits / month"
+    ],
+    "footerNote": "This plan may include ads."
+  },
+  {
+    "id": "plus",
+    "name": "Plus",
+    "price": 20,
+    "tagline": "Unlock the full experience",
+    "description": "The most popular choice. Double the AI credits of Go — 2,000 per month — for power users who want to build, score, and refine habits faster with full AI access.",
+    "credits": 2000,
+    "isPopular": true,
+    "isVisible": true,
+    "billingType": "personal",
+    "features": [
+      "Copy Habits from Friends & Family",
+      "Unlimited habitStacks, Habits, HabitLinks & HabitLinksItem",
+      "Copy Habits from Marketplace",
+      "NOCAP Habit Calendar",
+      "NOCAP AI Score Analysis",
+      "NOCAP AI Habit Swap",
+      "NOCAP AI Habit Generator",
+      "NOCAP AI Habit Chat & Assistant",
+      "2,000 AI credits / month"
+    ],
+    "footerNote": null
+  },
+  {
+    "id": "pro",
+    "name": "Pro",
+    "price": 100,
+    "tagline": "Maximize your productivity",
+    "description": "For serious habit builders. 10,000 AI credits per month plus live AI HabitStack portfolio tracking, giving you a real-time view of your progress across every stack.",
+    "credits": 10000,
+    "isPopular": false,
+    "isVisible": true,
+    "billingType": "personal",
+    "features": [
+      "Copy Habits from Friends & Family",
+      "Unlimited habitStacks, Habits, HabitLinks & HabitLinksItem",
+      "Copy Habits from Marketplace",
+      "NOCAP Habit Calendar",
+      "NOCAP AI Score Analysis",
+      "NOCAP AI Habit Swap",
+      "NOCAP AI Habit Generator",
+      "NOCAP AI Habit Chat & Assistant",
+      "NOCAP AI HabitStack Live Portfolio",
+      "10,000 AI credits / month"
+    ],
+    "footerNote": null
+  },
+  {
+    "id": "business",
+    "name": "Business",
+    "price": 1000,
+    "tagline": "Scale habits across your entire team",
+    "description": "Bring NoCap to your whole team. 100,000 AI credits per month, team habit stacks, collaboration tools, and priority support to keep your organization growing together.",
+    "credits": 100000,
+    "isPopular": false,
+    "isVisible": true,
+    "billingType": "business",
+    "features": [
+      "Everything in Pro",
+      "Team habit stacks and collaboration",
+      "Copy Habits from Friends & Family",
+      "Unlimited habitStacks, Habits, HabitLinks & HabitLinksItem",
+      "Copy Habits from Marketplace",
+      "NOCAP Habit Calendar",
+      "NOCAP AI Score Analysis",
+      "NOCAP AI Habit Swap",
+      "NOCAP AI Habit Generator",
+      "NOCAP AI Habit Chat & Assistant",
+      "NOCAP AI HabitStack Live Portfolio",
+      "100,000 AI credits / month",
+      "Priority support"
+    ],
+    "footerNote": null
+  },
+  {
+    "id": "enterprise",
+    "name": "Enterprise",
+    "price": 10000,
+    "tagline": "Built for organizations that demand the best",
+    "description": "Purpose-built for large organizations. 1,000,000 AI credits per month, private stacks from industry professionals, a dedicated account manager, and SLA-backed uptime.",
+    "credits": 1000000,
+    "isPopular": false,
+    "isVisible": true,
+    "billingType": "business",
+    "features": [
+      "Everything in Business",
+      "Private HabitStacks from Professionals",
+      "Dedicated account manager",
+      "SLA-backed uptime guarantee",
+      "1,000,000 AI credits / month"
+    ],
+    "footerNote": null
+  }
+]
+
