@@ -1,15 +1,15 @@
 import { Container, Wrapper } from "@/components";
 import Icons from "@/components/global/icons";
+import PricingSection from "@/components/home/pricing-section";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { LampContainer } from "@/components/ui/lamp";
 import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
-import { features, perks, pricingCards, reviews } from "@/constants";
+import { features, perks, reviews } from "@/constants";
 import { cn } from "@/lib/utils";
-import { ArrowRight, ChevronRight, UserIcon, Zap } from "lucide-react";
+import { ArrowRight, ChevronRight, UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -294,69 +294,7 @@ const HomePage = () => {
             </Wrapper>
 
             {/* pricing */}
-            <Wrapper id="pricing" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
-                <div className="hidden md:block absolute top-0 -right-1/3 w-72 h-72 bg-blue-500 rounded-full blur-[10rem] -z-10"></div>
-                <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="Pricing" />
-                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            Unlock the right plan for your business
-                        </h2>
-                        <p className="text-muted-foreground mt-6">
-                            Choose the best plan and start building better habits today
-                        </p>
-                    </div>
-                </Container>
-                <Container className="flex items-center justify-center">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full md:gap-6 py-10 md:py-20 flex-wrap max-w-5xl">
-                        {pricingCards.map((card) => (
-                            <Card
-                                key={card.title}
-                                className={cn("flex flex-col w-full border-neutral-700",
-                                    card.title === "Plus" && "border-2 border-primary"
-                                )}
-                            >
-                                <CardHeader className="border-b border-border">
-                                    <div className="flex items-center justify-between">
-                                        <span>{card.title}</span>
-                                        {card.title === "Plus" && (
-                                            <span className="text-xs font-semibold bg-primary text-primary-foreground px-2 py-1 rounded-md uppercase tracking-wide">
-                                                Popular
-                                            </span>
-                                        )}
-                                    </div>
-                                    <CardTitle className={cn(card.title === "Plus" && "text-foreground")}>
-                                        {card.price}
-                                        {card.duration && <span className="text-sm font-normal text-muted-foreground"> /{card.duration}</span>}
-                                    </CardTitle>
-                                    <CardDescription>
-                                        {card.description}
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent className="pt-6 space-y-3">
-                                    {card.features.map((feature) => (
-                                        <div key={feature} className="flex items-center gap-2">
-                                            <Zap className="w-4 h-4 fill-primary text-primary" />
-                                            <p>{feature}</p>
-                                        </div>
-                                    ))}
-                                </CardContent>
-                                <CardFooter className="mt-auto">
-                                    <Link
-                                        href="#"
-                                        className={cn(
-                                            "w-full text-center text-primary-foreground bg-primary p-2 rounded-md text-sm font-medium",
-                                            card.title !== "Plus" && "!bg-foreground !text-background"
-                                        )}
-                                    >
-                                        {card.buttonText}
-                                    </Link>
-                                </CardFooter>
-                            </Card>
-                        ))}
-                    </div>
-                </Container>
-            </Wrapper>
+            <PricingSection />
 
             {/* roadmap */}
             <Wrapper id="roadmap" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
