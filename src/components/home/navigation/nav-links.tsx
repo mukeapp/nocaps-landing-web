@@ -20,7 +20,7 @@ const NavLinks = () => {
         Features
       </a>
       <a href={href('roadmap')} className="hover:text-foreground/80 text-sm cursor-pointer">
-        Roadmap
+        Quick Roadmap
       </a>
       <a href={href('feedback')} className="hover:text-foreground/80 text-sm cursor-pointer">
         Feedback
