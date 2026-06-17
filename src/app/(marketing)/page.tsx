@@ -300,7 +300,7 @@ const HomePage = () => {
             <Wrapper id="roadmap" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <Container>
                     <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="Roadmap" />
+                        <SectionBadge title="Quick Roadmap" />
                     </div>
                 </Container>
                 <Container>
