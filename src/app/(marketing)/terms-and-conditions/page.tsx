@@ -23,7 +23,7 @@ const TermsAndConditionsPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">1. Acceptance of Terms</h2>
                             <p>
-                                By downloading, installing, or using the NoCap application or website (collectively,
+                                By downloading, installing, or using the NoCaps application or website (collectively,
                                 the &quot;Service&quot;), you agree to be bound by these Terms &amp; Conditions. If you do not
                                 agree, please do not use the Service.
                             </p>
@@ -46,7 +46,7 @@ const TermsAndConditionsPage = () => {
                             <p>
                                 You are responsible for maintaining the confidentiality of your account credentials
                                 and for all activity that occurs under your account. You must notify us immediately
-                                of any unauthorized use of your account. NoCap reserves the right to suspend or
+                                of any unauthorized use of your account. NoCaps reserves the right to suspend or
                                 terminate accounts that violate these Terms.
                             </p>
                         </div>

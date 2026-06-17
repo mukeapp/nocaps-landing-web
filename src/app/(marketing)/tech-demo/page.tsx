@@ -40,7 +40,7 @@ const TechDemoPage = () => {
                     <div className="max-w-2xl mx-auto text-start md:text-center">
                         <SectionBadge title="Tech Demo" />
                         <h1 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            See NoCap in action
+                            See NoCaps in action
                         </h1>
                         <p className="text-muted-foreground mt-4">
                             A step-by-step walkthrough of the core features — from first login to sharing habits with the world.

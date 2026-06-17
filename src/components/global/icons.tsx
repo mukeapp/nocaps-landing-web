@@ -9,7 +9,7 @@ const Icons: IconType = {
     logo: () => (
         <img
             src="/assets/nocapl.png"
-            alt="NoCap Logo"
+            alt="NoCaps Logo"
             width="100"
             height="50"
         />

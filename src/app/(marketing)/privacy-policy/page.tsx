@@ -23,7 +23,7 @@ const PrivacyPolicyPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">1. Introduction</h2>
                             <p>
-                                Welcome to NoCap (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). We are committed to protecting your
+                                Welcome to NoCaps (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;). We are committed to protecting your
                                 personal information and your right to privacy. This Privacy Policy explains how we
                                 collect, use, disclose, and safeguard your information when you use our mobile
                                 application and website.
@@ -46,7 +46,7 @@ const PrivacyPolicyPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">3. How We Use Your Information</h2>
                             <p>We use the information we collect to:</p>
                             <ul className="list-disc list-inside space-y-1 pl-2">
-                                <li>Provide, operate, and maintain the NoCap app and services</li>
+                                <li>Provide, operate, and maintain the NoCaps app and services</li>
                                 <li>Personalize your experience and deliver AI-powered habit insights</li>
                                 <li>Process transactions and manage subscriptions</li>
                                 <li>Send account-related notifications and updates</li>
@@ -98,7 +98,7 @@ const PrivacyPolicyPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">8. Children&apos;s Privacy</h2>
                             <p>
-                                NoCap is not directed to children under the age of 13. We do not knowingly collect
+                                NoCaps is not directed to children under the age of 13. We do not knowingly collect
                                 personal information from children. If you believe a child has provided us with
                                 personal data, please contact us immediately.
                             </p>
@@ -109,7 +109,7 @@ const PrivacyPolicyPage = () => {
                             <p>
                                 We may update this Privacy Policy from time to time. We will notify you of any
                                 significant changes by updating the date at the top of this page. Continued use of
-                                NoCap after changes constitutes your acceptance of the updated policy.
+                                NoCaps after changes constitutes your acceptance of the updated policy.
                             </p>
                         </div>
 
