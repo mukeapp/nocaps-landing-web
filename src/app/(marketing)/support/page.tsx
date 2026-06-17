@@ -23,7 +23,7 @@ const SupportPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">Getting Started</h2>
                             <p>
-                                NoCap helps you build and track habits that stick. Once you create an account,
+                                NoCaps helps you build and track habits that stick. Once you create an account,
                                 you can set up habit stacks, define your goals, and let our AI-powered insights
                                 guide your progress. Download the app, sign in, and start your first habit stack
                                 in under a minute.
@@ -47,7 +47,7 @@ const SupportPage = () => {
                                     <h3 className="font-medium text-foreground">How do I cancel my subscription?</h3>
                                     <p>
                                         Subscriptions are managed through the App Store (iOS) or Google Play (Android).
-                                        Go to your device&apos;s subscription settings, find NoCap, and select Cancel.
+                                        Go to your device&apos;s subscription settings, find NoCaps, and select Cancel.
                                         You will retain access until the end of your current billing period.
                                     </p>
                                 </div>

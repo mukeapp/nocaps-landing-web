@@ -10,7 +10,7 @@ const team = [
         name: "Franck Mukendi",
         role: "CEO",
         location: "Atlanta, GA",
-        bio: "Senior Software engineer and productivity obsessive building NoCap to solve his own problem. Leads company vision, strategy, and overall product direction.",
+        bio: "Senior Software engineer and productivity obsessive building NoCaps to solve his own problem. Leads company vision, strategy, and overall product direction.",
     },
     {
         initials: "YM",
@@ -26,7 +26,7 @@ const team = [
         name: "Geoffrey M.",
         role: "CTO",
         location: "Toronto, Canada",
-        bio: "Architects NoCap's technical foundation — from AI infrastructure and backend systems to cross-platform mobile delivery. Translates product vision into scalable, reliable engineering that ships.",
+        bio: "Architects NoCaps's technical foundation — from AI infrastructure and backend systems to cross-platform mobile delivery. Translates product vision into scalable, reliable engineering that ships.",
     },
 ];
 
@@ -38,7 +38,7 @@ const TeamPage = () => {
                     <div className="max-w-2xl mx-auto text-start md:text-center">
                         <SectionBadge title="The Team" />
                         <h1 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            The people building NoCap
+                            The people building NoCaps
                         </h1>
                         <p className="text-muted-foreground mt-4">
                             A focused team of builders shipping habit intelligence from the US and Canada.

@@ -36,7 +36,7 @@ const HomePage = () => {
                             <span className="h-full w-full blur-md absolute bottom-0 inset-x-0 bg-gradient-to-tr from-primary/40"></span>
                             <span className="z-10 py-0.5 text-sm text-neutral-100 flex items-center justify-center gap-1.5">
                                 <Image src="/icons/sparkles-dark.svg" alt="✨" width={24} height={24} className="w-4 h-4" />
-                                Introducing NoCap
+                                Introducing NoCaps
                                 <ChevronRight className="w-4 h-4" />
                             </span>
                         </button>
@@ -49,7 +49,7 @@ const HomePage = () => {
                                 <span className="text-blue-500">Habit Intelligence </span>
                             </h1>
                             <p className="text-base md:text-lg text-foreground/80 mt-6 text-center">
-                                NoCap is AI habit tracking + social sharing + a reverse search engine that works for your life — not against it.
+                                NoCaps is AI habit tracking + social sharing + a reverse search engine that works for your life — not against it.
                             </p>
                             <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
                                 {[
@@ -92,19 +92,19 @@ const HomePage = () => {
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
                     <div className="max-w-2xl mx-auto text-start md:text-center">
-                        <SectionBadge title="What is NoCap?" />
+                        <SectionBadge title="What is NoCaps?" />
                         <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
                             A habit intelligence platform
                         </h2>
                         <p className="text-muted-foreground mt-6">
-                            NoCap combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones.
+                            NoCaps combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones.
                         </p>
                     </div>
                 </Container>
                 <Container>
                     <div className="max-w-3xl mx-auto mt-8 space-y-8">
                         <p className="text-muted-foreground text-base leading-relaxed">
-                            NoCap lets users track habits across every area of life — finance, health, fitness, personal growth, relationships, and more — then uses AI to score those habits and suggest smarter alternatives. Users can share what works through our built-in Habit Marketplace, creating a community-driven library of proven routines and strategies.
+                            NoCaps lets users track habits across every area of life — finance, health, fitness, personal growth, relationships, and more — then uses AI to score those habits and suggest smarter alternatives. Users can share what works through our built-in Habit Marketplace, creating a community-driven library of proven routines and strategies.
                         </p>
                         <div>
                             <h3 className="text-lg font-semibold text-foreground mb-4">
@@ -220,7 +220,7 @@ const HomePage = () => {
 
                         </h2>
                         <p className="text-muted-foreground mt-6">
-                            NoCap offers a range of features designed to help you build and track better habits effortlessly.
+                            NoCaps offers a range of features designed to help you build and track better habits effortlessly.
                         </p>
                     </div>
                 </Container>
@@ -353,7 +353,7 @@ const HomePage = () => {
                             What people are saying
                         </h2>
                         <p className="text-muted-foreground mt-6">
-                            See how NoCap empowers businesses of all sizes. Here&apos;s what real people are saying on Twitter
+                            See how NoCaps empowers businesses of all sizes. Here&apos;s what real people are saying on Twitter
                         </p>
                     </div>
                 </Container>
@@ -420,7 +420,7 @@ const HomePage = () => {
                                 From Dream to Habit <br /> Achieve Your Goals Swiftly
                             </h2>
                             <p className="text-muted-foreground mt-6 max-w-md mx-auto">
-                                Build better habits with NoCap&apos;s intuitive tracking features and powerful AI suggestions.
+                                Build better habits with NoCaps&apos;s intuitive tracking features and powerful AI suggestions.
                             </p>
                             <Button variant="white" className="mt-6" asChild>
                                 <Link href="/sign-in">
@@ -439,7 +439,7 @@ const HomePage = () => {
                                     Join our newsletter
                                 </h4>
                                 <p className="text-base text-muted-foreground">
-                                    Be up to date with everything about NoCap Habit AI builder
+                                    Be up to date with everything about NoCaps Habit AI builder
                                 </p>
                             </div>
                             <div className="flex flex-col items-start gap-2 md:min-w-80 mt-5 md:mt-0 w-full md:w-max">

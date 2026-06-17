@@ -2,11 +2,11 @@ import { Metadata } from "next";
 
 export const SITE_CONFIG: Metadata = {
     title: {
-        // write a default title for NoCap a ai powered Habit Tracker app.
-        default: "NoCap - Next-Gen Habit Builder",
-        template: `%s | NoCap`
+        // write a default title for NoCaps a ai powered Habit Tracker app.
+        default: "NoCaps - Next-Gen Habit Builder",
+        template: `%s | NoCaps`
     },
-    description: "NoCap is an AI-powered habit tracker that helps you build better habits in minutes. No experience needed. Start your journey for free!",
+    description: "NoCaps is an AI-powered habit tracker that helps you build better habits in minutes. No experience needed. Start your journey for free!",
     icons: {
         icon: [
             {
@@ -16,8 +16,8 @@ export const SITE_CONFIG: Metadata = {
         ]
     },
     openGraph: {
-        title: "NoCap - AI Powered Habit Builder",
-        description: "NoCap is an AI-powered habit tracker that helps you build better habits in minutes. No experience needed. Start your journey for free!",
+        title: "NoCaps - AI Powered Habit Builder",
+        description: "NoCaps is an AI-powered habit tracker that helps you build better habits in minutes. No experience needed. Start your journey for free!",
         images: [
             {
                 url: "/assets/og-image.png",
@@ -27,8 +27,8 @@ export const SITE_CONFIG: Metadata = {
     twitter: {
         card: "summary_large_image",
         creator: "@shreyassihasane",
-        title: "NoCap - AI Powered Habit Builder",
-        description: "NoCap is an AI-powered habit tracker that helps you build better habits in minutes. No experience needed. Start your journey for free!",
+        title: "NoCaps - AI Powered Habit Builder",
+        description: "NoCaps is an AI-powered habit tracker that helps you build better habits in minutes. No experience needed. Start your journey for free!",
         images: [
             {
                 url: "/assets/og-image.png",

@@ -4,7 +4,7 @@ export const perks = [
     {
         icon: Icons.auth,
         title: "Sign Up",
-        info: "Create your free account to get started with NoCap.",
+        info: "Create your free account to get started with NoCaps.",
     },
     {
         icon: Icons.customize,
@@ -52,7 +52,7 @@ export const features = [
     {
         icon: Icons.customize,
         title: "Reverse Search Engine",
-        info: "Instead of you searching, NoCap searches for you — continuously, automatically.",
+        info: "Instead of you searching, NoCaps searches for you — continuously, automatically.",
     },
     {
         icon: Icons.auth,
@@ -226,7 +226,7 @@ export const reviews = [
     {
       name: "Mia",
       username: "@mia",
-      body: "NoCap completely changed my daily routine. The AI suggestions are shockingly accurate!",
+      body: "NoCaps completely changed my daily routine. The AI suggestions are shockingly accurate!",
     },
     {
       name: "Liam",
@@ -246,32 +246,32 @@ export const reviews = [
     {
       name: "Olivia",
       username: "@olivia",
-      body: "Tracking my grocery spending has never been easier. NoCap literally helped me cut my monthly bills by 20%.",
+      body: "Tracking my grocery spending has never been easier. NoCaps literally helped me cut my monthly bills by 20%.",
     },
     {
       name: "Lucas",
       username: "@lucas",
-      body: "I started using NoCap for calorie tracking and I'm finally seeing consistent progress with my fitness goals.",
+      body: "I started using NoCaps for calorie tracking and I'm finally seeing consistent progress with my fitness goals.",
     },
     {
       name: "Isabella",
       username: "@isabella",
-      body: "NoCap made it simple to build better spending habits. The weekly reports are a total game changer.",
+      body: "NoCaps made it simple to build better spending habits. The weekly reports are a total game changer.",
     },
     {
       name: "Mason",
       username: "@mason",
-      body: "I used to overspend without realizing it. Now with NoCap, I get smart nudges that actually help me save money.",
+      body: "I used to overspend without realizing it. Now with NoCaps, I get smart nudges that actually help me save money.",
     },
     {
       name: "Amelia",
       username: "@amelia",
-      body: "I've tried finance apps before, but the AI in NoCap feels way more personalized and actually motivates me.",
+      body: "I've tried finance apps before, but the AI in NoCaps feels way more personalized and actually motivates me.",
     },
     {
       name: "Logan",
       username: "@logan",
-      body: "From grocery lists to budgeting, NoCap keeps me organized without overwhelming me. Super clean experience.",
+      body: "From grocery lists to budgeting, NoCaps keeps me organized without overwhelming me. Super clean experience.",
     },
   ];
   

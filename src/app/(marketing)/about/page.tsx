@@ -12,7 +12,7 @@ const AboutPage = () => {
                             Built for people who want to change
                         </h1>
                         <p className="text-muted-foreground mt-4">
-                            NoCap is on a mission to make habit-building honest, personal, and actually fun.
+                            NoCaps is on a mission to make habit-building honest, personal, and actually fun.
                         </p>
                     </div>
                 </Container>
@@ -23,7 +23,7 @@ const AboutPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">Our Story</h2>
                             <p>
-                                NoCap was born out of frustration with habit trackers that felt like chores. We
+                                NoCaps was born out of frustration with habit trackers that felt like chores. We
                                 wanted something that met you where you were — no guilt, no gimmicks, just
                                 real accountability and a system that works around your life.
                             </p>
@@ -37,7 +37,7 @@ const AboutPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">Our Mission</h2>
                             <p>
                                 We believe lasting change comes from small, repeatable actions — not
-                                motivation or willpower alone. NoCap gives you the structure, the insights,
+                                motivation or willpower alone. NoCaps gives you the structure, the insights,
                                 and the nudges to build habits that actually stick, one day at a time.
                             </p>
                         </div>

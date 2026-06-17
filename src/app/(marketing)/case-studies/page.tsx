@@ -13,7 +13,7 @@ const CaseStudiesPage = () => {
                             Real features. Real impact.
                         </h1>
                         <p className="text-muted-foreground mt-4">
-                            A closer look at how NoCap helps you build smarter habits and make better decisions every day.
+                            A closer look at how NoCaps helps you build smarter habits and make better decisions every day.
                         </p>
                     </div>
                 </Container>
@@ -26,18 +26,18 @@ const CaseStudiesPage = () => {
 
                             <div className="space-y-2">
                                 <p className="text-sm font-medium text-primary uppercase tracking-widest">Case Study #1</p>
-                                <h2 className="text-2xl font-semibold text-foreground">NoCap Swap</h2>
+                                <h2 className="text-2xl font-semibold text-foreground">NoCaps Swap</h2>
                                 <p className="text-base">
-                                    How NoCap uses AI to detect underperforming habits and instantly suggest smarter replacements —
+                                    How NoCaps uses AI to detect underperforming habits and instantly suggest smarter replacements —
                                     so you spend less time starting over and more time leveling up.
                                 </p>
                             </div>
 
-                            {/* Hero image — NoCap app screens showing habit stacks in action */}
+                            {/* Hero image — NoCaps app screens showing habit stacks in action */}
                             <div className="rounded-xl overflow-hidden border border-border">
                                 <Image
                                     src="/assets/nocap-first.png"
-                                    alt="NoCap app showing habit stacks and tracking screens"
+                                    alt="NoCaps app showing habit stacks and tracking screens"
                                     width={896}
                                     height={600}
                                     className="w-full object-cover"
@@ -55,16 +55,16 @@ const CaseStudiesPage = () => {
                                     rebuild from scratch, which most people simply don&apos;t do.
                                 </p>
                                 <p>
-                                    NoCap tracks not just whether you completed a habit, but how well it&apos;s performing over time.
+                                    NoCaps tracks not just whether you completed a habit, but how well it&apos;s performing over time.
                                     When your score dips, the app knows something in your stack needs to change.
                                 </p>
                             </div>
 
                             {/* The Solution */}
                             <div className="space-y-3">
-                                <h3 className="text-lg font-semibold text-foreground">The Solution: NoCap Swap</h3>
+                                <h3 className="text-lg font-semibold text-foreground">The Solution: NoCaps Swap</h3>
                                 <p>
-                                    When your habit stack score falls below your target, <span className="text-foreground font-medium">NoCap Swap</span> steps in
+                                    When your habit stack score falls below your target, <span className="text-foreground font-medium">NoCaps Swap</span> steps in
                                     automatically. Instead of leaving you to figure it out, the AI surfaces a ranked list of
                                     stronger alternatives for any weak component — whether that&apos;s a Habit, a HabitLink, or an
                                     individual HabitLinkItem.
@@ -72,7 +72,7 @@ const CaseStudiesPage = () => {
                                 <p>Swap suggestions are generated based on three data sources:</p>
                                 <ul className="list-disc list-inside space-y-2 pl-2">
                                     <li><span className="text-foreground font-medium">Your personal specifications</span> — your goals, budget, and past preferences</li>
-                                    <li><span className="text-foreground font-medium">Collective wisdom</span> — patterns that have worked for other NoCap users in similar situations</li>
+                                    <li><span className="text-foreground font-medium">Collective wisdom</span> — patterns that have worked for other NoCaps users in similar situations</li>
                                     <li><span className="text-foreground font-medium">Proven higher-scoring patterns</span> — alternatives verified to produce better habit scores over time</li>
                                 </ul>
                             </div>
@@ -87,7 +87,7 @@ const CaseStudiesPage = () => {
                                         <div className="p-5 space-y-2">
                                             <p className="text-sm font-semibold text-foreground uppercase tracking-wide">Step 1 — Score drops</p>
                                             <p>
-                                                NoCap monitors each habit stack in real time. The moment a stack&apos;s performance score
+                                                NoCaps monitors each habit stack in real time. The moment a stack&apos;s performance score
                                                 falls below threshold, the Swap indicator activates on that stack.
                                             </p>
                                         </div>
@@ -142,7 +142,7 @@ const CaseStudiesPage = () => {
                             <div className="space-y-3">
                                 <h3 className="text-lg font-semibold text-foreground">The Result</h3>
                                 <p>
-                                    NoCap Swap turns a frustrating dead-end into a one-tap fix. Users who engage with Swap
+                                    NoCaps Swap turns a frustrating dead-end into a one-tap fix. Users who engage with Swap
                                     suggestions recover their habit scores faster and are significantly less likely to abandon
                                     a stack entirely. Instead of starting from scratch, they simply swap and upgrade —
                                     keeping their momentum and their streak intact.
@@ -151,9 +151,9 @@ const CaseStudiesPage = () => {
 
                             {/* CTA */}
                             <div className="rounded-xl border border-border bg-muted/30 p-6 space-y-3 text-center">
-                                <p className="text-foreground font-semibold text-lg">Try NoCap Swap for yourself</p>
+                                <p className="text-foreground font-semibold text-lg">Try NoCaps Swap for yourself</p>
                                 <p className="text-sm">
-                                    Download the NoCap app and let the AI find the upgrades your habits are missing.
+                                    Download the NoCaps app and let the AI find the upgrades your habits are missing.
                                 </p>
                                 <a
                                     href="mailto:franck@donocap.com"
