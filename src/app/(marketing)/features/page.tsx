@@ -40,7 +40,7 @@ const aiFeatures = [
         title: "AI Habit Chat",
         description:
             "Select any habit for instant, context-aware AI guidance. Chat with AI alone or bring friends in — every conversation is anchored to your specific habits, not generic advice.",
-        image: "/assets/KickStarterNoCapFeatures/images/image17.png",
+        image: "/assets/KickStarterNoCapFeatures/images/image39.png",
     },
 ];
 
