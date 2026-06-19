@@ -193,38 +193,53 @@ const HomePage = () => {
                             </Button>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                        {[
-                            {
-                                image: "/assets/KickStarterNoCapFeatures/images/image27.png",
-                                title: "Built Around a Real Data Model",
-                                desc: "Organize life into HabitStacks, Habits, HabitLinks, and HabitLinkItems — a four-layer system flexible enough for any goal.",
-                            },
-                            {
-                                image: "/assets/KickStarterNoCapFeatures/images/image17.png",
-                                title: "Track, Share & Discover",
-                                desc: "Log habits on a visual calendar, follow friends' progress, and explore routines across every life sector — all in one place.",
-                            },
-                            {
-                                image: "/assets/KickStarterNoCapFeatures/images/image53.png",
-                                title: "Your Full Habit Hub",
-                                desc: "From your personal library to the community market and friends feed, NoCaps puts your entire habit world in one app.",
-                            },
-                        ].map((item) => (
-                            <div key={item.title} className="rounded-2xl border border-border bg-card overflow-hidden">
+                    <div className="flex flex-col gap-6 max-w-5xl mx-auto">
+                        {/* Card 1 — horizontal, image left */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
                                 <Image
-                                    src={item.image}
-                                    alt={item.title}
-                                    width={600}
-                                    height={900}
+                                    src="/assets/KickStarterNoCapFeatures/images/image27.png"
+                                    alt="Built Around a Real Data Model"
+                                    width={800}
+                                    height={500}
                                     className="w-full h-auto"
                                 />
-                                <div className="p-5">
-                                    <h3 className="text-sm font-semibold text-foreground mb-1">{item.title}</h3>
-                                    <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                                <div className="p-8 flex flex-col justify-center">
+                                    <h3 className="text-base font-semibold text-foreground mb-2">Built Around a Real Data Model</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Organize life into HabitStacks, Habits, HabitLinks, and HabitLinkItems — a four-layer system flexible enough for any goal.</p>
                                 </div>
                             </div>
-                        ))}
+                        </div>
+                        {/* Card 2 — horizontal, image right */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <div className="p-8 flex flex-col justify-center order-2 md:order-1">
+                                    <h3 className="text-base font-semibold text-foreground mb-2">Track, Share &amp; Discover</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Log habits on a visual calendar, follow friends&apos; progress, and explore routines across every life sector — all in one place.</p>
+                                </div>
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image17.png"
+                                    alt="Track, Share & Discover"
+                                    width={800}
+                                    height={500}
+                                    className="w-full h-auto order-1 md:order-2"
+                                />
+                            </div>
+                        </div>
+                        {/* Card 3 — vertical, centered */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-sm mx-auto w-full">
+                            <Image
+                                src="/assets/KickStarterNoCapFeatures/images/image53.png"
+                                alt="Your Full Habit Hub"
+                                width={600}
+                                height={900}
+                                className="w-full h-auto"
+                            />
+                            <div className="p-5">
+                                <h3 className="text-sm font-semibold text-foreground mb-1">Your Full Habit Hub</h3>
+                                <p className="text-xs text-muted-foreground leading-relaxed">From your personal library to the community market and friends feed, NoCaps puts your entire habit world in one app.</p>
+                            </div>
+                        </div>
                     </div>
                     <div className="flex justify-center mt-10">
                         <Button asChild size="lg">
