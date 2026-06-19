@@ -589,37 +589,40 @@ const FeaturesPage = () => {
             {/* Habit Market */}
             <Wrapper className="flex flex-col items-center justify-center py-8 relative">
                 <Container>
-                    <div className="max-w-4xl mx-auto">
-                        <div className="text-center mb-10">
-                            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Habit Market</p>
-                            <h2 className="text-2xl lg:text-3xl font-semibold">Browse and Copy proven habit systems from the Community</h2>
-                            <p className="text-muted-foreground mt-3 text-sm max-w-lg mx-auto">
-                                A community-driven library of HabitStacks shared by real users. Find systems that work — and make them yours in one tap.
-                            </p>
-                        </div>
-                        <div className="grid md:grid-cols-2 gap-8 items-center">
-                            <div className="space-y-4">
-                                {[
-                                    { icon: "📦", title: "Copy any HabitStack", desc: "Browse stacks shared by friends, influencers, or the community — copy in one tap." },
-                                    { icon: "⭐", title: "AI-scored before you copy", desc: "Every marketplace stack is already rated, so you know the quality before you commit." },
-                                    { icon: "🔗", title: "Publish your own system", desc: "Built something great? Share it with the world — earn credibility in the community." },
-                                ].map((item) => (
-                                    <div key={item.title} className="flex gap-4 items-start bg-card border border-border rounded-xl px-5 py-4">
-                                        <span className="text-2xl flex-shrink-0">{item.icon}</span>
-                                        <div>
-                                            <h4 className="text-sm font-semibold text-foreground mb-1">{item.title}</h4>
-                                            <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10">
+                                <div className="inline-flex items-center gap-2 text-xs font-semibold text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full mb-5">
+                                    🏪 Habit Market
+                                </div>
+                                <h2 className="text-2xl font-semibold text-foreground mb-4">
+                                    Browse and Copy proven habit systems from the Community
+                                </h2>
+                                <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                                    A community-driven library of HabitStacks shared by real users. Find systems that work — and make them yours in one tap.
+                                </p>
+                                <div className="space-y-4">
+                                    {[
+                                        { icon: "📦", title: "Copy any HabitStack", desc: "Browse stacks shared by friends, influencers, or the community — copy in one tap." },
+                                        { icon: "⭐", title: "AI-scored before you copy", desc: "Every marketplace stack is already rated, so you know the quality before you commit." },
+                                        { icon: "🔗", title: "Publish your own system", desc: "Built something great? Share it with the world — earn credibility in the community." },
+                                    ].map((item) => (
+                                        <div key={item.title} className="flex gap-4 items-start bg-background/50 border border-border rounded-xl px-5 py-4">
+                                            <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-foreground mb-1">{item.title}</h4>
+                                                <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                            <div className="rounded-2xl overflow-hidden border border-border">
+                            <div className="relative min-h-[320px]">
                                 <Image
                                     src="/assets/KickStarterNoCapFeatures/images/image52.png"
                                     alt="NoCaps Habit Market showing Finance and Personal Development stacks"
-                                    width={600}
-                                    height={600}
-                                    className="w-full object-cover"
+                                    fill
+                                    className="object-cover"
                                 />
                             </div>
                         </div>
