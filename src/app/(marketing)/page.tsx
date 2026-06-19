@@ -1,5 +1,4 @@
 import { Container, Wrapper } from "@/components";
-import Icons from "@/components/global/icons";
 import PricingSection from "@/components/home/pricing-section";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { LampContainer } from "@/components/ui/lamp";
 import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
-import { features, perks, reviews } from "@/constants";
+import { perks, reviews } from "@/constants";
 import { cn } from "@/lib/utils";
 import { ArrowRight, ChevronRight, UserIcon } from "lucide-react";
 import Image from "next/image";
@@ -208,47 +207,6 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
-            {/* features */}
-            <Wrapper id="features" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
-                <div className="hidden md:block absolute top-0 -right-1/3 w-72 h-72 bg-primary rounded-full blur-[10rem] -z-10"></div>
-                <div className="hidden md:block absolute bottom-0 -left-1/3 w-72 h-72 bg-indigo-600 rounded-full blur-[10rem] -z-10"></div>
-                <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="Features" />
-                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            Discover Our Powerful Features 
-
-                        </h2>
-                        <p className="text-muted-foreground mt-6">
-                            NoCaps offers a range of features designed to help you build and track better habits effortlessly.
-                        </p>
-                    </div>
-                </Container>
-                <Container>
-                    <div className="flex items-center justify-center mx-auto mt-8">
-                        <Icons.feature className="w-auto h-80" />
-                    </div>
-                </Container>
-                <Container>
-                    <div className="flex flex-col items-center justify-center py-10 md:py-20 w-full">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-8">
-                            {features.map((feature) => (
-                                <div key={feature.title} className="flex flex-col items-start px-0 md:px-0">
-                                    <div className="flex items-center justify-center">
-                                        <feature.icon className="w-8 h-8" />
-                                    </div>
-                                    <h3 className="text-lg font-medium mt-4">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-muted-foreground mt-2 text-start">
-                                        {feature.info}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </Container>
-            </Wrapper>
 
             {/* how it works */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
@@ -295,53 +253,6 @@ const HomePage = () => {
 
             {/* pricing */}
             <PricingSection />
-
-            {/* roadmap */}
-            <Wrapper id="roadmap" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
-                <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="Quick Roadmap" />
-                    </div>
-                </Container>
-                <Container>
-                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-10">
-                        {/* timeline line */}
-                        <div className="relative">
-                            <div className="hidden lg:block absolute top-3 left-[12.5%] right-[12.5%] h-px bg-neutral-600" />
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                                {/* Step 1 - NOW */}
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-primary z-10" />
-                                    <span className="text-xs font-semibold text-primary uppercase tracking-wide mt-1">Now</span>
-                                    <h3 className="text-base font-bold text-foreground">Alpha live</h3>
-                                    <p className="text-muted-foreground text-sm">Core HabitStack + Habit Market</p>
-                                </div>
-                                {/* Step 2 - Q2 2026 */}
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-amber-500 z-10" />
-                                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q2 2026</span>
-                                    <h3 className="text-base font-bold text-foreground">Beta launch</h3>
-                                    <p className="text-muted-foreground text-sm">Community beta with early users</p>
-                                </div>
-                                {/* Step 3 - Q3 2026 */}
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-amber-400 z-10" />
-                                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q3 2026</span>
-                                    <h3 className="text-base font-bold text-foreground">iOS + Android</h3>
-                                    <p className="text-muted-foreground text-sm">Public app store launch</p>
-                                </div>
-                                {/* Step 4 - Q4 2026 */}
-                                <div className="flex flex-col items-center text-center gap-2">
-                                    <div className="w-5 h-5 rounded-full bg-muted-foreground/30 z-10" />
-                                    <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-1">Q4 2026</span>
-                                    <h3 className="text-base font-bold text-foreground">AI Features</h3>
-                                    <p className="text-muted-foreground text-sm">Habit Intelligence</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Container>
-            </Wrapper>
 
             {/* testimonials */}
             <Wrapper id="feedback" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
