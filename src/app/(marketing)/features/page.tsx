@@ -288,7 +288,7 @@ const FeaturesPage = () => {
 
                         <div
                             className="mt-10 rounded-2xl border border-border overflow-x-auto"
-                            style={{ width: '200%', marginLeft: '-40%' }}
+                            style={{ width: '230%', marginLeft: '-45%' }}
                         >
                             <Image
                                 src="/assets/KickStarterNoCapFeatures/images/image27.svg"
