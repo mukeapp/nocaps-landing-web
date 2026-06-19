@@ -491,7 +491,7 @@ const FeaturesPage = () => {
                             </div>
                             <div className="rounded-2xl overflow-hidden border border-border">
                                 <Image
-                                    src="/assets/KickStarterNoCapFeatures/images/image35.png"
+                                    src="/assets/KickStarterNoCapFeatures/images/image8.png"
                                     alt="NoCaps Habit Calendar monthly view"
                                     width={600}
                                     height={700}
