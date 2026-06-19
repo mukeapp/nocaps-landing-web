@@ -135,6 +135,44 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
+            {/* copy habit systems fast */}
+            <Wrapper className="flex flex-col items-center justify-center py-8 relative">
+                <Container>
+                    <div className="max-w-4xl mx-auto">
+                        <div className="text-center mb-10">
+                            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Any Life Sector</p>
+                            <h2 className="text-2xl lg:text-3xl font-semibold">Copy Habit Systems Fast!!!</h2>
+                            <p className="text-muted-foreground mt-3 text-sm max-w-lg mx-auto">
+                                Browse real habit systems built by people just like you — across every area of life. Find one that fits, copy it in one tap, and make it yours.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {[
+                                { src: "/assets/KickStarterNoCapFeatures/images/image5.png",  alt: "Finance habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image7.png",  alt: "Health & Fitness habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image18.png", alt: "Lifestyle habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image34.png", alt: "Travel habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image41.png", alt: "Fitness habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image44.png", alt: "Family health habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image45.png", alt: "Relationships habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image49.png", alt: "Personal Growth habit system" },
+                                { src: "/assets/KickStarterNoCapFeatures/images/image50.png", alt: "Productivity habit system" },
+                            ].map((item) => (
+                                <div key={item.src} className="rounded-2xl border border-border bg-card overflow-hidden">
+                                    <Image
+                                        src={item.src}
+                                        alt={item.alt}
+                                        width={600}
+                                        height={500}
+                                        className="w-full h-auto"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* the problem */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
