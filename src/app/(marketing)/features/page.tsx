@@ -573,12 +573,13 @@ const FeaturesPage = () => {
                                     ))}
                                 </ul>
                             </div>
-                            <div className="relative min-h-[320px]">
+                            <div className="flex items-center justify-center">
                                 <Image
                                     src="/assets/KickStarterNoCapFeatures/images/image51.png"
                                     alt="Browse and copy habit systems from friends and family"
-                                    fill
-                                    className="object-cover"
+                                    width={600}
+                                    height={900}
+                                    className="w-full h-auto"
                                 />
                             </div>
                         </div>
@@ -617,12 +618,13 @@ const FeaturesPage = () => {
                                     ))}
                                 </div>
                             </div>
-                            <div className="relative min-h-[320px]">
+                            <div className="flex items-center justify-center">
                                 <Image
                                     src="/assets/KickStarterNoCapFeatures/images/image52.png"
                                     alt="NoCaps Habit Market showing Finance and Personal Development stacks"
-                                    fill
-                                    className="object-cover"
+                                    width={600}
+                                    height={900}
+                                    className="w-full h-auto"
                                 />
                             </div>
                         </div>
