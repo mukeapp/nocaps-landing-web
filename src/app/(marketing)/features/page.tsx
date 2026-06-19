@@ -13,7 +13,7 @@ const aiFeatures = [
         title: "AI Habit Swap Engine",
         description:
             "When a habit is underperforming, NoCaps AI instantly surfaces ranked alternatives — sourced from your preferences, collective wisdom, and proven higher-scoring patterns. One tap to upgrade.",
-        image: "/assets/KickStarterNoCapFeatures/images/image42.png",
+        image: "/assets/KickStarterNoCapFeatures/images/image11-00.png",
     },
     {
         emoji: "⭐",
