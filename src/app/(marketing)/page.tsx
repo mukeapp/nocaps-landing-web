@@ -173,6 +173,62 @@ const HomePage = () => {
                 </Container>
             </Wrapper>
 
+            {/* quick features */}
+            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+                <Container>
+                    <div className="max-w-2xl mx-auto text-center mb-10">
+                        <SectionBadge title="Quick Features" />
+                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                            A glimpse of what NoCaps can do
+                        </h2>
+                        <p className="text-muted-foreground mt-4 text-sm max-w-lg mx-auto">
+                            From a structured data model to social sharing and a community marketplace — NoCaps gives you everything to build, track, and improve every habit in your life.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                        {[
+                            {
+                                image: "/assets/KickStarterNoCapFeatures/images/image27.png",
+                                title: "Built Around a Real Data Model",
+                                desc: "Organize life into HabitStacks, Habits, HabitLinks, and HabitLinkItems — a four-layer system flexible enough for any goal.",
+                            },
+                            {
+                                image: "/assets/KickStarterNoCapFeatures/images/image17.png",
+                                title: "Track, Share & Discover",
+                                desc: "Log habits on a visual calendar, follow friends' progress, and explore routines across every life sector — all in one place.",
+                            },
+                            {
+                                image: "/assets/KickStarterNoCapFeatures/images/image53.png",
+                                title: "Your Full Habit Hub",
+                                desc: "From your personal library to the community market and friends feed, NoCaps puts your entire habit world in one app.",
+                            },
+                        ].map((item) => (
+                            <div key={item.title} className="rounded-2xl border border-border bg-card overflow-hidden">
+                                <Image
+                                    src={item.image}
+                                    alt={item.title}
+                                    width={600}
+                                    height={900}
+                                    className="w-full h-auto"
+                                />
+                                <div className="p-5">
+                                    <h3 className="text-sm font-semibold text-foreground mb-1">{item.title}</h3>
+                                    <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex justify-center mt-10">
+                        <Button asChild size="lg">
+                            <Link href="/features">
+                                Explore all features
+                                <ArrowRight className="w-4 h-4 ml-2" />
+                            </Link>
+                        </Button>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* how it works */}
             <Wrapper id="about" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <Container>
