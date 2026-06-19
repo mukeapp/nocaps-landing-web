@@ -202,12 +202,12 @@ const HomePage = () => {
                     <div className="flex flex-col gap-6 max-w-5xl mx-auto">
                         {/* Card 1 — horizontal, image left */}
                         <div className="rounded-2xl border border-border bg-card overflow-hidden">
-                            <div className="grid md:grid-cols-[3fr_2fr]">
+                            <div className="grid md:grid-cols-[3fr_1fr]">
                                 <Image
                                     src="/assets/KickStarterNoCapFeatures/images/image27.png"
                                     alt="Built Around a Real Data Model"
-                                    width={800}
-                                    height={500}
+                                    width={1040}
+                                    height={650}
                                     className="w-full h-auto"
                                 />
                                 <div className="p-8 flex flex-col justify-center">
