@@ -298,40 +298,41 @@ const HomePage = () => {
             {/* how it works */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="How It Works" />
-                    </div>
-                </Container>
-                <Container>
-                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-10">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">1</span>
-                                <h3 className="text-base font-bold text-foreground">Build your HabitStack</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Organize life into Sectors → Habits → HabitLinks → Items
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10 flex flex-col justify-center">
+                                <SectionBadge title="How It Works" />
+                                <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                    Four steps to a smarter life
+                                </h2>
+                                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                    From setup to daily momentum — NoCaps guides you through every step with AI doing the heavy lifting.
                                 </p>
+                                <div className="mt-6 space-y-5">
+                                    {[
+                                        { step: "1", title: "Build your HabitStack", desc: "Organize life into Sectors → Habits → HabitLinks → Items" },
+                                        { step: "2", title: "Get AI scored", desc: "Each component is rated 0–100% across six categories from Bad to Excellent" },
+                                        { step: "3", title: "Swap & upgrade", desc: "AI suggests proven replacements for low-scoring habits using collective wisdom" },
+                                        { step: "4", title: "Track & share", desc: "Log daily/weekly/monthly, post progress, and inspire your community" },
+                                    ].map((item) => (
+                                        <div key={item.step} className="flex items-start gap-4">
+                                            <span className="text-2xl font-bold text-primary flex-shrink-0 w-6">{item.step}</span>
+                                            <div>
+                                                <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">2</span>
-                                <h3 className="text-base font-bold text-foreground">Get AI scored</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Each component is rated 0–100% across six categories from Bad to Excellent
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">3</span>
-                                <h3 className="text-base font-bold text-foreground">Swap &amp; upgrade</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    AI suggests proven replacements for low-scoring habits using collective wisdom
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">4</span>
-                                <h3 className="text-base font-bold text-foreground">Track &amp; share</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Log daily/weekly/monthly, post progress, and inspire your community
-                                </p>
+                            <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image16.png"
+                                    alt="NoCaps habit calendar with scoring"
+                                    width={500}
+                                    height={600}
+                                    className="w-full h-auto"
+                                />
                             </div>
                         </div>
                     </div>
