@@ -88,46 +88,47 @@ const HomePage = () => {
             </Wrapper>
 
             {/* what is nocap */}
-            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+            <Wrapper id="what-is-nocap" className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
-                    <div className="max-w-2xl mx-auto text-start md:text-center">
-                        <SectionBadge title="What is NoCaps?" />
-                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            A habit intelligence platform
-                        </h2>
-                        <p className="text-muted-foreground mt-6">
-                            NoCaps combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones.
-                        </p>
-                    </div>
-                </Container>
-                <Container>
-                    <div className="max-w-3xl mx-auto mt-8 space-y-8">
-                        <p className="text-muted-foreground text-base leading-relaxed">
-                            NoCaps lets users track habits across every area of life — finance, health, fitness, personal growth, relationships, and more — then uses AI to score those habits and suggest smarter alternatives. Users can share what works through our built-in Habit Marketplace, creating a community-driven library of proven routines and strategies.
-                        </p>
-                        <div>
-                            <h3 className="text-lg font-semibold text-foreground mb-4">
-                                What makes us different
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {[
-                                    "AI-powered Habit Swap Engine — finds better alternatives for your current habits across any sector",
-                                    "AI-powered Habit Scoring — rates your habits so you always know where you stand",
-                                    "AI-powered Habit Generating — creates personalized habit plans tailored to your goals",
-                                    "AI-powered Habit Chat — select any habit for instant, context-aware AI guidance",
-                                    "Habit Marketplace — where users share and copy each other's habit systems",
-                                    "Habit Stacks — organize habits into nested, interlinked systems that reflect real life complexity",
-                                    "Friends and Community — share your progress, swap habits, and learn from others in a supportive social environment",
-                                    "Tracks in real units that matter — USD, calories, kilograms, percentages, hours ...",
-                                ].map((item) => (
-                                    <div key={item} className="flex items-start gap-3">
-                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
-                                        <p className="text-muted-foreground text-sm leading-relaxed">{item}</p>
+                    <div className="max-w-4xl mx-auto">
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <div className="p-8 md:p-10 flex flex-col justify-center">
+                                    <SectionBadge title="What is NoCaps?" />
+                                    <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                        A habit intelligence platform
+                                    </h2>
+                                    <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                        NoCaps combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones — across every area of life.
+                                    </p>
+                                    <div className="mt-6 space-y-2">
+                                        {[
+                                            "AI Habit Scoring — know where every habit stands",
+                                            "AI Habit Swap Engine — upgrade weak habits in one tap",
+                                            "AI Habit Generating — personalized plans built for you",
+                                            "Habit Marketplace — copy proven systems from the community",
+                                            "Friends & Family feed — share progress with people you trust",
+                                            "Tracks in real units — USD, calories, kg, hours and more",
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-start gap-3">
+                                                <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
+                                                <p className="text-muted-foreground text-sm leading-relaxed">{item}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
+                                <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                    <Image
+                                        src="/assets/KickStarterNoCapFeatures/images/image14.png"
+                                        alt="NoCaps app — Build Better Habits"
+                                        width={500}
+                                        height={600}
+                                        className="w-full h-auto"
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="rounded-xl border border-border bg-foreground/[0.03] px-6 py-4 text-sm text-muted-foreground">
+                        <div className="mt-4 rounded-xl border border-border bg-foreground/[0.03] px-6 py-4 text-sm text-muted-foreground text-center">
                             We&apos;re currently in alpha, launching our KickStarter at the end of this month, with Android and iOS beta to follow.
                         </div>
                     </div>
@@ -137,38 +138,124 @@ const HomePage = () => {
             {/* the problem */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="The Problem" />
-                    </div>
-                </Container>
-                <Container>
-                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-8">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">No real guidance</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Apps track habits but never tell you if they&apos;re actually good or bad for you.
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10 flex flex-col justify-center">
+                                <SectionBadge title="The Problem" />
+                                <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                    Most habit apps leave you guessing
+                                </h2>
+                                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                    Tracking habits is the easy part. Knowing whether they&apos;re actually working — and what to do when they&apos;re not — is where every other app falls short.
                                 </p>
+                                <div className="mt-6 space-y-4">
+                                    {[
+                                        { title: "No real guidance", desc: "Apps track habits but never tell you if they're actually good or bad for you." },
+                                        { title: "Search engines exploit you", desc: "You spend hours searching for better routines — ads win, you don't." },
+                                        { title: "Isolated progress", desc: "Social media is noise. There's nowhere to share meaningful habit growth." },
+                                        { title: "One-size-fits-all", desc: "Rigid habit systems don't adapt to your unique goals and constraints." },
+                                    ].map((item) => (
+                                        <div key={item.title} className="flex items-start gap-3">
+                                            <span className="text-red-400 mt-0.5 flex-shrink-0 text-lg leading-none">✕</span>
+                                            <div>
+                                                <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">Search engines exploit you</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    You spend hours searching for better routines — ads win, you don&apos;t.
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">Isolated progress</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Social media is noise. There&apos;s nowhere to share meaningful habit growth.
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">One-size-fits-all</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Rigid habit systems don&apos;t adapt to your unique goals and constraints.
-                                </p>
+                            <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image2.png"
+                                    alt="NoCaps habit calendar showing scoring"
+                                    width={500}
+                                    height={700}
+                                    className="w-full h-auto"
+                                />
                             </div>
                         </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
+            {/* quick features */}
+            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+                <Container>
+                    <div className="max-w-2xl mx-auto text-center mb-10">
+                        <SectionBadge title="Quick Features" />
+                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                            A glimpse of what NoCaps can do
+                        </h2>
+                        <p className="text-muted-foreground mt-4 text-sm max-w-lg mx-auto">
+                            From a structured data model to social sharing and a community marketplace — NoCaps gives you everything to build, track, and improve every habit in your life.
+                        </p>
+                        <div className="flex justify-center mt-6">
+                            <Button asChild size="lg">
+                                <Link href="/features">
+                                    See all features
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                </Link>
+                            </Button>
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-6 max-w-5xl mx-auto">
+                        {/* Card 1 — horizontal, image left */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image27.png"
+                                    alt="Built Around a Real Data Model"
+                                    width={800}
+                                    height={500}
+                                    className="w-full h-auto"
+                                />
+                                <div className="p-8 flex flex-col justify-center">
+                                    <h3 className="text-base font-semibold text-foreground mb-2">Built Around a Real Data Model</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Organize life into HabitStacks, Habits, HabitLinks, and HabitLinkItems — a four-layer system flexible enough for any goal.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Card 2 — horizontal, image right */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <div className="p-8 flex flex-col justify-center order-2 md:order-1">
+                                    <h3 className="text-base font-semibold text-foreground mb-2">Track, Share &amp; Discover</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">Log habits on a visual calendar, follow friends&apos; progress, and explore routines across every life sector — all in one place.</p>
+                                </div>
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image17.png"
+                                    alt="Track, Share & Discover"
+                                    width={800}
+                                    height={500}
+                                    className="w-full h-auto order-1 md:order-2"
+                                />
+                            </div>
+                        </div>
+                        {/* Card 3 — horizontal, image left */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image53.png"
+                                    alt="Your Full Habit Hub"
+                                    width={300}
+                                    height={450}
+                                    className="w-[300px] h-auto mx-auto"
+                                />
+                                <div className="p-8 flex flex-col justify-center">
+                                    <h3 className="text-base font-semibold text-foreground mb-2">Your Full Habit Hub</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">From your personal library to the community market and friends feed, NoCaps puts your entire habit world in one app.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex justify-center mt-10">
+                        <Button asChild size="lg">
+                            <Link href="/features">
+                                Explore all features
+                                <ArrowRight className="w-4 h-4 ml-2" />
+                            </Link>
+                        </Button>
                     </div>
                 </Container>
             </Wrapper>
@@ -176,32 +263,39 @@ const HomePage = () => {
             {/* how it works */}
             <Wrapper id="about" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="The Process" />
-                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                        Transform Your Life Portfolio in Three Steps
-                        </h2>
-                        <p className="text-muted-foreground mt-6">
-                            Bring your vision to life in just three easy steps:
-                        </p>
-                    </div>
-                </Container>
-                <Container>
-                    <div className="flex flex-col items-center justify-center py-10 md:py-20 w-full">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full divide-x-0 md:divide-x divide-y md:divide-y-0 divide-gray-900 first:border-l-2 lg:first:border-none first:border-gray-900">
-                            {perks.map((perk) => (
-                                <div key={perk.title} className="flex flex-col items-start px-4 md:px-6 lg:px-8 lg:py-6 py-4">
-                                    <div className="flex items-center justify-center">
-                                        <perk.icon className="w-8 h-8" />
-                                    </div>
-                                    <h3 className="text-lg font-medium mt-4">
-                                        {perk.title}
-                                    </h3>
-                                    <p className="text-muted-foreground mt-2 text-start lg:text-start">
-                                        {perk.info}
-                                    </p>
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10 flex flex-col justify-center">
+                                <SectionBadge title="The Process" />
+                                <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                    Transform Your Life Portfolio in Three Steps
+                                </h2>
+                                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                    Bring your vision to life in just three easy steps:
+                                </p>
+                                <div className="mt-6 space-y-5">
+                                    {perks.map((perk) => (
+                                        <div key={perk.title} className="flex items-start gap-4">
+                                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                                <perk.icon className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-foreground">{perk.title}</p>
+                                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{perk.info}</p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
+                            <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image20.png"
+                                    alt="NoCaps Add HabitStack setup screens"
+                                    width={500}
+                                    height={600}
+                                    className="w-full h-auto"
+                                />
+                            </div>
                         </div>
                     </div>
                 </Container>
@@ -211,40 +305,41 @@ const HomePage = () => {
             {/* how it works */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="How It Works" />
-                    </div>
-                </Container>
-                <Container>
-                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-10">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">1</span>
-                                <h3 className="text-base font-bold text-foreground">Build your HabitStack</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Organize life into Sectors → Habits → HabitLinks → Items
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10 flex flex-col justify-center">
+                                <SectionBadge title="How It Works" />
+                                <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                    Four steps to a smarter life
+                                </h2>
+                                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                    From setup to daily momentum — NoCaps guides you through every step with AI doing the heavy lifting.
                                 </p>
+                                <div className="mt-6 space-y-5">
+                                    {[
+                                        { step: "1", title: "Build your HabitStack", desc: "Organize life into Sectors → Habits → HabitLinks → Items" },
+                                        { step: "2", title: "Get AI scored", desc: "Each component is rated 0–100% across six categories from Bad to Excellent" },
+                                        { step: "3", title: "Swap & upgrade", desc: "AI suggests proven replacements for low-scoring habits using collective wisdom" },
+                                        { step: "4", title: "Track & share", desc: "Log daily/weekly/monthly, post progress, and inspire your community" },
+                                    ].map((item) => (
+                                        <div key={item.step} className="flex items-start gap-4">
+                                            <span className="text-2xl font-bold text-primary flex-shrink-0 w-6">{item.step}</span>
+                                            <div>
+                                                <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">2</span>
-                                <h3 className="text-base font-bold text-foreground">Get AI scored</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Each component is rated 0–100% across six categories from Bad to Excellent
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">3</span>
-                                <h3 className="text-base font-bold text-foreground">Swap &amp; upgrade</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    AI suggests proven replacements for low-scoring habits using collective wisdom
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <span className="text-4xl font-bold text-primary">4</span>
-                                <h3 className="text-base font-bold text-foreground">Track &amp; share</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Log daily/weekly/monthly, post progress, and inspire your community
-                                </p>
+                            <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image16.png"
+                                    alt="NoCaps habit calendar with scoring"
+                                    width={500}
+                                    height={600}
+                                    className="w-full h-auto"
+                                />
                             </div>
                         </div>
                     </div>
