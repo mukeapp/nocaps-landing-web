@@ -31,7 +31,7 @@ const aiFeatures = [
         title: "AI Habit Generating",
         description:
             "No idea where to start? NoCaps creates personalized habit plans tailored to your goals, sector, and past performance — building a system designed around your life.",
-        image: null,
+        image: "/assets/KickStarterNoCapFeatures/images/image47.png",
     },
     {
         emoji: "💬",
