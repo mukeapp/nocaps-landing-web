@@ -90,44 +90,45 @@ const HomePage = () => {
             {/* what is nocap */}
             <Wrapper id="what-is-nocap" className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
-                    <div className="max-w-2xl mx-auto text-start md:text-center">
-                        <SectionBadge title="What is NoCaps?" />
-                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            A habit intelligence platform
-                        </h2>
-                        <p className="text-muted-foreground mt-6">
-                            NoCaps combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones.
-                        </p>
-                    </div>
-                </Container>
-                <Container>
-                    <div className="max-w-3xl mx-auto mt-8 space-y-8">
-                        <p className="text-muted-foreground text-base leading-relaxed">
-                            NoCaps lets users track habits across every area of life — finance, health, fitness, personal growth, relationships, and more — then uses AI to score those habits and suggest smarter alternatives. Users can share what works through our built-in Habit Marketplace, creating a community-driven library of proven routines and strategies.
-                        </p>
-                        <div>
-                            <h3 className="text-lg font-semibold text-foreground mb-4">
-                                What makes us different
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {[
-                                    "AI-powered Habit Swap Engine — finds better alternatives for your current habits across any sector",
-                                    "AI-powered Habit Scoring — rates your habits so you always know where you stand",
-                                    "AI-powered Habit Generating — creates personalized habit plans tailored to your goals",
-                                    "AI-powered Habit Chat — select any habit for instant, context-aware AI guidance",
-                                    "Habit Marketplace — where users share and copy each other's habit systems",
-                                    "Habit Stacks — organize habits into nested, interlinked systems that reflect real life complexity",
-                                    "Friends and Community — share your progress, swap habits, and learn from others in a supportive social environment",
-                                    "Tracks in real units that matter — USD, calories, kilograms, percentages, hours ...",
-                                ].map((item) => (
-                                    <div key={item} className="flex items-start gap-3">
-                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
-                                        <p className="text-muted-foreground text-sm leading-relaxed">{item}</p>
+                    <div className="max-w-4xl mx-auto">
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <div className="p-8 md:p-10 flex flex-col justify-center">
+                                    <SectionBadge title="What is NoCaps?" />
+                                    <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                        A habit intelligence platform
+                                    </h2>
+                                    <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                        NoCaps combines AI, habit tracking, and social sharing to help people build better habits and break free from bad ones — across every area of life.
+                                    </p>
+                                    <div className="mt-6 space-y-2">
+                                        {[
+                                            "AI Habit Scoring — know where every habit stands",
+                                            "AI Habit Swap Engine — upgrade weak habits in one tap",
+                                            "AI Habit Generating — personalized plans built for you",
+                                            "Habit Marketplace — copy proven systems from the community",
+                                            "Friends & Family feed — share progress with people you trust",
+                                            "Tracks in real units — USD, calories, kg, hours and more",
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-start gap-3">
+                                                <span className="mt-1.5 w-2 h-2 rounded-full bg-primary shrink-0" />
+                                                <p className="text-muted-foreground text-sm leading-relaxed">{item}</p>
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
+                                </div>
+                                <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                    <Image
+                                        src="/assets/KickStarterNoCapFeatures/images/image14.png"
+                                        alt="NoCaps app — Build Better Habits"
+                                        width={500}
+                                        height={600}
+                                        className="w-full h-auto"
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className="rounded-xl border border-border bg-foreground/[0.03] px-6 py-4 text-sm text-muted-foreground">
+                        <div className="mt-4 rounded-xl border border-border bg-foreground/[0.03] px-6 py-4 text-sm text-muted-foreground text-center">
                             We&apos;re currently in alpha, launching our KickStarter at the end of this month, with Android and iOS beta to follow.
                         </div>
                     </div>
