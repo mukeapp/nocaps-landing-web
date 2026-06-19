@@ -544,6 +544,48 @@ const FeaturesPage = () => {
                 </Container>
             </Wrapper>
 
+            {/* Friends & Family */}
+            <Wrapper className="flex flex-col items-center justify-center py-8 relative">
+                <Container>
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10">
+                                <div className="inline-flex items-center gap-2 text-xs font-semibold text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full mb-5">
+                                    👨‍👩‍👧 Friends &amp; Family
+                                </div>
+                                <h2 className="text-2xl font-semibold text-foreground mb-4">
+                                    Browse and copy proven habit systems from Friends and Family
+                                </h2>
+                                <p className="text-sm text-muted-foreground leading-relaxed mb-5">
+                                    See the real habits the people you trust are actually using — not generic templates from strangers. Browse your inner circle&apos;s HabitStacks and copy what works for them in one tap.
+                                </p>
+                                <ul className="space-y-2">
+                                    {[
+                                        "See exactly what habits your friends follow",
+                                        "Copy any HabitStack from your network in one tap",
+                                        "Trusted recommendations over random advice",
+                                        "Stay inspired by people who know your life",
+                                    ].map((item) => (
+                                        <li key={item} className="flex items-start gap-2.5 text-sm text-muted-foreground">
+                                            <span className="text-orange-400 mt-0.5 flex-shrink-0">✓</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="relative min-h-[320px]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image51.png"
+                                    alt="Browse and copy habit systems from friends and family"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </Container>
+            </Wrapper>
+
             {/* Habit Market */}
             <Wrapper className="flex flex-col items-center justify-center py-8 relative">
                 <Container>
