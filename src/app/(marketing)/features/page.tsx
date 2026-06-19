@@ -111,7 +111,7 @@ const sectors = [
         color: "#7C6EF8",
         bg: "rgba(124,110,248,0.08)",
         interests: ["Reading", "Coding", "Creativity", "Writing", "Confidence"],
-        image: null,
+        image: "/assets/KickStarterNoCapFeatures/images/image49.png",
     },
     {
         emoji: "⚡",
