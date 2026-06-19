@@ -202,7 +202,7 @@ const HomePage = () => {
                     <div className="flex flex-col gap-6 max-w-5xl mx-auto">
                         {/* Card 1 — horizontal, image left */}
                         <div className="rounded-2xl border border-border bg-card overflow-hidden">
-                            <div className="grid md:grid-cols-2">
+                            <div className="grid md:grid-cols-[3fr_2fr]">
                                 <Image
                                     src="/assets/KickStarterNoCapFeatures/images/image27.png"
                                     alt="Built Around a Real Data Model"
