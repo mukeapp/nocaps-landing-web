@@ -138,36 +138,41 @@ const HomePage = () => {
             {/* the problem */}
             <Wrapper className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="The Problem" />
-                    </div>
-                </Container>
-                <Container>
-                    <div className="w-full mt-8 rounded-xl border border-border bg-foreground/[0.03] p-6 md:p-8">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">No real guidance</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Apps track habits but never tell you if they&apos;re actually good or bad for you.
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10 flex flex-col justify-center">
+                                <SectionBadge title="The Problem" />
+                                <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                    Most habit apps leave you guessing
+                                </h2>
+                                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                    Tracking habits is the easy part. Knowing whether they&apos;re actually working — and what to do when they&apos;re not — is where every other app falls short.
                                 </p>
+                                <div className="mt-6 space-y-4">
+                                    {[
+                                        { title: "No real guidance", desc: "Apps track habits but never tell you if they're actually good or bad for you." },
+                                        { title: "Search engines exploit you", desc: "You spend hours searching for better routines — ads win, you don't." },
+                                        { title: "Isolated progress", desc: "Social media is noise. There's nowhere to share meaningful habit growth." },
+                                        { title: "One-size-fits-all", desc: "Rigid habit systems don't adapt to your unique goals and constraints." },
+                                    ].map((item) => (
+                                        <div key={item.title} className="flex items-start gap-3">
+                                            <span className="text-red-400 mt-0.5 flex-shrink-0 text-lg leading-none">✕</span>
+                                            <div>
+                                                <p className="text-sm font-semibold text-foreground">{item.title}</p>
+                                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">Search engines exploit you</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    You spend hours searching for better routines — ads win, you don&apos;t.
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">Isolated progress</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Social media is noise. There&apos;s nowhere to share meaningful habit growth.
-                                </p>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-bold text-foreground">One-size-fits-all</h3>
-                                <p className="text-muted-foreground text-sm">
-                                    Rigid habit systems don&apos;t adapt to your unique goals and constraints.
-                                </p>
+                            <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image2.png"
+                                    alt="NoCaps habit calendar showing scoring"
+                                    width={500}
+                                    height={700}
+                                    className="w-full h-auto"
+                                />
                             </div>
                         </div>
                     </div>
