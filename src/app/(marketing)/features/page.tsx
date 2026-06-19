@@ -550,7 +550,7 @@ const FeaturesPage = () => {
                     <div className="max-w-4xl mx-auto">
                         <div className="text-center mb-10">
                             <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">Habit Market</p>
-                            <h2 className="text-2xl lg:text-3xl font-semibold">Browse and copy proven habit systems</h2>
+                            <h2 className="text-2xl lg:text-3xl font-semibold">Browse and Copy proven habit systems from the Community</h2>
                             <p className="text-muted-foreground mt-3 text-sm max-w-lg mx-auto">
                                 A community-driven library of HabitStacks shared by real users. Find systems that work — and make them yours in one tap.
                             </p>
