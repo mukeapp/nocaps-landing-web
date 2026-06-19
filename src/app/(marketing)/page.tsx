@@ -88,7 +88,7 @@ const HomePage = () => {
             </Wrapper>
 
             {/* what is nocap */}
-            <Wrapper className="flex flex-col items-center justify-center py-12 relative">
+            <Wrapper id="what-is-nocap" className="flex flex-col items-center justify-center py-12 relative">
                 <Container>
                     <div className="max-w-2xl mx-auto text-start md:text-center">
                         <SectionBadge title="What is NoCaps?" />
