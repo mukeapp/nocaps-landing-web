@@ -263,32 +263,39 @@ const HomePage = () => {
             {/* how it works */}
             <Wrapper id="about" className="flex flex-col items-center justify-center py-12 relative scroll-mt-20">
                 <Container>
-                    <div className="max-w-md mx-auto text-start md:text-center">
-                        <SectionBadge title="The Process" />
-                        <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
-                        Transform Your Life Portfolio in Three Steps
-                        </h2>
-                        <p className="text-muted-foreground mt-6">
-                            Bring your vision to life in just three easy steps:
-                        </p>
-                    </div>
-                </Container>
-                <Container>
-                    <div className="flex flex-col items-center justify-center py-10 md:py-20 w-full">
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full divide-x-0 md:divide-x divide-y md:divide-y-0 divide-gray-900 first:border-l-2 lg:first:border-none first:border-gray-900">
-                            {perks.map((perk) => (
-                                <div key={perk.title} className="flex flex-col items-start px-4 md:px-6 lg:px-8 lg:py-6 py-4">
-                                    <div className="flex items-center justify-center">
-                                        <perk.icon className="w-8 h-8" />
-                                    </div>
-                                    <h3 className="text-lg font-medium mt-4">
-                                        {perk.title}
-                                    </h3>
-                                    <p className="text-muted-foreground mt-2 text-start lg:text-start">
-                                        {perk.info}
-                                    </p>
+                    <div className="max-w-4xl mx-auto rounded-2xl border border-border bg-card overflow-hidden">
+                        <div className="grid md:grid-cols-2">
+                            <div className="p-8 md:p-10 flex flex-col justify-center">
+                                <SectionBadge title="The Process" />
+                                <h2 className="text-3xl lg:text-4xl font-semibold mt-6">
+                                    Transform Your Life Portfolio in Three Steps
+                                </h2>
+                                <p className="text-muted-foreground mt-4 text-sm leading-relaxed">
+                                    Bring your vision to life in just three easy steps:
+                                </p>
+                                <div className="mt-6 space-y-5">
+                                    {perks.map((perk) => (
+                                        <div key={perk.title} className="flex items-start gap-4">
+                                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                                <perk.icon className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div>
+                                                <p className="text-sm font-semibold text-foreground">{perk.title}</p>
+                                                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{perk.info}</p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
+                            </div>
+                            <div className="flex items-center justify-center p-6 bg-foreground/[0.02]">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image20.png"
+                                    alt="NoCaps Add HabitStack setup screens"
+                                    width={500}
+                                    height={600}
+                                    className="w-full h-auto"
+                                />
+                            </div>
                         </div>
                     </div>
                 </Container>
