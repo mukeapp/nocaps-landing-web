@@ -573,7 +573,7 @@ const FeaturesPage = () => {
                             </div>
                             <div className="rounded-2xl overflow-hidden border border-border">
                                 <Image
-                                    src="/assets/KickStarterNoCapFeatures/images/image37.png"
+                                    src="/assets/KickStarterNoCapFeatures/images/image52.png"
                                     alt="NoCaps Habit Market showing Finance and Personal Development stacks"
                                     width={600}
                                     height={600}
