@@ -288,10 +288,10 @@ const FeaturesPage = () => {
 
                         <div className="mt-10 rounded-2xl overflow-hidden border border-border">
                             <Image
-                                src="/assets/KickStarterNoCapFeatures/images/image27.png"
+                                src="/assets/KickStarterNoCapFeatures/images/image27.svg"
                                 alt="NoCaps Habit Architecture — HabitStack to HabitLinkItem with real app screens"
                                 width={1200}
-                                height={600}
+                                height={1200}
                                 className="w-full object-cover"
                             />
                         </div>
