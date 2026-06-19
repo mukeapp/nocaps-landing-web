@@ -184,6 +184,14 @@ const HomePage = () => {
                         <p className="text-muted-foreground mt-4 text-sm max-w-lg mx-auto">
                             From a structured data model to social sharing and a community marketplace — NoCaps gives you everything to build, track, and improve every habit in your life.
                         </p>
+                        <div className="flex justify-center mt-6">
+                            <Button asChild size="lg">
+                                <Link href="/features">
+                                    See all features
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                         {[
