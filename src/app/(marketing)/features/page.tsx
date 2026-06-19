@@ -534,7 +534,7 @@ const FeaturesPage = () => {
                             </div>
                             <div className="relative min-h-[320px]">
                                 <Image
-                                    src="/assets/KickStarterNoCapFeatures/images/image38.png"
+                                    src="/assets/KickStarterNoCapFeatures/images/image48.png"
                                     alt="NoCaps social profile and community"
                                     fill
                                     className="object-cover"
