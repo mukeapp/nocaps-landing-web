@@ -226,18 +226,20 @@ const HomePage = () => {
                                 />
                             </div>
                         </div>
-                        {/* Card 3 — vertical, centered */}
-                        <div className="rounded-2xl border border-border bg-card overflow-hidden max-w-sm mx-auto w-full">
-                            <Image
-                                src="/assets/KickStarterNoCapFeatures/images/image53.png"
-                                alt="Your Full Habit Hub"
-                                width={600}
-                                height={900}
-                                className="w-full h-auto"
-                            />
-                            <div className="p-5">
-                                <h3 className="text-sm font-semibold text-foreground mb-1">Your Full Habit Hub</h3>
-                                <p className="text-xs text-muted-foreground leading-relaxed">From your personal library to the community market and friends feed, NoCaps puts your entire habit world in one app.</p>
+                        {/* Card 3 — horizontal, image left */}
+                        <div className="rounded-2xl border border-border bg-card overflow-hidden">
+                            <div className="grid md:grid-cols-2">
+                                <Image
+                                    src="/assets/KickStarterNoCapFeatures/images/image53.png"
+                                    alt="Your Full Habit Hub"
+                                    width={300}
+                                    height={450}
+                                    className="w-[300px] h-auto mx-auto"
+                                />
+                                <div className="p-8 flex flex-col justify-center">
+                                    <h3 className="text-base font-semibold text-foreground mb-2">Your Full Habit Hub</h3>
+                                    <p className="text-sm text-muted-foreground leading-relaxed">From your personal library to the community market and friends feed, NoCaps puts your entire habit world in one app.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
