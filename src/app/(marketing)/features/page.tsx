@@ -432,14 +432,13 @@ const FeaturesPage = () => {
                                     style={{ borderColor: `${s.color}20` }}
                                 >
                                     {s.image && (
-                                        <div className="relative w-full h-36">
-                                            <Image
-                                                src={s.image}
-                                                alt={`${s.name} habits in NoCaps`}
-                                                fill
-                                                className="object-cover object-top"
-                                            />
-                                        </div>
+                                        <Image
+                                            src={s.image}
+                                            alt={`${s.name} habits in NoCaps`}
+                                            width={600}
+                                            height={800}
+                                            className="w-full h-auto"
+                                        />
                                     )}
                                     <div className="p-5">
                                         <div
