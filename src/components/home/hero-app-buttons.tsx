@@ -12,7 +12,10 @@ const Tooltip = () => (
 );
 
 const HeroAppButtons = () => (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8 w-full">
+    <div className="flex flex-col items-center gap-3 mt-8 w-full">
+
+        {/* Row 1 — App Store, Google Play, Website */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
 
         {/* iOS */}
         <div className="relative group">
@@ -42,7 +45,22 @@ const HeroAppButtons = () => (
             </button>
         </div>
 
-        {/* Discord */}
+        {/* Website — not available */}
+        <div className="flex items-center gap-3 rounded-xl bg-red-600/20 border border-red-500/30 px-5 py-3 text-red-400 opacity-70 cursor-not-allowed select-none">
+            <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="2" y1="12" x2="22" y2="12" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+            <div className="flex flex-col items-start">
+                <span className="text-xs opacity-80">Not available yet</span>
+                <span className="text-sm font-bold leading-tight">Website — End of 2027</span>
+            </div>
+        </div>
+
+        </div>{/* end row 1 */}
+
+        {/* Row 2 — Discord */}
         <Link
             href="https://discord.gg/RjYcdT7S"
             target="_blank"
