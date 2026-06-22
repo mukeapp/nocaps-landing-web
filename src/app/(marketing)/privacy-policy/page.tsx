@@ -34,11 +34,8 @@ const PrivacyPolicyPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">2. Information We Collect</h2>
                             <p>We may collect the following types of information:</p>
                             <ul className="list-disc list-inside space-y-1 pl-2">
-                                <li>Account information (name, email address, password)</li>
+                                <li>Account information (name, email address)</li>
                                 <li>Profile and usage data (habits, stacks, goals, progress)</li>
-                                <li>Device information (device type, operating system, unique device identifiers)</li>
-                                <li>Log data (IP address, browser type, pages visited, timestamps)</li>
-                                <li>Payment information processed securely via third-party providers</li>
                             </ul>
                         </div>
 
@@ -69,8 +66,8 @@ const PrivacyPolicyPage = () => {
                             <h2 className="text-xl font-semibold text-foreground">5. Data Retention</h2>
                             <p>
                                 We retain your personal data for as long as your account is active or as needed to
-                                provide our services. You may request deletion of your account and associated data
-                                at any time by contacting us.
+                                provide our services. You may delete your account and all associated data directly
+                                through the app at any time.
                             </p>
                         </div>
 
@@ -96,16 +93,7 @@ const PrivacyPolicyPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">8. Children&apos;s Privacy</h2>
-                            <p>
-                                NoCaps is not directed to children under the age of 13. We do not knowingly collect
-                                personal information from children. If you believe a child has provided us with
-                                personal data, please contact us immediately.
-                            </p>
-                        </div>
-
-                        <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">9. Changes to This Policy</h2>
+                            <h2 className="text-xl font-semibold text-foreground">8. Changes to This Policy</h2>
                             <p>
                                 We may update this Privacy Policy from time to time. We will notify you of any
                                 significant changes by updating the date at the top of this page. Continued use of
@@ -114,10 +102,18 @@ const PrivacyPolicyPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">10. Contact Us</h2>
+                            <h2 className="text-xl font-semibold text-foreground">9. Contact Us</h2>
                             <p>
-                                If you have any questions or concerns about this Privacy Policy, please contact us at:
+                                If you have any questions or concerns about this Privacy Policy, the best way to reach us is through our Discord community. You can also email us directly.
                             </p>
+                            <a
+                                href="https://discord.gg/v9NDUZVD"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-foreground font-medium underline underline-offset-4 hover:text-primary"
+                            >
+                                Join our Discord → discord.gg/v9NDUZVD
+                            </a>
                             <p className="text-foreground font-medium">franck@donocap.com</p>
                         </div>
 

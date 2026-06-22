@@ -3,8 +3,8 @@
 const FooterLinks = () => {
   return (
     <div className="flex flex-col gap-4">
-      <a 
-        href="#features"
+      <a
+        href="/features"
         className="hover:text-foreground/80 text-sm cursor-pointer"
       >
         Features
