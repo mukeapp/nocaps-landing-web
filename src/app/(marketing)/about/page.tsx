@@ -9,10 +9,10 @@ const AboutPage = () => {
                     <div className="max-w-2xl mx-auto text-start md:text-center">
                         <SectionBadge title="About Us" />
                         <h1 className="text-3xl lg:text-4xl font-semibold mt-6">
-                            Built for people who want to change
+                            Built for the complexity of life
                         </h1>
                         <p className="text-muted-foreground mt-4">
-                            NoCaps is on a mission to make habit-building honest, personal, and actually fun.
+                            NoCaps is a system for capturing and passing down wisdom — so no one has to face life&apos;s hardships alone or repeat the same mistakes.
                         </p>
                     </div>
                 </Container>
@@ -23,22 +23,33 @@ const AboutPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">Our Story</h2>
                             <p>
-                                NoCaps was born out of frustration with habit trackers that felt like chores. We
-                                wanted something that met you where you were — no guilt, no gimmicks, just
-                                real accountability and a system that works around your life.
+                                NoCaps wasn&apos;t born out of frustration with habit tracker apps.
+                                It was born out of frustration with something far bigger — the complexity of life,
+                                and the lack of wisdom available to conquer it.
                             </p>
                             <p>
-                                We are a small, focused team based in the US, building tools that help people
-                                show up consistently for the things that matter most to them.
+                                The idea came from a deeply personal place: I wanted my children to have what I didn&apos;t always have —
+                                the accumulated wisdom of the people around them. The lessons learned through hardship.
+                                The patterns that worked. The mistakes that should never have to be repeated.
+                            </p>
+                            <p>
+                                I wanted my children to learn from me, from our family, from friends, from our community,
+                                from our country — from anyone who carries positive energy and genuinely wishes success
+                                upon others. Regardless of age. Regardless of where they come from.
+                            </p>
+                            <p>
+                                NoCaps is that system. A living record of wisdom — so that no matter what life throws at you,
+                                you don&apos;t have to face it alone, and you don&apos;t have to start from zero.
                             </p>
                         </div>
 
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">Our Mission</h2>
                             <p>
-                                We believe lasting change comes from small, repeatable actions — not
-                                motivation or willpower alone. NoCaps gives you the structure, the insights,
-                                and the nudges to build habits that actually stick, one day at a time.
+                                We believe wisdom is the most powerful habit of all. NoCaps gives everyone —
+                                regardless of age or background — access to the habits, systems, and lessons
+                                of people who have already walked the path. Learn from others. Build on what works.
+                                Pass it forward.
                             </p>
                         </div>
 
@@ -55,9 +66,16 @@ const AboutPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">Get in Touch</h2>
                             <p>
-                                We love hearing from our users. Whether you have feedback, a feature idea, or
-                                just want to say hi — drop us a line.
+                                The best way to reach us and connect with the community is through Discord.
                             </p>
+                            <a
+                                href="https://discord.gg/v9NDUZVD"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-foreground font-medium underline underline-offset-4 hover:text-primary"
+                            >
+                                Join our Discord → discord.gg/v9NDUZVD
+                            </a>
                             <p>
                                 Email:{" "}
                                 <a
