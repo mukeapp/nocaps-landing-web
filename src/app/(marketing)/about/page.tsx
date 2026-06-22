@@ -23,8 +23,7 @@ const AboutPage = () => {
                         <div className="space-y-3">
                             <h2 className="text-xl font-semibold text-foreground">Our Story</h2>
                             <p>
-                                NoCaps wasn&apos;t born out of frustration with habit tracker apps.
-                                It was born out of frustration with something far bigger — the complexity of life,
+                                NoCaps was born out of frustration with something deeply human — the complexity of life,
                                 and the lack of wisdom available to conquer it.
                             </p>
                             <p>
