@@ -1,4 +1,6 @@
 import { Container, Wrapper } from "@/components";
+import dynamic from "next/dynamic";
+const HeroAppButtons = dynamic(() => import("@/components/home/hero-app-buttons"), { ssr: false });
 import PricingSection from "@/components/home/pricing-section";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
@@ -65,6 +67,7 @@ const HomePage = () => {
                                     </span>
                                 ))}
                             </div>
+                            <HeroAppButtons />
                         </div>
 
                         <div className="relative flex items-center py-10 md:py-20 w-full">
