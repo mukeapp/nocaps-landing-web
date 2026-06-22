@@ -2,7 +2,6 @@ import { Container, Wrapper } from "@/components";
 import PricingSection from "@/components/home/pricing-section";
 import { BorderBeam } from "@/components/ui/border-beam";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { LampContainer } from "@/components/ui/lamp";
 import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
@@ -480,30 +479,19 @@ const HomePage = () => {
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-start md:justify-between w-full px-4 md:px-8 rounded-lg lg:rounded-2xl border border-border/80 py-4 md:py-8">
                             <div className="flex flex-col items-start gap-4 w-full">
                                 <h4 className="text-xl md:text-2xl font-semibold">
-                                    Join our newsletter
+                                    Join our Discord community
                                 </h4>
                                 <p className="text-base text-muted-foreground">
-                                    Be up to date with everything about NoCaps Habit AI builder
+                                    Stay up to date with everything NoCaps — get early access, share feedback, and connect with fellow builders.
                                 </p>
                             </div>
                             <div className="flex flex-col items-start gap-2 md:min-w-80 mt-5 md:mt-0 w-full md:w-max">
-                                <form action="#" className="flex flex-col md:flex-row items-center gap-2 w-full md:max-w-xs">
-                                    <Input
-                                        required
-                                        type="email"
-                                        placeholder="Enter your email"
-                                        className="focus-visible:ring-0 focus-visible:ring-transparent focus-visible:border-primary duration-300 w-full"
-                                    />
-                                    <Button type="submit" size="sm" variant="secondary" className="w-full md:w-max">
-                                        Subscribe
-                                    </Button>
-                                </form>
-                                <p className="text-xs text-muted-foreground">
-                                    By subscribing you agree with our{" "}
-                                    <Link href="/privacy-policy" className="text-red-500 underline">
-                                        Privacy Policy
+                                <Button size="sm" asChild>
+                                    <Link href="https://discord.gg/v9NDUZVD" target="_blank" rel="noopener noreferrer">
+                                        Join Discord
+                                        <ArrowRight className="w-4 h-4 ml-2" />
                                     </Link>
-                                </p>
+                                </Button>
                             </div>
                         </div>
                     </div>
