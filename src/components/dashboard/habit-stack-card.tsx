@@ -3,10 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronRight, Heart, MoreVertical, Pencil, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronDown, ChevronUp, Heart, MoreVertical, Pencil, Trash2 } from "lucide-react";
 import type { HabitStackComponent } from "@/types/section-b/habit";
 import { ScoreDial } from "@/components/dashboard/score-dial";
 import { StatusIcon } from "@/components/dashboard/status-icon";
+import { HabitCard } from "@/components/dashboard/habit-card";
+import { withOpacity } from "@/lib/score-colors";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,18 +27,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-function withOpacity(hex: string | undefined, opacity: number): string {
-  if (!hex) return `rgba(45,156,219,${opacity})`;
-  const clean = hex.replace("#", "");
-  const full = clean.length === 3 ? clean.split("").map((c) => c + c).join("") : clean;
-  const value = parseInt(full, 16);
-  if (Number.isNaN(value)) return `rgba(45,156,219,${opacity})`;
-  const r = (value >> 16) & 255;
-  const g = (value >> 8) & 255;
-  const b = value & 255;
-  return `rgba(${r},${g},${b},${opacity})`;
-}
-
 function MetaPill({ children }: { children: React.ReactNode }) {
   return (
     <span className="rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-medium text-white/70">
@@ -45,10 +36,11 @@ function MetaPill({ children }: { children: React.ReactNode }) {
 }
 
 /**
- * Mirrors mobile's HabitStackCard (core/components/section-b/habits/HabitStackCard) exactly:
- * banner, icon box + name + person pill + menu, meta pills + status circle, score dial,
- * like/edit footer. Expand chevron and card click both go to the detail page rather than
- * expanding inline (mobile's inline HabitCard list isn't ported this pass).
+ * Mirrors mobile's HabitStackCard (core/components/section-b/habits/HabitStackCard)
+ * including its interaction model: the card holds `expanded` state and, when
+ * expanded, renders a HabitCard for every habit INLINE inside the card —
+ * clicking the card/chevron toggles expansion, exactly like mobile (which has
+ * no separate stack-detail screen). Edit/Delete live in the ⋮ menu.
  */
 export function HabitStackCard({
   stack,
@@ -57,19 +49,25 @@ export function HabitStackCard({
   onDelete,
   onCopy,
   copyLabel = "Copy",
+  defaultExpanded = false,
 }: {
   stack: HabitStackComponent;
-  href: string;
+  /** Retained for deep-link compatibility; card click expands instead of navigating. */
+  href?: string;
   editHref: string;
   onDelete: () => void;
   /** Renders mobile's banner copy button (market/friends flows) when provided */
   onCopy?: (stack: HabitStackComponent) => void | Promise<void>;
   copyLabel?: string;
+  defaultExpanded?: boolean;
 }) {
+  const router = useRouter();
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [copyState, setCopyState] = useState<"idle" | "copying" | "copied">("idle");
   const borderColor = withOpacity(stack.iconColor, 0.5);
   const iconTint = withOpacity(stack.iconColor, 0.2);
+  const stackId = stack.documentId ?? stack.id;
 
   async function handleCopy() {
     if (!onCopy || copyState !== "idle") return;
@@ -82,20 +80,26 @@ export function HabitStackCard({
     }
   }
 
+  const toggleExpand = () => setExpanded((v) => !v);
+
   return (
     <div
       className="mb-3 overflow-hidden rounded-xl bg-[rgba(25,25,25,1)] p-2"
       style={{ border: `1px solid ${borderColor}` }}
     >
+      {/* Banner — click toggles expansion, like tapping the card on mobile */}
       <div className="relative">
-        <Link href={href} className="relative block h-[180px] w-full overflow-hidden rounded-lg bg-white/5">
+        <button
+          onClick={toggleExpand}
+          className="relative block h-[180px] w-full overflow-hidden rounded-lg bg-white/5"
+        >
           <Image
             src={stack.bannerImage || "/assets/images/default_banner_image_000.png"}
             alt=""
             fill
             className="object-cover"
           />
-        </Link>
+        </button>
         {onCopy ? (
           <button
             onClick={handleCopy}
@@ -109,8 +113,10 @@ export function HabitStackCard({
         ) : null}
       </div>
 
+      {/* Header row */}
       <div className="flex items-start gap-3 pt-3">
-        <div
+        <button
+          onClick={toggleExpand}
           className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-xl"
           style={{ backgroundColor: iconTint }}
         >
@@ -120,13 +126,16 @@ export function HabitStackCard({
             width={30}
             height={30}
           />
-        </div>
+        </button>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
-            <Link href={href} className="truncate text-[15px] font-medium text-white hover:underline">
+            <button
+              onClick={toggleExpand}
+              className="min-w-0 truncate text-left text-[15px] font-medium text-white"
+            >
               {stack.name}
-            </Link>
+            </button>
             <div className="flex shrink-0 items-center gap-1">
               {typeof stack.personsCount === "number" ? (
                 <span className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-white/60">
@@ -152,9 +161,10 @@ export function HabitStackCard({
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Link href={href} className="rounded p-1 text-white/50 hover:text-white">
-                <ChevronRight className="h-4 w-4" />
-              </Link>
+              {/* Expand chevron — mobile's keyboard-arrow-down/up */}
+              <button onClick={toggleExpand} className="rounded p-1 text-white/50 hover:text-white">
+                {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              </button>
             </div>
           </div>
 
@@ -169,16 +179,38 @@ export function HabitStackCard({
         </div>
       </div>
 
+      {/* Summary row: habit count + score dial (always visible, like mobile) */}
       <div className="flex items-center justify-between pt-3">
         <span className="text-xs text-white/50">{stack.habitData?.length ?? 0} habits</span>
         <ScoreDial score={stack.scoreComponent?.score} scoreInfo={stack.scoreComponent?.scoreInfo} />
       </div>
 
+      {/* Expanded: nested HabitCards inline, exactly like mobile */}
+      {expanded
+        ? (stack.habitData ?? []).map((habit) => {
+            const habitId = habit.documentId ?? habit.id;
+            return (
+              <HabitCard
+                key={habitId}
+                habit={habit}
+                editHref={`/dashboard/habit-stacks/${stackId}/habits/${habitId}/edit`}
+                onOpenLink={(linkId) =>
+                  router.push(`/dashboard/habit-stacks/${stackId}/habits/${habitId}/links/${linkId}`)
+                }
+              />
+            );
+          })
+        : null}
+
+      {/* Footer row */}
       <div className="mt-2 flex items-center gap-4 border-t border-white/[0.04] pt-2">
         <button className="flex items-center gap-1.5 text-white/50 hover:text-white">
           <Heart className="h-4 w-4" />
           <span className="text-xs">0</span>
         </button>
+        <Link href={editHref} className="flex items-center text-white/50 hover:text-white">
+          <Pencil className="h-4 w-4" />
+        </Link>
       </div>
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>

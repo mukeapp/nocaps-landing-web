@@ -229,7 +229,11 @@ export function PostItem({
 
       {/* Comments bottom sheet */}
       <Sheet open={commentsOpen} onOpenChange={setCommentsOpen}>
-        <SheetContent side="bottom" className="max-h-[70vh] overflow-y-auto bg-[#2C2C2E]">
+        <SheetContent
+          side="bottom"
+          className="max-h-[70vh] overflow-y-auto rounded-t-2xl border-none bg-[#2C2C2E]"
+        >
+          <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#898B9A]" />
           <SheetHeader>
             <SheetTitle className="text-white">Comments</SheetTitle>
           </SheetHeader>

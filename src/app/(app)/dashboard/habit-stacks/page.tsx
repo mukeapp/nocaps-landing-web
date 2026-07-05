@@ -2,20 +2,24 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Plus, Sparkles, Store, UsersRound, Library } from "lucide-react";
+import { Bot, CircleUserRound, Plus, Store, UsersRound, X, Zap } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { selectDefaultSelection, makeSelectModelById } from "@/redux/ai-models-cost-multiplier";
+import { selectGenerateHabitStackCost } from "@/redux/habit-intelligence-cost";
+import { selectRevenueCat, RevenueCatAction } from "@/redux/user-revenue-cat";
 import { useCurrentUserId } from "@/hooks/use-current-user-id";
+import { DecreaseRemainingCreditsByUserId } from "@/lib/api/section-b/revenue-cat";
 import { DeleteHabitStack, getHabitStackComponentsByUserId } from "@/lib/api/section-b/habit-stack";
 import type { HabitStackComponent } from "@/types/section-b/habit";
 import { Button } from "@/components/ui/button";
 import { HabitStackCard } from "@/components/dashboard/habit-stack-card";
+import { AIModelSelector } from "@/components/dashboard/ai-model-selector";
 import { DataState } from "@/components/dashboard/data-state";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+
+const ensureMinTotalCost = (cost: number) => (cost === 0 ? 1 : cost);
 
 // Score legend on mobile's MyHabitStacksScreen uses its own literal hex values,
 // distinct from the tier-color map used by the card's ScoreDial — a real
@@ -29,11 +33,59 @@ const LEGEND = [
   { label: "UNKNOWN", color: "#6B7280" },
 ];
 
+// Mobile's RBSheet addOptions, exact titles/subtitles/order
+// (MyHabitStacksScreen lines ~205-265).
+const ADD_OPTIONS = [
+  {
+    id: 1,
+    title: "Add Habit Stack From Market",
+    subtitle: "Browse and add habit stacks from the marketplace",
+    icon: Store,
+    href: "/dashboard/market",
+  },
+  {
+    id: 2,
+    title: "Add Habit Stack From Friends",
+    subtitle: "Browse and copy habit stacks from your friends",
+    icon: UsersRound,
+    href: "/dashboard/friends",
+  },
+  {
+    id: 3,
+    title: "Add Habit Stack From My Library",
+    subtitle: "Browse and copy habit stacks from your library",
+    icon: CircleUserRound,
+    href: "/dashboard/habit-library",
+  },
+  {
+    id: 4,
+    title: "Add Habit Stack With AI",
+    subtitle: "Let AI help you build a personalized habit stack",
+    icon: Bot,
+    href: null, // opens the AI confirm modal, like mobile
+  },
+];
+
 export default function HabitStacksPage() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const userId = useCurrentUserId();
   const [stacks, setStacks] = useState<HabitStackComponent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+
+  // AI confirm modal state — mirrors mobile's showAIConfirmModal flow.
+  const [aiModalOpen, setAiModalOpen] = useState(false);
+  const [steerDescription, setSteerDescription] = useState("");
+  const defaults = useAppSelector(selectDefaultSelection);
+  const [companyName, setCompanyName] = useState(defaults.companyName);
+  const [modelId, setModelId] = useState(defaults.modelId);
+  const baseCost = useAppSelector(selectGenerateHabitStackCost);
+  const revenueCat = useAppSelector(selectRevenueCat);
+  const selectedModel = useAppSelector(makeSelectModelById(modelId));
+  const totalCost = ensureMinTotalCost(baseCost * (selectedModel?.noCapCostMultiplier ?? 1));
+  const [charging, setCharging] = useState(false);
 
   const load = useCallback(() => {
     if (!userId) return;
@@ -64,6 +116,33 @@ export default function HabitStacksPage() {
     }
   }
 
+  // Mirrors mobile's handleGoToHabitStackAI: charge credits first, then
+  // navigate to the AI screen which runs the generation.
+  async function handleGoToHabitStackAI() {
+    if (!userId) return;
+    if (!steerDescription.trim()) return void toast.error("Describe what you want to build.");
+    if (revenueCat.remainingCredits < totalCost)
+      return void toast.error("Not enough AI credits. Add credits from your Account page.");
+
+    setCharging(true);
+    try {
+      const res = await DecreaseRemainingCreditsByUserId({ userId, amount: totalCost });
+      if (res.status >= 200 && res.status < 300) {
+        dispatch(RevenueCatAction.subtractCredits(totalCost));
+        setAiModalOpen(false);
+        router.push(
+          `/dashboard/ai/generate/habit-stack?steer=${encodeURIComponent(
+            steerDescription.trim(),
+          )}&model=${encodeURIComponent(modelId)}&charged=1`,
+        );
+      } else {
+        toast.error("Could not charge AI credits. Please try again.");
+      }
+    } finally {
+      setCharging(false);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-xl space-y-4">
       <h1 className="text-xl font-semibold text-white">Build Better habits, one day at a time.</h1>
@@ -91,7 +170,6 @@ export default function HabitStacksPage() {
                 <HabitStackCard
                   key={id}
                   stack={stack}
-                  href={`/dashboard/habit-stacks/${id}`}
                   editHref={`/dashboard/habit-stacks/${id}/edit`}
                   onDelete={() => handleDelete(id)}
                 />
@@ -102,39 +180,9 @@ export default function HabitStacksPage() {
       </DataState>
 
       <div className="flex items-center gap-2 pt-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex-1">
-              Add Habit Stack
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-56">
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/market">
-                <Store className="mr-2 h-4 w-4" />
-                From Market
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/friends">
-                <UsersRound className="mr-2 h-4 w-4" />
-                From Friends
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/habit-library">
-                <Library className="mr-2 h-4 w-4" />
-                From My Library
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link href="/dashboard/ai">
-                <Sparkles className="mr-2 h-4 w-4" />
-                With AI
-              </Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button variant="outline" className="flex-1" onClick={() => setSheetOpen(true)}>
+          Add Habit Stack
+        </Button>
         <Button asChild className="flex-1">
           <Link href="/dashboard/habit-stacks/new">
             <Plus className="mr-2 h-4 w-4" />
@@ -142,6 +190,108 @@ export default function HabitStacksPage() {
           </Link>
         </Button>
       </div>
+
+      {/* Add Habit Stack bottom sheet — mirrors mobile's RBSheet exactly */}
+      <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
+        <SheetContent side="bottom" className="rounded-t-2xl border-none bg-[#2C2C2E] px-4 pb-6 pt-3">
+          <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#898B9A]" />
+          <p className="mb-4 font-poppins text-[18px] font-semibold text-white">Add Habit Stack</p>
+          <div className="space-y-2">
+            {ADD_OPTIONS.map((option) => {
+              const Icon = option.icon;
+              return (
+                <button
+                  key={option.id}
+                  onClick={() => {
+                    setSheetOpen(false);
+                    if (option.href) {
+                      router.push(option.href);
+                    } else {
+                      setSteerDescription("");
+                      setTimeout(() => setAiModalOpen(true), 250);
+                    }
+                  }}
+                  className="flex w-full items-start gap-3 rounded-xl bg-[rgba(25,25,25,1)] px-3 py-4 text-left hover:bg-white/[0.07]"
+                >
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-white" />
+                  <span className="min-w-0">
+                    <span className="block font-poppins text-[15px] font-semibold text-white">
+                      {option.title}
+                    </span>
+                    <span className="block font-poppins text-[13px] leading-5 text-[#898B9A]">
+                      {option.subtitle}
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Generate with AI confirm modal — mirrors mobile's aiConfirmModal */}
+      {aiModalOpen ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4"
+          onClick={() => !charging && setAiModalOpen(false)}
+        >
+          <div
+            className="w-full max-w-md rounded-[20px] border border-[#333333] bg-[#1C1C1E] p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <p className="text-[17px] font-semibold text-white">Generate with AI</p>
+                <p className="text-[13px] text-[#6B7280]">
+                  Let AI help you build a personalized habit stack
+                </p>
+              </div>
+              <button
+                onClick={() => !charging && setAiModalOpen(false)}
+                className="rounded-full bg-white/5 p-1.5 text-[#6B7280]"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="mb-4 flex items-center justify-between rounded-xl bg-white/[0.04] px-4 py-3">
+              <span className="text-[13px] text-white/60">Your credits</span>
+              <span className="flex items-center gap-1 text-[14px] font-bold text-white">
+                <Zap className="h-4 w-4 text-[#f59e0b]" />
+                {revenueCat.remainingCredits.toLocaleString()}
+              </span>
+            </div>
+
+            <textarea
+              className="mb-4 min-h-24 w-full resize-y rounded-lg border border-[#3A3A3A] bg-[rgba(41,41,41,1)] px-3 py-2.5 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-[rgba(45,156,219,1)]"
+              placeholder="Describe the habit stack you want…"
+              value={steerDescription}
+              onChange={(e) => setSteerDescription(e.target.value)}
+            />
+
+            <div className="mb-4">
+              <AIModelSelector
+                companyName={companyName}
+                modelId={modelId}
+                onCompanyChange={(name, defModel) => {
+                  setCompanyName(name);
+                  setModelId(defModel);
+                }}
+                onModelChange={setModelId}
+              />
+            </div>
+
+            <div className="mb-4 flex items-center justify-between text-[13px] text-white/60">
+              <span>Cost</span>
+              <span className="font-bold text-[#fbbf24]">{totalCost.toFixed(0)} credits</span>
+            </div>
+
+            <Button className="w-full" disabled={charging} onClick={handleGoToHabitStackAI}>
+              {charging ? "Charging credits…" : "Generate"}
+            </Button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -166,7 +166,8 @@ export default function AccountPage() {
                 Add Credits
               </button>
             </SheetTrigger>
-            <SheetContent side="bottom" className="bg-[#2C2C2E]">
+            <SheetContent side="bottom" className="rounded-t-2xl border-none bg-[#2C2C2E]">
+              <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-[#898B9A]" />
               <SheetHeader>
                 <SheetTitle className="text-white">Add Credits</SheetTitle>
               </SheetHeader>

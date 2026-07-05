@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { Sparkles } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -21,13 +21,14 @@ const inputClass =
   "w-full rounded-lg border border-[#3A3A3A] bg-[rgba(41,41,41,1)] px-3 py-2.5 text-[14px] text-white placeholder:text-white/40 outline-none focus:border-[rgba(45,156,219,1)]";
 
 /**
- * Mirrors mobile's HabitStackAIScreen flow (reached from MyHabitStacksScreen's
- * AI confirm sheet): steer description + model pick, charge credits
- * (decreaseRemainingCreditsByUserId + subtractCredits), call the AI
- * generator, then apply chosen candidates via PostGenHabitStack.
+ * Mirrors mobile's HabitStackAIScreen flow: normally the MyHabitStacksScreen
+ * "Generate with AI" modal charges credits then navigates here with
+ * ?steer=&model=&charged=1, and this screen auto-runs the generation
+ * (mobile's habit-stack-ai screen does the same). Visiting directly without
+ * params keeps the in-page charge-and-run flow.
  */
-export default function HabitStackAIPage() {
-  const router = useRouter();
+function HabitStackAIContent() {
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const userId = useCurrentUserId();
 
@@ -35,33 +36,27 @@ export default function HabitStackAIPage() {
   const revenueCat = useAppSelector(selectRevenueCat);
   const defaults = useAppSelector(selectDefaultSelection);
 
+  const paramSteer = searchParams.get("steer") ?? "";
+  const paramModel = searchParams.get("model") ?? "";
+  const preCharged = searchParams.get("charged") === "1";
+
   const [companyName, setCompanyName] = useState(defaults.companyName);
-  const [modelId, setModelId] = useState(defaults.modelId);
-  const [steerDescription, setSteerDescription] = useState("");
+  const [modelId, setModelId] = useState(paramModel || defaults.modelId);
+  const [steerDescription, setSteerDescription] = useState(paramSteer);
   const [loading, setLoading] = useState(false);
   const [applyingId, setApplyingId] = useState<string | null>(null);
   const [summary, setSummary] = useState("");
   const [candidates, setCandidates] = useState<HabitStackComponent[]>([]);
+  const autoRanRef = useRef(false);
 
   const selectedModel = useAppSelector(makeSelectModelById(modelId));
   const totalCost = ensureMinTotalCost(baseCost * (selectedModel?.noCapCostMultiplier ?? 1));
   const canAfford = revenueCat.remainingCredits >= totalCost;
 
-  async function handleGenerate() {
-    if (!userId) return;
-    if (!steerDescription.trim()) return void toast.error("Describe what you want to build.");
-    if (!canAfford) return void toast.error("Not enough AI credits. Add credits from your Account page.");
-
+  async function runGeneration(steer: string, model: string) {
     setLoading(true);
     try {
-      const charge = await DecreaseRemainingCreditsByUserId({ userId, amount: totalCost });
-      if (charge.status < 200 || charge.status >= 300) {
-        toast.error("Could not charge AI credits. Please try again.");
-        return;
-      }
-      dispatch(RevenueCatAction.subtractCredits(totalCost));
-
-      const res = await GetGeneratedHabitStacks(steerDescription.trim(), modelId);
+      const res = await GetGeneratedHabitStacks(steer, model);
       if (res.status >= 200 && res.status < 300 && res.data) {
         setSummary(res.data.summary ?? "");
         setCandidates(res.data.generatedList ?? []);
@@ -72,6 +67,29 @@ export default function HabitStackAIPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  // Auto-run when arriving pre-charged from the "Generate with AI" modal.
+  useEffect(() => {
+    if (preCharged && paramSteer && !autoRanRef.current) {
+      autoRanRef.current = true;
+      runGeneration(paramSteer, paramModel || defaults.modelId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preCharged, paramSteer, paramModel]);
+
+  async function handleGenerate() {
+    if (!userId) return;
+    if (!steerDescription.trim()) return void toast.error("Describe what you want to build.");
+    if (!canAfford) return void toast.error("Not enough AI credits. Add credits from your Account page.");
+
+    const charge = await DecreaseRemainingCreditsByUserId({ userId, amount: totalCost });
+    if (charge.status < 200 || charge.status >= 300) {
+      toast.error("Could not charge AI credits. Please try again.");
+      return;
+    }
+    dispatch(RevenueCatAction.subtractCredits(totalCost));
+    await runGeneration(steerDescription.trim(), modelId);
   }
 
   async function applyCandidate(candidate: HabitStackComponent) {
@@ -167,5 +185,13 @@ export default function HabitStackAIPage() {
         </div>
       ) : null}
     </div>
+  );
+}
+
+export default function HabitStackAIPage() {
+  return (
+    <Suspense fallback={null}>
+      <HabitStackAIContent />
+    </Suspense>
   );
 }
