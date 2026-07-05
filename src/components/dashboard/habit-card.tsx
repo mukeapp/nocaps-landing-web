@@ -24,12 +24,16 @@ export function HabitCard({
   editHref,
   onOpenLink,
   defaultExpanded = false,
+  showHabitLinkNav = true,
+  showExpandedButton = true,
 }: {
   habit: HabitComponent;
   costSymbol?: string;
   editHref?: string;
   onOpenLink?: (linkId: string) => void;
   defaultExpanded?: boolean;
+  showHabitLinkNav?: boolean;
+  showExpandedButton?: boolean;
 }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const scoreColor = scoreHex(habit.scoreComponent?.scoreInfo?.color);
@@ -156,6 +160,8 @@ export function HabitCard({
               link={link}
               costSymbol={costSymbol}
               onOpen={(lk) => onOpenLink?.(lk.documentId ?? lk.id ?? "")}
+              showHabitLinkNav={showHabitLinkNav}
+              showExpandedButton={showExpandedButton}
             />
           ))}
         </>

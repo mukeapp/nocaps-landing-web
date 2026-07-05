@@ -22,7 +22,11 @@ export function ScoreDial({
   size?: number;
 }) {
   const percent = Math.max(0, Math.min(100, (score ?? 0) < 1 ? (score ?? 0) * 100 : score ?? 0));
-  const color = TIER_HEX[scoreInfo?.color?.toUpperCase() ?? "GRAY"] ?? TIER_HEX.GRAY;
+  // Mobile passes scoreInfo.color.toLowerCase() as a literal CSS color word
+  // ("gold"/"green"/"gray"/…) straight to SemiCircleProgress — same here,
+  // with the hex map only as a fallback for missing values.
+  const rawColor = scoreInfo?.color?.toLowerCase();
+  const color = rawColor || TIER_HEX.GRAY;
   const label = scoreInfo?.label ?? scoreInfo?.code ?? "Unscored";
 
   const strokeWidth = 5;

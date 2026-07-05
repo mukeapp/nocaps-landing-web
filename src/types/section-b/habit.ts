@@ -8,6 +8,7 @@ export type ScoreCode = "UNKNOWN" | "BAD" | "POOR" | "AVERAGE" | "GOOD" | "EXCEL
 
 export interface ScoreInfo {
   color?: string; // e.g. "GRAY", "GOLD"
+  rgb?: string; // e.g. "rgb(128,128,128)" — mobile uses this as the card accent
   code?: ScoreCode;
   label?: string;
 }
@@ -39,6 +40,7 @@ export interface HabitStackComponent {
   priority?: string;
   scoreComponent?: ScoreComponent;
   habitData?: HabitComponent[];
+  habitStackLikes?: { documentId?: string; id?: string; userId?: string; isLike?: boolean }[];
   createdAt?: Date | string;
   updatedAt?: Date | string;
 }

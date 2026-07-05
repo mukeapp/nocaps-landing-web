@@ -21,11 +21,17 @@ export function HabitLinkRow({
   costSymbol = "$",
   onOpen,
   defaultExpanded = false,
+  showHabitLinkNav = true,
+  showExpandedButton = true,
 }: {
   link: HabitLinkComponent;
   costSymbol?: string;
   onOpen?: (link: HabitLinkComponent) => void;
   defaultExpanded?: boolean;
+  /** Mobile's showHabitLinkNav — hides the blue file/nav button when false */
+  showHabitLinkNav?: boolean;
+  /** Mobile's showExpandedButton — hides the expand chevron when false */
+  showExpandedButton?: boolean;
 }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
   const items = link.habitLinkItemComponentsData ?? [];
@@ -73,13 +79,15 @@ export function HabitLinkRow({
           >
             <ArrowLeftRight className="h-4 w-4" />
           </Link>
-          <button
-            onClick={() => onOpen?.(link)}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-[rgba(45,156,219,1)]"
-          >
-            <Image src="/assets/images/file.png" alt="" width={18} height={18} className="brightness-0 invert" />
-          </button>
-          {items.length > 0 ? (
+          {showHabitLinkNav ? (
+            <button
+              onClick={() => onOpen?.(link)}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[rgba(45,156,219,1)]"
+            >
+              <Image src="/assets/images/file.png" alt="" width={18} height={18} className="brightness-0 invert" />
+            </button>
+          ) : null}
+          {showExpandedButton && items.length > 0 ? (
             <button
               onClick={() => setExpanded((v) => !v)}
               className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0D0D0D] text-white"

@@ -145,8 +145,8 @@ export default function HabitStacksPage() {
 
   return (
     <div className="mx-auto max-w-xl space-y-4">
-      <h1 className="text-xl font-semibold text-white">Build Better habits, one day at a time.</h1>
-      <p className="-mt-2 text-sm text-white/60">Let NoCap guide your journey!</p>
+      <h1 className="text-[23px] font-semibold text-white">Build Better habits, one day at a time.</h1>
+      <p className="-mt-2 text-[16px] font-bold text-[rgba(242,242,242,0.5)]">Let NoCap guide your journey!</p>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-white/[0.03] px-3 py-2">
         {LEGEND.map((tier) => (
@@ -172,6 +172,8 @@ export default function HabitStacksPage() {
                   stack={stack}
                   editHref={`/dashboard/habit-stacks/${id}/edit`}
                   onDelete={() => handleDelete(id)}
+                  showHabitLinkNav={false}
+                  showExpandedButton={false}
                 />
               );
             })}
@@ -179,16 +181,29 @@ export default function HabitStacksPage() {
         )}
       </DataState>
 
-      <div className="flex items-center gap-2 pt-2">
-        <Button variant="outline" className="flex-1" onClick={() => setSheetOpen(true)}>
+      {/* Bottom buttons — mobile's ButtonSignIn design: 45%-width dark buttons
+          with white border, then a full-width white "Next" → posts screen */}
+      <div className="flex items-center justify-between pt-2">
+        <button
+          onClick={() => setSheetOpen(true)}
+          className="h-[50px] w-[45%] rounded-xl border border-[#F2F2F2] bg-[#0D0D0D] text-[14px] font-bold tracking-wider text-[#F2F2F2]"
+        >
           Add Habit Stack
-        </Button>
-        <Button asChild className="flex-1">
-          <Link href="/dashboard/habit-stacks/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Create Habit Stack
-          </Link>
-        </Button>
+        </button>
+        <Link
+          href="/dashboard/habit-stacks/new"
+          className="flex h-[50px] w-[45%] items-center justify-center rounded-xl border border-[#F2F2F2] bg-[#0D0D0D] text-[14px] font-bold tracking-wider text-[#F2F2F2]"
+        >
+          Create Habit Stack
+        </Link>
+      </div>
+      <div className="py-2">
+        <Link
+          href="/dashboard/posts"
+          className="flex h-[50px] w-full items-center justify-center rounded-xl bg-[#F2F2F2] text-[14px] font-bold tracking-wider text-[#0D0D0D]"
+        >
+          Next
+        </Link>
       </div>
 
       {/* Add Habit Stack bottom sheet — mirrors mobile's RBSheet exactly */}

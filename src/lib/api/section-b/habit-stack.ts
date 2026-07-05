@@ -67,6 +67,36 @@ export const fetchHabitStackComponentsByUserAndSector = async (
   }
 };
 
+export const CreateHabitStackLike = async (payload: {
+  id: string;
+  userId: string;
+  habitStackId: string;
+}) => {
+  try {
+    const now = new Date().toISOString();
+    const response = await API.post(`/habit-stack-likes`, {
+      ...payload,
+      isLike: true,
+      createdAt: now,
+      updatedAt: now,
+    });
+    return { data: response.data, status: response.status };
+  } catch (err) {
+    console.log("CreateHabitStackLike error:", err);
+    return { data: null, status: 500 };
+  }
+};
+
+export const DeleteHabitStackLike = async (docId: string) => {
+  try {
+    const response = await API.delete(`/habit-stack-likes/${docId}`);
+    return { data: response.data, status: response.status };
+  } catch (err) {
+    console.log("DeleteHabitStackLike error:", err);
+    return { data: null, status: 500 };
+  }
+};
+
 export const CopyHabitStackToAnotherUser = async (payload: { data: any }) => {
   try {
     const response = await API.post(`/habit-stack-data-migration/copy-to-new-user`, payload.data);
