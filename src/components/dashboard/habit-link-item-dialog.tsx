@@ -1,5 +1,6 @@
 "use client";
 
+import { mobileInput } from "@/components/dashboard/form-styles";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SaveHabitLinkItem, UpdateHabitLinkItem } from "@/lib/api/section-b/habit-link-item";
@@ -84,22 +85,23 @@ export function HabitLinkItemDialog({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="item-name">Name</Label>
-            <Input id="item-name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <Input className={mobileInput} id="item-name" value={name} onChange={(e) => setName(e.target.value)} required />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
               <Label htmlFor="item-company">Store / company</Label>
-              <Input id="item-company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+              <Input className={mobileInput} id="item-company" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="item-location">Location</Label>
-              <Input id="item-location" value={location} onChange={(e) => setLocation(e.target.value)} />
+              <Input className={mobileInput} id="item-location" value={location} onChange={(e) => setLocation(e.target.value)} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
               <Label htmlFor="item-price">Price</Label>
               <Input
+                className={mobileInput}
                 id="item-price"
                 type="number"
                 step="0.01"
@@ -110,6 +112,7 @@ export function HabitLinkItemDialog({
             <div className="space-y-2">
               <Label htmlFor="item-quantity">Quantity</Label>
               <Input
+                className={mobileInput}
                 id="item-quantity"
                 type="number"
                 value={quantity}
@@ -119,7 +122,7 @@ export function HabitLinkItemDialog({
           </div>
           <div className="space-y-2">
             <Label htmlFor="item-description">Description</Label>
-            <Textarea
+            <Textarea className={mobileInput}
               id="item-description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}

@@ -8,10 +8,14 @@ interface Props {
     children: React.ReactNode;
 }
 
+// Mirrors mobile's MainStyles.root: full dark #0D0D0D screen, content in a
+// phone-width column (mobile is a phone screen; the web centers that column).
 const AuthLayout = ({ children }: Props) => {
     return (
-        <div className="flex items-center justify-center h-screen">
-            {children}
+        <div className="flex min-h-screen justify-center bg-[#0D0D0D]">
+            <div className="flex w-full max-w-md flex-col px-4 pt-12">
+                {children}
+            </div>
         </div>
     )
 };

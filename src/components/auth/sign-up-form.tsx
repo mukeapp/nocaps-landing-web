@@ -1,39 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signInWithPopup,
-  User,
-} from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { ArrowLeft, CircleUserRound, Lock, Mail } from "lucide-react";
 import { toast } from "sonner";
 import { auth } from "@/lib/firebase/client";
 import { establishSession } from "@/lib/auth/session";
-import { SaveUserInFirestore, GetUserByEmail } from "@/lib/api/section-a/user";
+import { SaveUserInFirestore } from "@/lib/api/section-a/user";
 import { buildUserFromTempAndAuth } from "@/lib/utils/build-user";
 import { isStrongPassword, isValidEmail } from "@/lib/utils/validation";
-import { AuthCard } from "@/components/auth/auth-card";
-import { GoogleButton } from "@/components/auth/google-button";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { AuthInput, AuthButton } from "@/components/auth/auth-input";
 
-async function createBackendProfile(
-  user: User,
-  temp: { first: string; last: string; username: string },
-) {
-  const idToken = await user.getIdToken();
-  const loggedUser = buildUserFromTempAndAuth(
-    { ...temp, fullName: user.displayName ?? undefined, photoUrl: user.photoURL ?? undefined },
-    { uid: user.uid, email: user.email },
-  );
-  await SaveUserInFirestore({ loggedUser, token: idToken });
-}
-
+/**
+ * Mirrors mobile's SignUpScreen (app/src/screens/section-a/section-a-1/
+ * SignUp/index.tsx) exactly: white circular back button, "Create an account",
+ * six icon inputs (First/Last/Username with person icon, Email with mail,
+ * Password + Confirm with lock and eye toggles), white Sign Up pill, then the
+ * terms confirmation line with bold links. Mobile's sign-up has NO Google
+ * button (Google flows through the sign-in screen). Reference:
+ * SignUp/ux-ui/sign-up-screen.png.
+ */
 export function SignUpForm() {
   const router = useRouter();
 
@@ -80,7 +68,11 @@ export function SignUpForm() {
       }
 
       await establishSession(await cred.user.getIdToken());
-      await createBackendProfile(cred.user, { first: firstName, last: lastName, username: uname });
+      const loggedUser = buildUserFromTempAndAuth(
+        { first: firstName.trim(), last: lastName.trim(), username: uname },
+        { uid: cred.user.uid, email: cred.user.email },
+      );
+      await SaveUserInFirestore({ loggedUser, token: await cred.user.getIdToken() });
 
       toast.success("Account created. Check your inbox to verify your email.");
       router.push("/dashboard/habit-stacks");
@@ -96,112 +88,75 @@ export function SignUpForm() {
     }
   }
 
-  async function handleGoogleSignUp() {
-    setLoading(true);
-    try {
-      const cred = await signInWithPopup(auth, new GoogleAuthProvider());
-      const idToken = await cred.user.getIdToken();
-      await establishSession(idToken);
-
-      try {
-        await GetUserByEmail({ mail: cred.user.email ?? "" });
-        router.push("/dashboard/habit-stacks");
-        router.refresh();
-      } catch (err: any) {
-        if (err?.status === 404) {
-          const [first, ...rest] = (cred.user.displayName ?? "").split(" ");
-          await createBackendProfile(cred.user, {
-            first: first || "",
-            last: rest.join(" ") || "",
-            username: (cred.user.email ?? "").split("@")[0],
-          });
-          router.push("/dashboard/habit-stacks");
-          router.refresh();
-        } else {
-          toast.error("Unable to load your profile. Please try again.");
-        }
-      }
-    } catch (err: any) {
-      toast.error(err?.message ?? "Google sign-in failed.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
-    <AuthCard
-      title="Create your account"
-      subtitle="Start tracking with NoCap"
-      footer={
-        <>
-          Already have an account?{" "}
-          <Link href="/sign-in" className="text-primary underline-offset-4 hover:underline">
-            Sign in
-          </Link>
-        </>
-      }
-    >
-      <form onSubmit={handleEmailSignUp} className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
-          <div className="space-y-2">
-            <Label htmlFor="firstName">First name</Label>
-            <Input id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} required />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="lastName">Last name</Label>
-            <Input id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} required />
-          </div>
+    <div className="w-full pb-8">
+      {/* Back button — white circle, black arrow */}
+      <button
+        type="button"
+        onClick={() => router.back()}
+        className="mb-6 flex h-10 w-10 items-center justify-center rounded-full bg-[#F2F2F2]"
+      >
+        <ArrowLeft className="h-5 w-5 text-[rgba(28,28,28,1)]" />
+      </button>
+
+      <h1 className="mb-10 text-[20px] font-bold text-[#F2F2F2]">Create an account</h1>
+
+      <form onSubmit={handleEmailSignUp}>
+        <AuthInput icon={CircleUserRound} placeholder="First Name" value={firstName} onChange={setFirstName} />
+        <AuthInput icon={CircleUserRound} placeholder="Last Name" value={lastName} onChange={setLastName} />
+        <AuthInput icon={CircleUserRound} placeholder="Username" value={userName} onChange={setUserName} />
+        <AuthInput
+          icon={Mail}
+          type="email"
+          placeholder="Email Address"
+          value={email}
+          onChange={setEmail}
+          autoComplete="email"
+        />
+        <AuthInput
+          icon={Lock}
+          placeholder="Password"
+          value={password}
+          onChange={setPassword}
+          autoComplete="new-password"
+          withPasswordToggle
+        />
+        <AuthInput
+          icon={Lock}
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          autoComplete="new-password"
+          withPasswordToggle
+        />
+
+        <div className="mb-6 mt-6">
+          <AuthButton type="submit" disabled={loading}>
+            {loading ? "Creating Account..." : "Sign Up"}
+          </AuthButton>
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="userName">Username</Label>
-          <Input id="userName" value={userName} onChange={(e) => setUserName(e.target.value)} required />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="new-password"
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="confirmPassword">Confirm password</Label>
-          <Input
-            id="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            autoComplete="new-password"
-            required
-          />
-        </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Creating account..." : "Sign up"}
-        </Button>
       </form>
-      <div className="relative my-4">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">Or</span>
-        </div>
-      </div>
-      <GoogleButton onClick={handleGoogleSignUp} disabled={loading} />
-    </AuthCard>
+
+      <p className="text-center text-[11px] text-[rgba(242,242,242,0.5)]">
+        By registering, you confirm that you accept our
+      </p>
+      <p className="mt-1 text-center text-[11px] text-[rgba(242,242,242,0.5)]">
+        <Link
+          href="https://www.donocap.com/terms-and-conditions"
+          target="_blank"
+          className="text-[12px] font-bold text-[#F2F2F2]"
+        >
+          Terms of service
+        </Link>{" "}
+        and{" "}
+        <Link
+          href="https://www.donocap.com/privacy-policy"
+          target="_blank"
+          className="text-[12px] font-bold text-[#F2F2F2]"
+        >
+          Privacy policy
+        </Link>
+      </p>
+    </div>
   );
 }

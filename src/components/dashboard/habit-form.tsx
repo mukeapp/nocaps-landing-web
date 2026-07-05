@@ -1,5 +1,6 @@
 "use client";
 
+import { mobileInput } from "@/components/dashboard/form-styles";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -62,21 +63,21 @@ export function HabitForm({ habitStackId, habit }: { habitStackId: string; habit
     <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
-        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input className={mobileInput} id="name" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
-        <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
+        <Textarea className={mobileInput} id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
           <Label htmlFor="frequency">Frequency</Label>
-          <Input id="frequency" value={frequency} onChange={(e) => setFrequency(e.target.value)} />
+          <Input className={mobileInput} id="frequency" value={frequency} onChange={(e) => setFrequency(e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label>Status</Label>
           <Select value={status} onValueChange={(v) => setStatus(v as HabitStatus)}>
-            <SelectTrigger>
+            <SelectTrigger className={mobileInput}>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

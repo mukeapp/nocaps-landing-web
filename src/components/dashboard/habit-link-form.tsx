@@ -1,5 +1,6 @@
 "use client";
 
+import { mobileInput } from "@/components/dashboard/form-styles";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -70,20 +71,20 @@ export function HabitLinkForm({
     <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
-        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input className={mobileInput} id="name" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
-        <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
+        <Textarea className={mobileInput} id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-2">
           <Label htmlFor="company">Company</Label>
-          <Input id="company" value={company} onChange={(e) => setCompany(e.target.value)} />
+          <Input className={mobileInput} id="company" value={company} onChange={(e) => setCompany(e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label htmlFor="location">Location</Label>
-          <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} />
+          <Input className={mobileInput} id="location" value={location} onChange={(e) => setLocation(e.target.value)} />
         </div>
       </div>
       <div className="flex gap-3">

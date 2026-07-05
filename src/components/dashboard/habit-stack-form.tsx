@@ -1,5 +1,6 @@
 "use client";
 
+import { mobileInput } from "@/components/dashboard/form-styles";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -83,17 +84,17 @@ export function HabitStackForm({ stack }: { stack?: HabitStackComponent }) {
     <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
       <div className="space-y-2">
         <Label htmlFor="name">Name</Label>
-        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+        <Input className={mobileInput} id="name" value={name} onChange={(e) => setName(e.target.value)} required />
       </div>
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
-        <Textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
+        <Textarea className={mobileInput} id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
       </div>
       {sectors.length > 0 ? (
         <div className="space-y-2">
           <Label>Sector</Label>
           <Select value={sectorId} onValueChange={setSectorId}>
-            <SelectTrigger>
+            <SelectTrigger className={mobileInput}>
               <SelectValue placeholder="Select a sector" />
             </SelectTrigger>
             <SelectContent>
