@@ -1,8 +1,9 @@
 import { Container } from "@/components";
 import Icons from "@/components/global/icons";
 import { buttonVariants } from "@/components/ui/button";
-import { UserButton, } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+import { UserMenu } from "@/components/global/user-menu";
+import { SESSION_COOKIE_NAME, isPlausiblySignedIn } from "@/lib/auth/session-cookie";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
@@ -11,7 +12,7 @@ const NavLinks = dynamic(() => import("./nav-links"), { ssr: false });
 
 const Navbar = async () => {
 
-    const user = await currentUser();
+    const signedIn = isPlausiblySignedIn(cookies().get(SESSION_COOKIE_NAME)?.value);
 
     return (
         <header className="px-4 h-14 sticky top-0 inset-x-0 w-full bg-background/40 backdrop-blur-lg border-b border-border z-50">
@@ -29,8 +30,8 @@ const Navbar = async () => {
                         <NavLinks />
                     </nav>
                     <div className="flex items-center gap-4">
-                        {user ? (
-                            <UserButton />
+                        {signedIn ? (
+                            <UserMenu />
                         ) : (
                             <>
                                 <Link href="/sign-in" className={buttonVariants({ size: "sm", variant: "ghost" })}>

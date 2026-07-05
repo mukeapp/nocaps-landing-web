@@ -16,14 +16,55 @@ body {
 }
 
 @layer base {
+  /*
+   * Light is the default (:root) and dark lives under .dark, per next-themes'
+   * attribute="class" convention. Primary hue (202) matches the mobile app's
+   * accent blue (rgba(45,156,219,1)) in both modes for brand continuity.
+   */
   :root {
-    /* Name: custom color palette
-       Author: Ilias Ism
-       URL: https://gradient.page */
-
-    /* CSS: .bg-gradient { background: var(--gradient) } */
     --gradient: linear-gradient(to top left, #007adf, #00ecbc);
 
+    --background: 216 100% 98.04%;
+    --foreground: 213.6 100% 4.9%;
+
+    --muted: 213.6 100% 95.1%;
+    --muted-foreground: 0 0% 40%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 213.6 100% 4.9%;
+
+    --card: 216 100% 98.04%;
+    --card-foreground: 213.6 100% 4.9%;
+
+    --border: 0 0% 90.2%;
+    --input: 0 0% 90.2%;
+
+    --primary: 202 71% 52%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 214.74 100% 92.55%;
+    --secondary-foreground: 216 100% 0.98%;
+
+    --accent: 213.6 100% 95.1%;
+    --accent-foreground: 202 71% 52%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 202 71% 52%;
+
+    --radius: 0.5rem;
+
+    /* Score tiers (color-coded habit/link/item scoring, mobile ScoreInfo concept) */
+    --score-gray: 220 9% 65%;
+    --score-red: 0 84% 60%;
+    --score-orange: 25 95% 53%;
+    --score-yellow: 45 93% 47%;
+    --score-green: 142 71% 45%;
+    --score-gold: 45 93% 58%;
+  }
+
+  .dark {
     --background: 220 65% 3.52%;
     --foreground: 220 10% 97.2%;
 
@@ -39,7 +80,7 @@ body {
     --border: 220 50% 13.2%;
     --input: 220 50% 13.2%;
 
-    --primary: 220 100% 44%;
+    --primary: 202 71% 52%;
     --primary-foreground: 220 10% 97.2%;
 
     --secondary: 220 50% 13.2%;
@@ -51,41 +92,16 @@ body {
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 220 10% 97.2%;
 
-    --ring: 220 100% 44%;
+    --ring: 202 71% 52%;
 
     --radius: 0.5rem;
-  }
 
-  .dark {
-    --background: 216 100% 98.04%;
-    --foreground: 213.6 100% 4.9%;
-
-    --primary: 214.12 100% 50%;
-    --primary-foreground: 0 0% 100%;
-
-    --card: 216 100% 98.04%;
-    --card-foreground: 213.6 100% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 213.6 100% 4.9%;
-
-    --secondary: 214.74 100% 92.55%;
-    --secondary-foreground: 216 100% 0.98%;
-
-    --muted: 213.6 100% 95.1%;
-    --muted-foreground: 0 0% 40%;
-
-    --accent: 213.6 100% 95.1%;
-    --accent-foreground: 214.12 100% 50%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 0 0% 90.2%;
-    --input: 0 0% 90.2%;
-    --ring: 214.12 100% 50%;
-
-    --radius: 0.5rem;
+    --score-gray: 220 9% 55%;
+    --score-red: 0 91% 65%;
+    --score-orange: 25 95% 58%;
+    --score-yellow: 45 93% 55%;
+    --score-green: 142 71% 50%;
+    --score-gold: 45 93% 62%;
   }
 }
 

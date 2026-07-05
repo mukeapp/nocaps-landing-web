@@ -50,6 +50,14 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        score: {
+          gray: 'hsl(var(--score-gray))',
+          red: 'hsl(var(--score-red))',
+          orange: 'hsl(var(--score-orange))',
+          yellow: 'hsl(var(--score-yellow))',
+          green: 'hsl(var(--score-green))',
+          gold: 'hsl(var(--score-gold))',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

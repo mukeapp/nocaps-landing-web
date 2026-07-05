@@ -24,7 +24,7 @@ const HomePage = () => {
 
             {/* hero */}
             <Wrapper>
-                <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] -z-10 h-[150vh]" />
+                <div className="absolute inset-0 dark:bg-[linear-gradient(to_right,rgba(226,232,240,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(226,232,240,0.06)_1px,transparent_1px)] bg-[linear-gradient(to_right,rgba(22,22,22,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(22,22,22,0.06)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] -z-10 h-[150vh]" />
 
                 <Container>
                     <div className="flex flex-col items-center justify-center py-20 h-full">
