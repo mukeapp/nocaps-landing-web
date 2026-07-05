@@ -55,13 +55,17 @@ body {
 
     --radius: 0.5rem;
 
-    /* Score tiers (color-coded habit/link/item scoring, mobile ScoreInfo concept) */
-    --score-gray: 220 9% 65%;
-    --score-red: 0 84% 60%;
-    --score-orange: 25 95% 53%;
-    --score-yellow: 45 93% 47%;
+    /* Score tiers — exact values from mobile's core/utils/utilities/score.ts
+       colorMap, fixed regardless of site theme (mobile has no light/dark
+       variant of these, they're absolute brand colors for score tiers):
+       gray=UNKNOWN #4b5563, red=BAD #f87171, purple=POOR #a855f7,
+       orange=AVERAGE #fb923c, green=GOOD #22c55e, gold=EXCELLENT #fbbf24 */
+    --score-gray: 215 14% 34%;
+    --score-red: 0 91% 71%;
+    --score-purple: 271 91% 65%;
+    --score-orange: 27 96% 61%;
     --score-green: 142 71% 45%;
-    --score-gold: 45 93% 58%;
+    --score-gold: 43 96% 56%;
   }
 
   .dark {
@@ -96,12 +100,12 @@ body {
 
     --radius: 0.5rem;
 
-    --score-gray: 220 9% 55%;
-    --score-red: 0 91% 65%;
-    --score-orange: 25 95% 58%;
-    --score-yellow: 45 93% 55%;
-    --score-green: 142 71% 50%;
-    --score-gold: 45 93% 62%;
+    --score-gray: 215 14% 34%;
+    --score-red: 0 91% 71%;
+    --score-purple: 271 91% 65%;
+    --score-orange: 27 96% 61%;
+    --score-green: 142 71% 45%;
+    --score-gold: 43 96% 56%;
   }
 }
 

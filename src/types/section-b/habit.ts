@@ -29,9 +29,14 @@ export interface HabitStackComponent {
   sectorId?: string;
   icon?: string;
   iconColor?: string;
+  bannerImage?: string;
   isPublic?: boolean;
   hideFromFriends?: boolean;
   status?: HabitStatus;
+  personsCount?: number;
+  focus?: string;
+  unit?: string;
+  priority?: string;
   scoreComponent?: ScoreComponent;
   habitData?: HabitComponent[];
   createdAt?: Date | string;

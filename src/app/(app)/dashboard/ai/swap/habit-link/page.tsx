@@ -1,5 +1,5 @@
-import { ComingSoon } from "@/components/dashboard/coming-soon";
+import { SwapScreen } from "@/components/dashboard/swap-screen";
 
-export default function AISwapHabitLinkPage() {
-  return <ComingSoon feature="AI Habit Link Swap" />;
+export default function SwapHabitLinkPage() {
+  return <SwapScreen type="habit-link" />;
 }

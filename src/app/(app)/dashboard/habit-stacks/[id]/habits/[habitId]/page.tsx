@@ -6,11 +6,11 @@ import { useParams, useRouter } from "next/navigation";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { DeleteHabitOnly, GetHabitComponentsByHabitStackId } from "@/lib/api/section-b/habit";
-import { GetHabitLinksComponentsByHabitId, DeleteHabitLinks } from "@/lib/api/section-b/habit-link";
+import { GetHabitLinksComponentsByHabitId } from "@/lib/api/section-b/habit-link";
 import type { HabitComponent, HabitLinkComponent } from "@/types/section-b/habit";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScoreBadge } from "@/components/dashboard/score-badge";
+import { HabitLinkRow } from "@/components/dashboard/habit-link-row";
 import { DataState } from "@/components/dashboard/data-state";
 import {
   AlertDialog,
@@ -117,28 +117,23 @@ export default function HabitDetailPage() {
             </Button>
           </div>
 
-          <DataState loading={false} error={null} empty={links.length === 0} emptyMessage="No links on this habit yet.">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {links.map((link) => (
-                <Link
-                  key={link.documentId ?? link.id}
-                  href={`/dashboard/habit-stacks/${params.id}/habits/${params.habitId}/links/${link.documentId ?? link.id}`}
-                >
-                  <Card className="h-full transition-colors hover:bg-accent/50">
-                    <CardHeader>
-                      <CardTitle className="text-base">{link.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {link.company ? (
-                        <p className="text-sm text-muted-foreground">{link.company}</p>
-                      ) : null}
-                      <ScoreBadge scoreInfo={link.scoreComponent?.scoreInfo} />
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
+          {links.length === 0 ? (
+            <div className="flex h-[30vh] items-center justify-center">
+              <p className="text-base font-semibold text-white">No Habit Link Found.</p>
             </div>
-          </DataState>
+          ) : (
+            links.map((link) => (
+              <HabitLinkRow
+                key={link.documentId ?? link.id}
+                link={link}
+                onOpen={(lk) =>
+                  router.push(
+                    `/dashboard/habit-stacks/${params.id}/habits/${params.habitId}/links/${lk.documentId ?? lk.id}`,
+                  )
+                }
+              />
+            ))
+          )}
         </div>
       ) : null}
     </DataState>

@@ -7,6 +7,7 @@ import Icons from "@/components/global/icons";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SidebarNav } from "@/components/dashboard/sidebar-nav";
+import { DrawerLogo } from "@/components/dashboard/drawer-logo";
 import { UserMenu } from "@/components/global/user-menu";
 
 export function DashboardHeader() {
@@ -20,11 +21,11 @@ export function DashboardHeader() {
             <Menu className="h-5 w-5" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-64 p-4">
-          <Link href="/" className="mb-6 flex items-center gap-2">
-            <Icons.logo className="h-7 w-7" />
-            <span className="text-lg font-medium">NoCaps</span>
-          </Link>
+        <SheetContent
+          side="left"
+          className="w-64 overflow-y-auto bg-[rgba(25,25,25,1)] bg-[url('/assets/images/draw.png')] bg-cover p-4"
+        >
+          <DrawerLogo />
           <SidebarNav onNavigate={() => setOpen(false)} />
         </SheetContent>
       </Sheet>

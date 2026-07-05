@@ -54,6 +54,29 @@ export const DeleteHabitStack = async (payload: { id: string }) => {
   }
 };
 
+export const fetchHabitStackComponentsByUserAndSector = async (
+  userId: string,
+  sectorId: string,
+) => {
+  try {
+    const response = await API.get(`/habit-stack-components/user/${userId}/sector/${sectorId}`);
+    return { data: response.data, status: response.status };
+  } catch (err) {
+    console.log("fetchHabitStackComponentsByUserAndSector error:", err);
+    return { data: null, status: 500 };
+  }
+};
+
+export const CopyHabitStackToAnotherUser = async (payload: { data: any }) => {
+  try {
+    const response = await API.post(`/habit-stack-data-migration/copy-to-new-user`, payload.data);
+    return { data: response.data, status: response.status };
+  } catch (err) {
+    console.log("CopyHabitStackToAnotherUser error:", err);
+    return { data: null, status: 500 };
+  }
+};
+
 export const GetAllSectorComponents = async () => {
   try {
     const response = await API.get(`/sector-components`);

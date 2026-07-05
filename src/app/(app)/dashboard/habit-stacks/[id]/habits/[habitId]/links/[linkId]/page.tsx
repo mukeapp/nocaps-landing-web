@@ -12,14 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ScoreBadge } from "@/components/dashboard/score-badge";
 import { DataState } from "@/components/dashboard/data-state";
 import { HabitLinkItemDialog } from "@/components/dashboard/habit-link-item-dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { HabitLinkItemCard } from "@/components/dashboard/habit-link-item-card";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -138,50 +131,33 @@ export default function HabitLinkDetailPage() {
             />
           </div>
 
-          <DataState loading={false} error={null} empty={items.length === 0} emptyMessage="No items on this link yet.">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Store</TableHead>
-                  <TableHead>Price</TableHead>
-                  <TableHead>Qty</TableHead>
-                  <TableHead className="w-24" />
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {items.map((item) => (
-                  <TableRow key={item.documentId ?? item.id}>
-                    <TableCell className="font-medium">{item.name}</TableCell>
-                    <TableCell>{item.companyName ?? "—"}</TableCell>
-                    <TableCell>{item.price != null ? `$${item.price}` : "—"}</TableCell>
-                    <TableCell>{item.quantity ?? "—"}</TableCell>
-                    <TableCell>
-                      <div className="flex justify-end gap-1">
-                        <HabitLinkItemDialog
-                          habitLinkId={params.linkId}
-                          item={item}
-                          onSaved={loadItems}
-                          trigger={
-                            <Button variant="ghost" size="icon">
-                              <Pencil className="h-4 w-4" />
-                            </Button>
-                          }
-                        />
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleDeleteItem(item.documentId ?? item.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </DataState>
+          {items.length === 0 ? (
+            <div className="flex h-[30vh] items-center justify-center">
+              <p className="text-base font-semibold text-white">No Item Found.</p>
+            </div>
+          ) : (
+            items.map((item) => (
+              <div key={item.documentId ?? item.id} className="flex items-center gap-2">
+                <div className="flex-1">
+                  <HabitLinkItemCard
+                    item={item}
+                    canEdit
+                    onDelete={(it) => handleDeleteItem(it.documentId ?? it.id)}
+                  />
+                </div>
+                <HabitLinkItemDialog
+                  habitLinkId={params.linkId}
+                  item={item}
+                  onSaved={loadItems}
+                  trigger={
+                    <Button variant="ghost" size="iconx" className="shrink-0 text-white/50 hover:text-white">
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Button>
+                  }
+                />
+              </div>
+            ))
+          )}
         </div>
       ) : null}
     </DataState>

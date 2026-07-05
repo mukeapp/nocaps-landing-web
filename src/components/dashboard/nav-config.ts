@@ -1,28 +1,30 @@
-import {
-  Boxes,
-  Calendar,
-  Library,
-  Settings,
-  Sparkles,
-  Store,
-  UserCircle,
-  UsersRound,
-  CreditCard,
-  Newspaper,
-} from "lucide-react";
+import { BookOpen, CircleUserRound, Layers, LogOut, Newspaper } from "lucide-react";
 
-// Mirrors mobile's CustomDrawerContent menu (core/components/section-b/drawer),
-// in the same order. `builtOut: true` items are fully implemented this pass;
-// everything else renders the shared ComingSoon placeholder.
-export const DASHBOARD_NAV = [
-  { label: "My Habit Stacks", href: "/dashboard/habit-stacks", icon: Boxes, builtOut: true },
-  { label: "Habit Library", href: "/dashboard/habit-library", icon: Library, builtOut: false },
-  { label: "Habit Market", href: "/dashboard/market", icon: Store, builtOut: false },
-  { label: "Habit Calendar", href: "/dashboard/calendar", icon: Calendar, builtOut: false },
-  { label: "AI Tools", href: "/dashboard/ai", icon: Sparkles, builtOut: false },
-  { label: "Friends & Habits", href: "/dashboard/friends", icon: UsersRound, builtOut: false },
-  { label: "My Posts", href: "/dashboard/posts", icon: Newspaper, builtOut: false },
-  { label: "Subscribe", href: "/dashboard/subscription", icon: CreditCard, builtOut: true },
-  { label: "My Profile", href: "/dashboard/profile", icon: UserCircle, builtOut: false },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings, builtOut: true },
-] as const;
+// Ported 1:1 from mobile's CustomDrawerContent
+// (core/components/section-b/drawer/CustomDrawerContent/index.tsx) — same items,
+// same order, same routes. Do not add items that aren't in that file: mobile's
+// drawer has no "AI Tools" or "Habit Calendar" entry (those screens exist but
+// aren't linked from the drawer), and "Home" and "My Habit Stacks" are two
+// separate entries that both point at the same route — that's how mobile is
+// built, not a bug to dedupe away.
+export type NavItem = {
+  label: string;
+  href: string;
+  icon?: typeof Layers;
+  /** Path under public/, mirrors mobile's custom Image-based drawer icons */
+  image?: string;
+};
+
+export const DASHBOARD_NAV: NavItem[] = [
+  { label: "Home", href: "/dashboard/habit-stacks", image: "/assets/images/hm.png" },
+  { label: "Subscribe", href: "/dashboard/subscription", image: "/assets/images/taj.png" },
+  { label: "My Profile", href: "/dashboard/profile", icon: CircleUserRound },
+  { label: "Market", href: "/dashboard/market", image: "/assets/images/box.png" },
+  { label: "MyPosts", href: "/dashboard/posts", icon: Newspaper },
+  { label: "Friends & Habits", href: "/dashboard/friends", image: "/assets/images/per.png" },
+  { label: "My Habit Stacks", href: "/dashboard/habit-stacks", icon: Layers },
+  { label: "My Habit Library", href: "/dashboard/habit-library", icon: BookOpen },
+  { label: "Settings", href: "/dashboard/settings", image: "/assets/images/set.png" },
+];
+
+export const LOGOUT_ICON = LogOut;

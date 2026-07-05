@@ -82,3 +82,19 @@ export const IncreaseRemainingCreditsByUserId = async (payload: {
     return { data: null, status: 500 };
   }
 };
+
+export const DecreaseRemainingCreditsByUserId = async (payload: {
+  userId: string;
+  amount: number;
+}) => {
+  try {
+    const response = await API.put(
+      `/user-revenue-cat/remaining-credits/decrease/by-user-id/${payload.userId}`,
+      { amount: payload.amount },
+    );
+    return { data: response.data, status: response.status };
+  } catch (err) {
+    console.log("DecreaseRemainingCreditsByUserId error:", err);
+    return { data: null, status: 500 };
+  }
+};

@@ -16,6 +16,10 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        opensans: ['var(--font-opensans)'],
+        poppins: ['var(--font-poppins)'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -53,8 +57,8 @@ module.exports = {
         score: {
           gray: 'hsl(var(--score-gray))',
           red: 'hsl(var(--score-red))',
+          purple: 'hsl(var(--score-purple))',
           orange: 'hsl(var(--score-orange))',
-          yellow: 'hsl(var(--score-yellow))',
           green: 'hsl(var(--score-green))',
           gold: 'hsl(var(--score-gold))',
         },
