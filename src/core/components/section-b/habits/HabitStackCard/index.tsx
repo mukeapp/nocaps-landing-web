@@ -11,7 +11,7 @@ import {fetchUserByUserId} from "@/core/services/section-a/user";
 import {withOpacity} from "@/core/utils/utilities/color";
 import {fetchUnitsByDocumentId} from "@/core/services/section-b/section-b-0/units";
 import React, {useEffect, useState} from "react";
-import {StyleSheet, View} from "react-native";
+import {Platform, StyleSheet, View} from "react-native";
 
 type Props = {
   hideCalendar?: boolean;
@@ -134,7 +134,13 @@ const HabitStackCard: React.FC<Props> = ({
   }, [stack?.unit]);
 
   return (
-    <View style={[s.wrapper, { borderColor: stackBorderColor, borderWidth: 1 }]}>
+    <View
+      style={[
+        s.wrapper,
+        { borderColor: stackBorderColor, borderWidth: 1 },
+        Platform.OS === "web" && { marginBottom: 0, height: "100%" },
+      ]}
+    >
       <Banner
         dataType="habit-stack"
         bannerImage={stack?.bannerImage}
@@ -191,7 +197,38 @@ const HabitStackCard: React.FC<Props> = ({
        )
       }
 
-      {expanded &&
+      {Platform.OS === "web" ? (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateRows: expanded ? "1fr" : "0fr",
+            opacity: expanded ? 1 : 0,
+            transition:
+              "grid-template-rows 300ms ease-out, opacity 300ms ease-out",
+          }}
+        >
+          <div style={{ overflow: "hidden" }}>
+            {(stack?.habitData ?? []).map((h, i) => (
+              <HabitCard
+                key={h.documentId ?? h.id ?? i}
+                habit={h}
+                onOpenItem={onOpenLinkItem}
+                costSymbol={costUnit?.symbol ?? ""}
+                hideCalendar={hideCalendar}
+                canEdit={canEdit}
+                showExpandedButton={showExpandedButton}
+                showHabitLinkNav={showHabitLinkNav}
+                canGoToSwapScreen={canGoToSwapScreen}
+                showBottomUpSheetItemList={showBottomUpSheetItemList}
+                onScoreComplete={onScoreComplete}
+                canAIScore={canAIScore}
+                ScreenOrigin={ScreenOrigin}
+              />
+            ))}
+          </div>
+        </div>
+      ) : (
+        expanded &&
         (stack?.habitData ?? []).map((h, i) => (
           <HabitCard
             key={h.documentId ?? h.id ?? i}
@@ -208,7 +245,8 @@ const HabitStackCard: React.FC<Props> = ({
             canAIScore={canAIScore}
             ScreenOrigin={ScreenOrigin}
           />
-        ))}
+        ))
+      )}
 
       <HabitFooterRow
         canEdit={canEdit}

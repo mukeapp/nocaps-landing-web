@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 
 import { persistor, store } from "@/core/redux/store";
 import { selectUserAuth } from "@/core/redux/user-data";
-import CustomDrawerContent from "@/core/components/section-b/drawer/CustomDrawerContent";
+import DashboardDrawer from "@/core/components/section-b/drawer/DashboardDrawer";
 
-import { NavigationProvider, useDrawerOpen, useScreenProps } from "./index";
+import { NavigationProvider, useScreenProps } from "./index";
 
 type Section = "auth" | "app";
 
@@ -44,28 +44,6 @@ function AuthStackSwitcher({ section }: { section: Section }) {
   }, [auth, section, router]);
 
   return null;
-}
-
-function DrawerOverlay() {
-  const drawerOpen = useDrawerOpen();
-  const { navigation } = useScreenProps();
-  if (!drawerOpen) return null;
-  // Drawertab sets drawerStyle width wp(100) — a full-viewport drawer.
-  return (
-    <View
-      style={{
-        position: "fixed" as any,
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 1000,
-        backgroundColor: "#0D0D0D",
-      }}
-    >
-      <CustomDrawerContent navigation={navigation} />
-    </View>
-  );
 }
 
 function ScreenRenderer({
@@ -107,7 +85,7 @@ export default function ScreenPage({
           >
             <ScreenRenderer component={component} />
           </View>
-          {section === "app" ? <DrawerOverlay /> : null}
+          {section === "app" ? <DashboardDrawer /> : null}
         </NavigationProvider>
       </PersistGate>
     </Provider>

@@ -375,35 +375,51 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
   });
 
   return (
-    <View style={MainStyles.root}>
-      <TouchableOpacity
-        style={MainStyles.viewone}
-        onPress={() => navigation.openDrawer()}
-      >
-        <View style={styles.box}>
-          <Image
-            source={Images.logo}
-            resizeMode="contain"
-            style={styles.logo}
-          />
-        </View>
-        <Text style={MainStyles.text20}>NoCaps</Text>
-      </TouchableOpacity>
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.header}>
-          <Text
-            style={styles.headerTitle}
-            numberOfLines={1}
-            adjustsFontSizeToFit
+    <View
+      style={[
+        MainStyles.root,
+        Platform.OS === "web" && {
+          paddingHorizontal: 0,
+          paddingTop: 0,
+        },
+      ]}
+    >
+      {/* Sticky top bar — web native */}
+      <div className="sticky top-0 z-40 flex items-center justify-between px-4 h-14 bg-background/80 backdrop-blur-lg border-b border-border">
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => navigation.openDrawer()}
+            className="grid place-items-center h-9 w-9 rounded-lg hover:bg-accent transition-colors"
+            aria-label="Open menu"
           >
+            <MaterialCommunityIcons name="menu" size={22} color={Colors.white} />
+          </button>
+          <div className="h-8 w-8 rounded-lg bg-card grid place-items-center overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={(Images.logo as any)?.default ?? Images.logo}
+              alt="NoCaps"
+              className="h-5 w-5 object-contain"
+            />
+          </div>
+          <span className="text-base font-semibold text-foreground">NoCaps</span>
+        </div>
+      </div>
+
+      {/* Scrollable content */}
+      <div className="px-4 md:px-6 lg:px-8 py-6 max-w-screen-2xl mx-auto w-full">
+        {/* Header */}
+        <div className="mb-1">
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
             Build Better habits, one day at a time.
-          </Text>
-        </View>
+          </h1>
+        </div>
+        <p className="text-sm text-muted-foreground mb-4">
+          Let NoCap guide your journey!
+        </p>
 
-        <Text style={MainStyles.text16}>Let NoCap guide your journey!</Text>
-
-        <View style={styles.scoreRow}>
+        {/* Score legend */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-5">
           {[
             { label: "BAD", color: "#e74c3c" },
             { label: "POOR", color: "#8e44ad" },
@@ -412,12 +428,17 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
             { label: "EXCELLENT", color: "#f1c40f" },
             { label: "UNKNOWN", color: "#6B7280" },
           ].map(({ label, color }) => (
-            <View key={label} style={styles.scoreItem}>
-              <View style={[styles.scoreDot, { backgroundColor: color }]} />
-              <Text style={styles.scoreLabel}>{label}</Text>
-            </View>
+            <div key={label} className="flex items-center gap-1.5">
+              <span
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: color }}
+              />
+              <span className="text-[10px] uppercase tracking-wide text-muted-foreground font-medium">
+                {label}
+              </span>
+            </div>
           ))}
-        </View>
+        </div>
 
         <BannerAd
           unitId={TestIds.BANNER}
@@ -430,27 +451,23 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
           }}
         />
 
+        {/* Stack grid */}
         {stacks.length ? (
-          <View style={styles.listWrap}>
-            <FlatList
-              data={listData}
-              keyExtractor={(item, i) =>
-                item.type === 'ad'
-                  ? item.id
-                  : String(item.data.documentId ?? item.data.id ?? i)
-              }
-              scrollEnabled={false}
-              renderItem={({ item }) => {
-                if (item.type === 'ad') {
-                  return (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+            {listData.map((item, i) => {
+              if (item.type === "ad") {
+                return (
+                  <div key={item.id} className="col-span-full flex justify-center py-2">
                     <BannerAd
                       unitId={TestIds.BANNER}
                       size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
                       requestOptions={{ requestNonPersonalizedAdsOnly: true }}
                     />
-                  );
-                }
-                return (
+                  </div>
+                );
+              }
+              return (
+                <div key={String(item.data.documentId ?? item.data.id ?? i)} className="min-w-0">
                   <HabitStackCard
                     canEdit={true}
                     stack={item.data}
@@ -466,49 +483,58 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
                     canAIScore={true}
                     bannerImageShowIconGoToHabitAndFriends={false}
                   />
-                );
-              }}
-            />
-          </View>
+                </div>
+              );
+            })}
+          </div>
         ) : (
-          <View style={styles.notfound}>
-            <Text style={styles.nottxt}>No Habit Stack Found.</Text>
-          </View>
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <MaterialCommunityIcons
+              name="layers-outline"
+              size={48}
+              color={Colors.text_color}
+            />
+            <p className="mt-4 text-lg font-semibold text-foreground">
+              No Habit Stack Found.
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Create your first habit stack to get started.
+            </p>
+            <button
+              onClick={() =>
+                navigation.navigate("add_edit_habitstack", { habitstackdata: {} })
+              }
+              className="mt-5 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 text-sm font-medium transition-colors"
+            >
+              Create Habit Stack
+            </button>
+          </div>
         )}
 
-        <View style={[MainStyles.viewtwo, { marginVertical: hp("1%") }]}>
-          <Button
-            text="Add Habit Stack"
-            wid="45"
-            bg={Colors.background_color}
-            bd={Colors.white}
-            ftn={14}
-            mov={handleOpenAddOptions}
-          />
-
-          <Button
-            text="Create Habit Stack"
-            wid="45"
-            bg={Colors.background_color}
-            bd={Colors.white}
-            ftn={14}
-            mov={() =>
+        {/* Action buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 mt-8">
+          <button
+            onClick={handleOpenAddOptions}
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-5 text-sm font-medium transition-colors flex-1 sm:flex-none sm:px-8"
+          >
+            Add Habit Stack
+          </button>
+          <button
+            onClick={() =>
               navigation.navigate("add_edit_habitstack", { habitstackdata: {} })
             }
-          />
-        </View>
-
-        <View style={[MainStyles.viewtwo, { marginVertical: hp("1%") }]}>
-          <Button
-            text="Next"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            mov={() => navigation.navigate("no-cap-post-home")}
-          />
-        </View>
-      </ScrollView>
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-5 text-sm font-medium transition-colors flex-1 sm:flex-none sm:px-8"
+          >
+            Create Habit Stack
+          </button>
+          <button
+            onClick={() => navigation.navigate("no-cap-post-home")}
+            className="inline-flex items-center justify-center rounded-md bg-foreground text-background hover:bg-foreground/90 h-10 px-5 text-sm font-medium transition-colors flex-1 sm:flex-none sm:px-8"
+          >
+            Next
+          </button>
+        </div>
+      </div>
 
       {/* Bottom Sheet */}
       <RBSheet
@@ -563,9 +589,9 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
       </RBSheet>
 
       {loading && (
-        <View style={styles.loaderOverlay} pointerEvents="none">
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
+        <div className="fixed inset-0 z-50 grid place-items-center bg-background/60 backdrop-blur-sm">
+          <div className="h-8 w-8 rounded-full border-2 border-muted border-t-foreground animate-spin" />
+        </div>
       )}
 
       {/* AI Confirm Modal */}
