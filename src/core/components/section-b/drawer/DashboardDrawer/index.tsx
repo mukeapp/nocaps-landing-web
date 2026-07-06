@@ -109,9 +109,10 @@ export default function DashboardDrawer() {
         <nav className="flex flex-col gap-1 px-3 py-4 overflow-y-auto flex-1">
           {NAV_ITEMS.map((item) => {
             const isActive =
-              currentRoute === item.route ||
-              (item.route === "nocap-drawer" &&
-                currentRoute === "my-habit-stacks");
+              !item.href &&
+              (currentRoute === item.route ||
+                (item.route === "nocap-drawer" &&
+                  currentRoute === "my-habit-stacks"));
             const Icon = item.icon;
             return (
               <button
