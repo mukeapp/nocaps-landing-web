@@ -26,8 +26,18 @@ function AuthStackSwitcher({ section }: { section: Section }) {
       document.cookie = "nocap_session=1; path=/; max-age=31536000; samesite=lax";
       router.replace("/dashboard");
     } else if (!auth && section === "app") {
+      // Web equivalent of mobile's logout stack switch: clear the session
+      // cookie, wipe every persisted redux slice, land on the marketing home.
       document.cookie = "nocap_session=; path=/; max-age=0";
-      router.replace("/login");
+      try {
+        for (const key of Object.keys(localStorage)) {
+          if (key.startsWith("persist:")) localStorage.removeItem(key);
+        }
+      } catch {
+        // storage unavailable — nothing to clean
+      }
+      persistor.purge();
+      router.replace("/");
     } else if (auth) {
       document.cookie = "nocap_session=1; path=/; max-age=31536000; samesite=lax";
     }

@@ -1,11 +1,11 @@
 import { Container } from "@/components";
 import Icons from "@/components/global/icons";
-import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
 // Dynamically import the NavLinks component with no SSR
 const NavLinks = dynamic(() => import("./nav-links"), { ssr: false });
+const NavAuth = dynamic(() => import("./nav-auth"), { ssr: false });
 
 const Navbar = () => {
 
@@ -25,12 +25,7 @@ const Navbar = () => {
                         <NavLinks />
                     </nav>
                     <div className="flex items-center gap-4">
-                        <Link href="/login" className={buttonVariants({ size: "sm", variant: "ghost" })}>
-                            Login
-                        </Link>
-                        <Link href="/signup" className={buttonVariants({ size: "sm", className: "hidden md:flex" })}>
-                        Get Beta Access Now
-                        </Link>
+                        <NavAuth />
                     </div>
                 </div>
             </Container>

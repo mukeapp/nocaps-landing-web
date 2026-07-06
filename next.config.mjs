@@ -23,12 +23,8 @@ const EXPO_PUBLIC_VARS = [
   'EXPO_PUBLIC_FEATURE_FLAG_AI_SWAP_HABITLINKITEM_ON',
   'EXPO_PUBLIC_FEATURE_FLAG_AI_SWAP_HABITLINK_ON',
   'EXPO_PUBLIC_FEATURE_FLAG_AI_SWAP_HABIT_ON',
-  'EXPO_PUBLIC_GOOGLE_ANDROID_CLIENT_ID',
-  'EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID',
   'EXPO_PUBLIC_GOOGLE_MAPS_API_KEY',
   'EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID',
-  'EXPO_PUBLIC_RC_ANDROID_API_KEY',
-  'EXPO_PUBLIC_RC_IOS_API_KEY',
 ];
 
 const shim = (name) => new URL(`./src/shims/${name}`, import.meta.url).pathname;
@@ -59,6 +55,14 @@ const nextConfig = {
     'toggle-switch-react-native',
   ],
   webpack: (config, { webpack }) => {
+    // The copied mobile barrels re-export TS types (e.g. IUserRevenueCatApiPayload,
+    // SelectionItem); Metro drops these silently, webpack warns on every page.
+    // They have no runtime existence, so the warning is pure noise.
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings || []),
+      { message: /export .* was not found in/ },
+    ];
+
     // require("../assets/images/x.png") in the copied mobile code must return a
     // plain URL string (react-native-web Image handles string sources). Scope
     // asset/resource to the mobile trees and keep Next's image loader away.
@@ -87,7 +91,8 @@ const nextConfig = {
 
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      'react-native$': 'react-native-web',
+      // react-native-web plus a functional Alert.alert (RNW's is a silent no-op)
+      'react-native$': shim('react-native-web-plus'),
       // Web shims for native-only modules (see approved plan, Step 0)
       '@expo/vector-icons': shim('expo-vector-icons'),
       '@react-navigation/native': shim('react-navigation'),
