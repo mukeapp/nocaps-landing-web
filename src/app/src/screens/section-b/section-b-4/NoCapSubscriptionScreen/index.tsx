@@ -14,6 +14,7 @@ const isWeb = Platform.OS === "web";
 import {GetAllSubscriptions} from "@/core/api/section-b";
 import {DefaultLoader as Loader} from "@/core/components/section-a";
 import {Header2} from "@/core/components/section-b";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import {DowngradeSheet} from "@/core/components/section-b-5";
 import {MainStyles} from "@/core/constants/styles";
 import {useNoCapSubscriptionForm} from "@/core/hooks";
@@ -347,15 +348,23 @@ const NoCapSubscriptionScreen: React.FC<{ navigation: any; route: any }> = ({
   };
 
   return (
-    <View style={MainStyles.root2}>
-      <Header2
-        title="SUBSCRIPTION"
-        titleTextFormat={1}
-        titleVisibilityIcon={false}
-        showSettingsIcon={false}
-        navigation={navigation}
-        cameFromDrawerTab={form.cameFromDrawerTab}
-      />
+    <View
+      style={[
+        MainStyles.root2,
+        isWeb && { paddingHorizontal: 0, paddingTop: 0 },
+      ]}
+    >
+      <WebDashboardHeader title="SUBSCRIPTION" onOpenDrawer={() => navigation.openDrawer()} />
+      {!isWeb && (
+        <Header2
+          title="SUBSCRIPTION"
+          titleTextFormat={1}
+          titleVisibilityIcon={false}
+          showSettingsIcon={false}
+          navigation={navigation}
+          cameFromDrawerTab={form.cameFromDrawerTab}
+        />
+      )}
       <Loader status={form.loading} />
 
       <ScrollView
