@@ -7,6 +7,7 @@ import {
 import {
   ActivityIndicator,
   Modal,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -17,6 +18,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 import {Colors} from "@/core/constants/Colors";
 import {HabitComponent, RouterData} from "@/core/models/section-b";
@@ -688,22 +691,22 @@ const HeaderControls: React.FC<Props> = ({
 const s = StyleSheet.create({
   controls: { flexDirection: "row", alignItems: "center" },
   ctrl: {
-    width: wp("6.5%"),
-    height: wp("6.5%"),
-    borderRadius: wp("7%"),
+    width: isWeb ? 30 : wp("6.5%"),
+    height: isWeb ? 30 : wp("6.5%"),
+    borderRadius: isWeb ? 15 : wp("7%"),
     borderWidth: 1.5,
     borderColor: "rgba(255,255,255,0.07)",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp("1%"),
+    marginLeft: isWeb ? 6 : wp("1%"),
   },
   ctrlWhite: {
-    width: wp("6.5%"),
-    height: wp("6.5%"),
-    borderRadius: wp("7%"),
+    width: isWeb ? 30 : wp("6.5%"),
+    height: isWeb ? 30 : wp("6.5%"),
+    borderRadius: isWeb ? 15 : wp("7%"),
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp("1%"),
+    marginLeft: isWeb ? 6 : wp("1%"),
     backgroundColor: Colors.white, // will be overridden for the sync button
   },
   modalOverlay: {
@@ -715,7 +718,7 @@ const s = StyleSheet.create({
   menuModal: {
     backgroundColor: Colors.content_back,
     borderRadius: 12,
-    width: wp(50),
+    width: isWeb ? 240 : wp(50),
     paddingVertical: 8,
     borderWidth: 1,
     borderColor: Colors.borderline,

@@ -1,7 +1,9 @@
 import React, { useRef, useState } from "react";
-import { View, Image, StyleSheet, Pressable, Text, ImageSourcePropType } from "react-native";
+import { Platform, View, Image, StyleSheet, Pressable, Text, ImageSourcePropType } from "react-native";
 import { useSelector } from "react-redux";
 import { widthPercentageToDP as wp } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 import { Colors } from "@/core/constants/Colors";
 import { Images } from "@/core/constants/Images";
 import { HabitComponent } from "@/core/models/section-b";
@@ -73,14 +75,14 @@ const HeaderIcon: React.FC<Props> = ({ iconSource, starTint, iconColor = 'rgba(1
 
 const s = StyleSheet.create({
   iconWrap: {
-    width: wp("12%"),
-    height: wp("12%"),
-    borderRadius: wp("3%"),
+    width: isWeb ? 44 : wp("12%"),
+    height: isWeb ? 44 : wp("12%"),
+    borderRadius: isWeb ? 10 : wp("3%"),
     backgroundColor: Colors.icon_back,
     alignItems: "center",
     justifyContent: "center",
   },
-  icon: { width: wp("7%"), height: wp("7%") },
+  icon: { width: isWeb ? 26 : wp("7%"), height: isWeb ? 26 : wp("7%") },
   starBadgeRow: {
     position: "absolute",
     right: -6,

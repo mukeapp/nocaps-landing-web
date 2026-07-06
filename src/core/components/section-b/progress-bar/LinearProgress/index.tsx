@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Platform, View, Text, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
+
+const isWeb = Platform.OS === "web";
 
 interface LinearProgressProps {
   progress: number; // 0 - 100
@@ -40,14 +42,14 @@ const LinearProgress = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: wp(19),
+    width: isWeb ? 80 : wp(19),
     borderRadius: 5.5,
     overflow: "hidden",
     justifyContent: "center",
     backgroundColor: "transparent",
   },
   progressBar: {
-    height: hp(1.4),
+    height: isWeb ? 8 : hp(1.4),
   },
 });
 

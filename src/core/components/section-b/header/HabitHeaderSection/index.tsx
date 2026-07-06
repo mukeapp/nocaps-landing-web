@@ -1,10 +1,12 @@
 import {useNavigation} from "@react-navigation/native";
 import React from "react";
-import {ImageSourcePropType, StyleSheet, Text, View} from "react-native";
+import {ImageSourcePropType, Platform, StyleSheet, Text, View} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 import {Colors} from "@/core/constants/Colors";
 import {MainStyles} from "@/core/constants/styles";
@@ -129,10 +131,10 @@ const s = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: hp("2%"),
-    marginTop: hp("1%"),
+    marginBottom: isWeb ? 10 : hp("2%"),
+    marginTop: isWeb ? 6 : hp("1%"),
   },
-  info: { marginLeft: wp("2%"), flex: 1 },
+  info: { marginLeft: isWeb ? 10 : wp("2%"), flex: 1 },
   header: {
     flexDirection: "row",
     alignItems: "center",

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Platform, View, Text, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -8,6 +8,8 @@ import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
 import StatusIcon from "../StatusIcon";
 import {formatCost} from "@/core/utils/utilities/numberUtils";
+
+const isWeb = Platform.OS === "web";
 
 type Props = {
   costSymbol?: string;
@@ -55,21 +57,21 @@ const MetaRow: React.FC<Props> = ({ costSymbol = "", cost, focus, priority, stat
 };
 
 const s = StyleSheet.create({
-  metaRow: { flexDirection: "row", alignItems: "center", marginTop: hp("1%") },
+  metaRow: { flexDirection: "row", alignItems: "center", marginTop: isWeb ? 6 : hp("1%") },
   tag: {
     backgroundColor: Colors.text_background,
-    paddingHorizontal: wp("2%"),
-    height: hp("2.5%"),
-    borderRadius: wp("10%"),
+    paddingHorizontal: isWeb ? 8 : wp("2%"),
+    height: isWeb ? 22 : hp("2.5%"),
+    borderRadius: 999,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: wp("1%"),
+    marginRight: isWeb ? 4 : wp("1%"),
   },
   status: {
     backgroundColor: Colors.text_background,
-    paddingHorizontal: hp("0.7%"),
-    paddingVertical: hp("0.7%"),
-    borderRadius: wp("4%"),
+    paddingHorizontal: isWeb ? 6 : hp("0.7%"),
+    paddingVertical: isWeb ? 6 : hp("0.7%"),
+    borderRadius: isWeb ? 8 : wp("4%"),
   },
 });
 

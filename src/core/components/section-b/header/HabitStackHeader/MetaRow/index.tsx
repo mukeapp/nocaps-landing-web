@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Platform, View, Text, StyleSheet } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
@@ -10,6 +10,8 @@ import {
   widthPercentageToDP as wp,
   fs,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 type Props = {
   cost: number;
@@ -72,7 +74,7 @@ const s = StyleSheet.create({
   metaRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: hp(1),
+    marginTop: isWeb ? 6 : hp(1),
   },
   tagsWrap: {
     flexDirection: "row",
@@ -82,34 +84,34 @@ const s = StyleSheet.create({
   },
   costTag: {
     backgroundColor: Colors.text_background,
-    paddingHorizontal: wp(2),
-    height: hp(3),
+    paddingHorizontal: isWeb ? 8 : wp(2),
+    height: isWeb ? 22 : hp(3),
     borderRadius: 999,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: wp(1.5),
+    marginRight: isWeb ? 6 : wp(1.5),
     flexShrink: 0,
   },
   tag: {
     backgroundColor: Colors.text_background,
-    paddingHorizontal: wp(2),
-    height: hp(3),
+    paddingHorizontal: isWeb ? 8 : wp(2),
+    height: isWeb ? 22 : hp(3),
     borderRadius: 999,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: wp(1.5),
+    marginRight: isWeb ? 6 : wp(1.5),
     flexShrink: 1,
-    minWidth: wp(10),
+    minWidth: isWeb ? 60 : wp(10),
   },
   status: {
     backgroundColor: Colors.text_background,
-    width: wp(7),
-    height: wp(7),
-    borderRadius: wp(3.5),
+    width: isWeb ? 26 : wp(7),
+    height: isWeb ? 26 : wp(7),
+    borderRadius: isWeb ? 13 : wp(3.5),
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
-    marginLeft: wp(1.5),
+    marginLeft: isWeb ? 6 : wp(1.5),
   },
 });
 

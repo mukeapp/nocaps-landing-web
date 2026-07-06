@@ -1,8 +1,10 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { Platform, View, Text, Image, StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "@/core/utils/responsive";
 import moment from "moment";
 import AntDesign from "@expo/vector-icons/AntDesign";
+
+const isWeb = Platform.OS === "web";
 
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
@@ -102,29 +104,29 @@ const s = StyleSheet.create({
   },
   chip: {
     backgroundColor: Colors.text_background,
-    paddingHorizontal: wp("2%"),
-    paddingVertical: hp("0.3%"),
-    borderRadius: wp("10%"),
-    marginBottom: hp("0.5%"),
+    paddingHorizontal: isWeb ? 8 : wp("2%"),
+    paddingVertical: isWeb ? 3 : hp("0.3%"),
+    borderRadius: isWeb ? 999 : wp("10%"),
+    marginBottom: isWeb ? 4 : hp("0.5%"),
   },
   daysRow: { flexDirection: "row", alignItems: "center" },
   day: {
-    width: wp("7%"),
-    height: hp("3%"),
-    borderRadius: wp("10%"),
+    width: isWeb ? 26 : wp("7%"),
+    height: isWeb ? 26 : hp("3%"),
+    borderRadius: isWeb ? 999 : wp("10%"),
     backgroundColor: Colors.text_background,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp("1%"),
+    marginLeft: isWeb ? 4 : wp("1%"),
   },
   dayFull: {
-    height: hp("3%"),
-    paddingHorizontal: wp("4%"),
-    borderRadius: wp("10%"),
+    height: isWeb ? 26 : hp("3%"),
+    paddingHorizontal: isWeb ? 16 : wp("4%"),
+    borderRadius: isWeb ? 999 : wp("10%"),
     backgroundColor: Colors.text_background,
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp("1%"),
+    marginLeft: isWeb ? 4 : wp("1%"),
   },
   friendsWrap: {
     width: wp(29),

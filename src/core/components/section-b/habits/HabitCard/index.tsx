@@ -1,9 +1,11 @@
 import React, {useEffect, useMemo, useState} from "react";
-import {StyleSheet, View} from "react-native";
+import {Platform, StyleSheet, View} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 import {
   Banner,
@@ -199,10 +201,10 @@ const s = StyleSheet.create({
   card: {
     backgroundColor: "#212426",
     borderTopWidth: 2.5,
-    borderRadius: wp("3%"),
-    paddingHorizontal: wp("1%"),
-    paddingBottom: hp("1%"),
-    marginTop: hp("3%"),
+    borderRadius: isWeb ? 10 : wp("3%"),
+    paddingHorizontal: isWeb ? 6 : wp("1%"),
+    paddingBottom: isWeb ? 8 : hp("1%"),
+    marginTop: isWeb ? 12 : hp("3%"),
   },
   hero: {
     width: wp(84),

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { Platform, View, Text, StyleSheet, ScrollView } from "react-native";
 import { MainStyles } from "@/core/constants/styles";
 import { formatCost, truncateString } from "@/core/utils";
 import { Unit } from "@/core/models/section-b/unit";
@@ -10,6 +10,8 @@ import {
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
+
+const isWeb = Platform.OS === "web";
 
 type Props = {
   costSymbol?: string;
@@ -87,33 +89,33 @@ const s = StyleSheet.create({
     width: "80%",
   },
   scrollContent: {
-    paddingRight: wp(4),
-    paddingVertical: hp(0.5),
+    paddingRight: isWeb ? 16 : wp(4),
+    paddingVertical: isWeb ? 4 : hp(0.5),
   },
   card: {
     backgroundColor: Colors.content_back,
     borderRadius: 12,
     overflow: "hidden",
-    minWidth: wp(28),
-    maxWidth: wp(40),
+    minWidth: isWeb ? 140 : wp(28),
+    maxWidth: isWeb ? 200 : wp(40),
     borderWidth: 1,
     borderColor: Colors.borderline,
   },
   cardSpacing: {
-    marginRight: wp(2.5),
+    marginRight: isWeb ? 10 : wp(2.5),
   },
   accentBar: {
     height: 3,
     width: "100%",
   },
   cardBody: {
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.2),
+    paddingHorizontal: isWeb ? 12 : wp(3),
+    paddingVertical: isWeb ? 8 : hp(1.2),
   },
   nameRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: hp(0.8),
+    marginBottom: isWeb ? 6 : hp(0.8),
   },
   dot: {
     width: 8,

@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Platform, View, Text, StyleSheet } from "react-native";
 import { widthPercentageToDP as wp } from "@/core/utils/responsive";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
+
+const isWeb = Platform.OS === "web";
 
 type Props = {
   likesCount: number;
@@ -24,7 +26,7 @@ const LikesPill: React.FC<Props> = ({ likesCount }) => {
 };
 
 const s = StyleSheet.create({
-  likes: { flexDirection: "row", alignItems: "center", marginLeft: wp("2%") },
+  likes: { flexDirection: "row", alignItems: "center", marginLeft: isWeb ? 8 : wp("2%") },
 });
 
 export default LikesPill;
