@@ -129,7 +129,7 @@ export default TabContent;
 
 const styles = StyleSheet.create({
   stackCard: {
-    width: wp(90),
+    width: wp(50),
     minHeight: hp(10),
     marginRight: wp(3),
     borderRadius: wp(3),
