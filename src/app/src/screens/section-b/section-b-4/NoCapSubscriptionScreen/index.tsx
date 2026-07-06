@@ -9,6 +9,8 @@ import {
 import Toast from "react-native-root-toast";
 import {useDispatch, useSelector} from "react-redux";
 
+const isWeb = Platform.OS === "web";
+
 import {GetAllSubscriptions} from "@/core/api/section-b";
 import {DefaultLoader as Loader} from "@/core/components/section-a";
 import {Header2} from "@/core/components/section-b";
@@ -358,7 +360,7 @@ const NoCapSubscriptionScreen: React.FC<{ navigation: any; route: any }> = ({
 
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, isWeb && { maxWidth: 640, alignSelf: "center", width: "100%" }]}
         showsVerticalScrollIndicator={false}
       >
         <SubscriptionHeader
@@ -443,9 +445,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingHorizontal: wp(4),
-    paddingTop: hp(2.5),
-    paddingBottom: hp(4),
+    paddingHorizontal: isWeb ? 24 : wp(4),
+    paddingTop: isWeb ? 20 : hp(2.5),
+    paddingBottom: isWeb ? 32 : hp(4),
   },
   loaderOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -456,11 +458,11 @@ const styles = StyleSheet.create({
   },
   manageSubLink: {
     alignSelf: "center",
-    paddingVertical: hp(1.5),
-    marginTop: hp(1),
+    paddingVertical: isWeb ? 12 : hp(1.5),
+    marginTop: isWeb ? 8 : hp(1),
   },
   manageSubLinkText: {
-    fontSize: wp(3.3),
+    fontSize: isWeb ? 14 : wp(3.3),
     fontFamily: "regular",
     color: "#6b7280",
   },

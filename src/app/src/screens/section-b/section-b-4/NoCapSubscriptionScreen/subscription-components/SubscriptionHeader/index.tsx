@@ -1,7 +1,7 @@
 // SubscriptionHeader.tsx
 
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -9,6 +9,8 @@ import {
 
 import {Colors} from "@/core/constants/Colors";
 import {BillingType} from "@/core/redux/subscription-plan";
+
+const isWeb = Platform.OS === "web";
 
 interface Props {
   billingType: BillingType;
@@ -70,24 +72,24 @@ export default SubscriptionHeader;
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingBottom: hp(3),
+    paddingBottom: isWeb ? 24 : hp(3),
   },
   toggle: {
     flexDirection: "row",
     backgroundColor: "#1C1C1E",
-    borderRadius: wp(8),
-    padding: wp(1),
+    borderRadius: isWeb ? 12 : wp(8),
+    padding: isWeb ? 4 : wp(1),
   },
   toggleOption: {
-    paddingHorizontal: wp(7),
-    paddingVertical: hp(0.9),
-    borderRadius: wp(7),
+    paddingHorizontal: isWeb ? 32 : wp(7),
+    paddingVertical: isWeb ? 10 : hp(0.9),
+    borderRadius: isWeb ? 10 : wp(7),
   },
   toggleOptionActive: {
     backgroundColor: "#3A3A3C",
   },
   toggleText: {
-    fontSize: wp(3.8),
+    fontSize: isWeb ? 15 : wp(3.8),
     fontFamily: "poppins_regular",
     color: Colors.gray,
   },
