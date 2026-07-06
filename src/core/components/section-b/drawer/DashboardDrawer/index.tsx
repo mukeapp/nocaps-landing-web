@@ -31,10 +31,11 @@ type NavItem = {
   label: string;
   route: string;
   icon: React.ComponentType<{ className?: string }>;
+  href?: string; // external route (e.g. "/" for marketing home)
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Home", route: "nocap-drawer", icon: Home },
+  { label: "Home", route: "nocap-drawer", icon: Home, href: "/" },
   { label: "Subscribe", route: "no-cap-subscription", icon: Crown },
   { label: "My Profile", route: "profile", icon: User },
   { label: "Market", route: "habit-market", icon: Store },
@@ -52,9 +53,13 @@ export default function DashboardDrawer() {
   const dispatch = useDispatch();
   const currentRoute = route.name;
 
-  const handleNavigate = (routeName: string) => {
+  const handleNavigate = (item: NavItem) => {
     navigation.closeDrawer();
-    navigation.navigate(routeName);
+    if (item.href) {
+      window.location.href = item.href;
+      return;
+    }
+    navigation.navigate(item.route);
   };
 
   const handleLogout = async () => {
@@ -111,7 +116,7 @@ export default function DashboardDrawer() {
             return (
               <button
                 key={`${item.label}-${item.route}`}
-                onClick={() => handleNavigate(item.route)}
+                onClick={() => handleNavigate(item)}
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors text-left",
                   isActive
