@@ -18,6 +18,7 @@ import {
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
+  fs,
 } from "@/core/utils/responsive";
 
 const isWeb = Platform.OS === "web";
@@ -369,7 +370,7 @@ const HabitLinkItemRow: React.FC<Props> = ({
           style={{
             justifyContent: "center",
             flexDirection: "row",
-            gap: wp("2%"),
+            gap: isWeb ? 8 : wp("2%"),
           }}
         >
           {
@@ -387,6 +388,7 @@ const HabitLinkItemRow: React.FC<Props> = ({
             <TouchableOpacity
               style={[
                 MainStyles.sheeticon,
+                isWeb && { width: 36, height: 36, borderRadius: 18 },
                 {
                   backgroundColor:
                     habitLink?.scoreComponent?.scoreInfo?.color?.toLowerCase?.() ||
@@ -1024,20 +1026,20 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.75)",
     justifyContent: "center",
     alignItems: "center",
-    padding: wp(4),
+    padding: isWeb ? 16 : wp(4),
   },
   scoreModal: {
     width: "100%",
     backgroundColor: "#1C1C1E",
     borderRadius: 20,
-    padding: wp(6),
+    padding: isWeb ? 24 : wp(6),
     borderWidth: 1,
     borderColor: "#333333",
   },
   scoreModalHeader: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: hp(2.5),
+    marginBottom: isWeb ? 12 : hp(2.5),
   },
   scoreModalName: {
     fontSize: 17,
@@ -1051,15 +1053,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#222",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp(3),
+    marginLeft: isWeb ? 12 : wp(3),
   },
   scoreCurrentRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: wp(3),
+    padding: isWeb ? 12 : wp(3),
     borderRadius: 12,
-    marginBottom: hp(3),
+    marginBottom: isWeb ? 16 : hp(3),
     borderWidth: 1,
     backgroundColor: "rgba(255,255,255,0.03)",
   },
@@ -1078,10 +1080,10 @@ const styles = StyleSheet.create({
   },
   scoreAiSection: {
     alignItems: "center",
-    padding: wp(5),
+    padding: isWeb ? 20 : wp(5),
     backgroundColor: "#1e1b4b",
     borderRadius: 14,
-    marginBottom: hp(3),
+    marginBottom: isWeb ? 16 : hp(3),
     borderWidth: 1,
     borderColor: "#312e81",
   },
@@ -1092,13 +1094,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#7C3AED",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: hp(2),
+    marginBottom: isWeb ? 8 : hp(2),
   },
   scoreAiTitle: {
     fontSize: 16,
     fontWeight: "600",
     color: "#E8E5FF",
-    marginBottom: hp(1),
+    marginBottom: isWeb ? 4 : hp(1),
   },
   scoreAiDesc: {
     fontSize: 13,
@@ -1108,7 +1110,7 @@ const styles = StyleSheet.create({
   },
   scoreButtons: {
     flexDirection: "row",
-    gap: wp(2.5),
+    gap: isWeb ? 10 : wp(2.5),
   },
   scoreCancelBtn: {
     flex: 1,
@@ -1133,7 +1135,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: wp(2),
+    gap: isWeb ? 8 : wp(2),
   },
   scoreConfirmBtnLoading: {
     backgroundColor: "#5B21B6",
@@ -1146,7 +1148,7 @@ const styles = StyleSheet.create({
   swapConfirmBtnFull: {
     flex: 0,
     width: "100%",
-    marginBottom: hp(1.2),
+    marginBottom: isWeb ? 6 : hp(1.2),
   },
   swapCostRow: {
     flexDirection: "row" as const,
@@ -1174,7 +1176,7 @@ const styles = StyleSheet.create({
     flexDirection: "row" as const,
     alignItems: "center" as const,
     justifyContent: "center" as const,
-    gap: wp(2),
+    gap: isWeb ? 8 : wp(2),
     height: 48,
     borderRadius: 14,
     borderWidth: 1,
