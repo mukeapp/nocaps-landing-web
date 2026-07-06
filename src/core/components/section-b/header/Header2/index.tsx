@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
 import React from "react";
 import { widthPercentageToDP as wp } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
@@ -8,6 +8,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { Images } from "@/core/constants/Images";
+
+const isWeb = Platform.OS === "web";
 
 const Header2 = ({
   title = "",
@@ -36,7 +38,7 @@ const Header2 = ({
       )}
       {cameFromDrawerTab && (
         <TouchableOpacity
-          style={MainStyles.viewone}
+          style={[MainStyles.viewone, isWeb && { marginBottom: 0 }]}
           onPress={() => navigation.openDrawer()}
           activeOpacity={0.85}
         >
@@ -54,10 +56,11 @@ const Header2 = ({
         <Text
           style={
             titleTextFormat === 1
-              ? [MainStyles.text16white, { marginRight: wp(2) }]
+              ? [MainStyles.text16white, { marginRight: isWeb ? 8 : wp(2) }, isWeb && { fontSize: 16 }]
               : [
                   MainStyles.text20semibold,
-                  { marginRight: wp(2), letterSpacing: 1 },
+                  { marginRight: isWeb ? 8 : wp(2), letterSpacing: 1 },
+                  isWeb && { fontSize: 20 },
                 ]
           }
         >
@@ -87,9 +90,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   icnview: {
-    width: wp(7),
-    height: wp(7),
-    borderRadius: wp(4),
+    width: isWeb ? 36 : wp(7),
+    height: isWeb ? 36 : wp(7),
+    borderRadius: isWeb ? 8 : wp(4),
     backgroundColor: Colors.white,
     alignItems: "center",
     justifyContent: "center",
@@ -99,34 +102,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   icnviews: {
-    width: wp(8),
-    height: wp(8),
-    borderRadius: wp(4),
+    width: isWeb ? 36 : wp(8),
+    height: isWeb ? 36 : wp(8),
+    borderRadius: isWeb ? 8 : wp(4),
     borderWidth: 1.5,
     borderColor: Colors.borderline,
     alignItems: "center",
     justifyContent: "center",
   },
   logoBox: {
-    width: wp(12),
-    height: wp(12),
+    width: isWeb ? 36 : wp(12),
+    height: isWeb ? 36 : wp(12),
     backgroundColor: Colors.title_background,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: wp(3),
-    marginRight: wp(3),
+    borderRadius: isWeb ? 8 : wp(3),
+    marginRight: isWeb ? 10 : wp(3),
   },
   logoBoxDark: {
-    width: wp(12),
-    height: wp(12),
+    width: isWeb ? 36 : wp(12),
+    height: isWeb ? 36 : wp(12),
     backgroundColor: Colors.background_color,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: wp(3),
-    marginRight: wp(3),
+    borderRadius: isWeb ? 8 : wp(3),
+    marginRight: isWeb ? 10 : wp(3),
   },
   logo: {
-    width: wp(7),
-    height: wp(7),
+    width: isWeb ? 22 : wp(7),
+    height: isWeb ? 22 : wp(7),
   },
 });
