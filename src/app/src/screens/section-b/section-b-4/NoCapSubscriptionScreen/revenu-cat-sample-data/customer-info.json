@@ -1,0 +1,56 @@
+{
+  "activeSubscriptions": ["go:free"],
+  "allExpirationDates": {
+    "go:free": "2026-07-01T18:11:41.000Z"
+  },
+  "allExpirationDatesMillis": {
+    "go:free": 1782929501000
+  },
+  "allPurchaseDates": {
+    "go:free": "2026-06-01T18:11:44.000Z"
+  },
+  "allPurchaseDatesMillis": {
+    "go:free": 1780337504000
+  },
+  "allPurchasedProductIdentifiers": ["go:free"],
+  "entitlements": {
+    "active": {
+      "NOCAP-GO": {}
+    },
+    "all": {
+      "NOCAP-GO": {}
+    },
+    "verification": "NOT_REQUESTED"
+  },
+  "firstSeen": "2026-06-01T05:13:35.000Z",
+  "firstSeenMillis": 1780290815000,
+  "latestExpirationDate": "2026-07-01T18:11:41.000Z",
+  "latestExpirationDateMillis": 1782929501000,
+  "managementURL": "https://play.google.com/store/account/subscriptions",
+  "nonSubscriptionTransactions": [],
+  "originalAppUserId": "$RCAnonymousID:af49b67755774d60beb8e3802d2331a2",
+  "originalApplicationVersion": null,
+  "originalPurchaseDate": null,
+  "originalPurchaseDateMillis": null,
+  "requestDate": "2026-06-03T04:24:22.032Z",
+  "requestDateMillis": 1780460662032,
+  "subscriptionsByProductIdentifier": {
+    "go": {
+      "billingIssuesDetectedAt": null,
+      "expiresDate": "2026-07-01T18:11:41.000Z",
+      "gracePeriodExpiresDate": null,
+      "isActive": true,
+      "isSandbox": false,
+      "originalPurchaseDate": "2026-06-01T18:11:44.000Z",
+      "ownershipType": "UNKNOWN",
+      "periodType": "NORMAL",
+      "productIdentifier": "go",
+      "purchaseDate": "2026-06-01T18:11:44.000Z",
+      "refundedAt": null,
+      "store": "PLAY_STORE",
+      "storeTransactionId": "GPA.3302-3275-2055-83652",
+      "unsubscribeDetectedAt": "2026-06-01T23:19:15.000Z",
+      "willRenew": false
+    }
+  }
+}

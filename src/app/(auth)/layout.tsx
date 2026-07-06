@@ -6,7 +6,7 @@ interface Props {
 
 const AuthLayout = ({ children }: Props) => {
     return (
-        <div className="flex items-center justify-center h-screen">
+        <div style={{ minHeight: '100vh', backgroundColor: '#0D0D0D' }}>
             {children}
         </div>
     )

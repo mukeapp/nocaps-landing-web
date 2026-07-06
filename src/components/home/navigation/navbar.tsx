@@ -1,17 +1,13 @@
 import { Container } from "@/components";
 import Icons from "@/components/global/icons";
 import { buttonVariants } from "@/components/ui/button";
-import { UserButton, } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
 // Dynamically import the NavLinks component with no SSR
 const NavLinks = dynamic(() => import("./nav-links"), { ssr: false });
 
-const Navbar = async () => {
-
-    const user = await currentUser();
+const Navbar = () => {
 
     return (
         <header className="px-4 h-14 sticky top-0 inset-x-0 w-full bg-background/40 backdrop-blur-lg border-b border-border z-50">
@@ -29,18 +25,12 @@ const Navbar = async () => {
                         <NavLinks />
                     </nav>
                     <div className="flex items-center gap-4">
-                        {user ? (
-                            <UserButton />
-                        ) : (
-                            <>
-                                <Link href="/sign-in" className={buttonVariants({ size: "sm", variant: "ghost" })}>
-                                    Login
-                                </Link>
-                                <Link href="/sign-up" className={buttonVariants({ size: "sm", className: "hidden md:flex" })}>
-                                Get Beta Access Now
-                                </Link>
-                            </>
-                        )}
+                        <Link href="/login" className={buttonVariants({ size: "sm", variant: "ghost" })}>
+                            Login
+                        </Link>
+                        <Link href="/signup" className={buttonVariants({ size: "sm", className: "hidden md:flex" })}>
+                        Get Beta Access Now
+                        </Link>
                     </div>
                 </div>
             </Container>

@@ -1,0 +1,28 @@
+/* Mobile app fonts — family names must match app/index.tsx useFonts keys exactly */
+@font-face { font-family: "regular"; src: url("/fonts/app/OpenSans-Regular.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "medium"; src: url("/fonts/app/OpenSans-Medium.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "semibold"; src: url("/fonts/app/OpenSans-SemiBold.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "bold"; src: url("/fonts/app/OpenSans-Bold.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "poppins_regular"; src: url("/fonts/app/Poppins-Regular.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "poppins_medium"; src: url("/fonts/app/Poppins-Medium.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "poppins_semibold"; src: url("/fonts/app/Poppins-SemiBold.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "poppins_bold"; src: url("/fonts/app/Poppins-Bold.ttf") format("truetype"); font-display: swap; }
+@font-face { font-family: "poppins_black"; src: url("/fonts/app/Poppins-Black.ttf") format("truetype"); font-display: swap; }
+
+/* Vector icon fonts — family names must match src/shims/expo-vector-icons */
+@font-face { font-family: "AntDesign"; src: url("/fonts/vector-icons/AntDesign.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Entypo"; src: url("/fonts/vector-icons/Entypo.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Feather"; src: url("/fonts/vector-icons/Feather.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome"; src: url("/fonts/vector-icons/FontAwesome.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome5Free-Regular"; src: url("/fonts/vector-icons/FontAwesome5_Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome5Free-Solid"; src: url("/fonts/vector-icons/FontAwesome5_Solid.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome5Brands-Regular"; src: url("/fonts/vector-icons/FontAwesome5_Brands.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome6Free-Regular"; src: url("/fonts/vector-icons/FontAwesome6_Regular.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome6Free-Solid"; src: url("/fonts/vector-icons/FontAwesome6_Solid.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "FontAwesome6Brands-Regular"; src: url("/fonts/vector-icons/FontAwesome6_Brands.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Fontisto"; src: url("/fonts/vector-icons/Fontisto.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Ionicons"; src: url("/fonts/vector-icons/Ionicons.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "MaterialCommunityIcons"; src: url("/fonts/vector-icons/MaterialCommunityIcons.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "MaterialIcons"; src: url("/fonts/vector-icons/MaterialIcons.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "SimpleLineIcons"; src: url("/fonts/vector-icons/SimpleLineIcons.ttf") format("truetype"); font-display: block; }
+@font-face { font-family: "Octicons"; src: url("/fonts/vector-icons/Octicons.ttf") format("truetype"); font-display: block; }
