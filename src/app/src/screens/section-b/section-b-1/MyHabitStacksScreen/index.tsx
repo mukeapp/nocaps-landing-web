@@ -415,7 +415,7 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
           </h1>
         </div>
         <p className="text-sm text-muted-foreground mb-4">
-          Let NoCap guide your journey!
+          Let NoCaps guide your journey!
         </p>
 
         {/* Score legend */}
