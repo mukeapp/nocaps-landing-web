@@ -1,57 +1,96 @@
-import { setUserLogout, selectUser } from "@/core/redux/user-data";
-import { useDispatch } from "react-redux";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  ScrollView,
-  Alert,
-  TouchableOpacity,
-} from "react-native";
-import { useSelector } from "react-redux";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "@/core/utils/responsive";
-import { useFocusEffect } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import { Platform, View } from "react-native";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { MainStyles } from "@/core/constants/styles";
-import { Images } from "@/core/constants/Images";
 import { Colors } from "@/core/constants/Colors";
-import { HabitStackCard, Header2 } from "@/core/components/section-b";
+import { DefaultLoader as Loader } from "@/core/components/section-a";
 import {
-  DefaultLoader as Loader,
-  ButtonSignIn as Button,
-} from "@/core/components/section-a";
-import {
-  getHabitStackComponentsByUserId,
-  DeleteHabitStack,
-} from "@/core/api/section-b";
-import Toast from "react-native-root-toast";
-import { HabitStackComponent } from "@/core/models/section-b";
+  HabitCard,
+  HabitLinkCard,
+  HabitStackCard,
+} from "@/core/components/section-b";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import { useMyFriendsAndHabitsForm } from "@/core/hooks";
-import { FriendsLinks, HabitCategories, HabitLinkItemsRow, HabitLinksRow, HabitsRow, HabitStacksRow, FriendsFilterRow } from "@/core/components/section-b-1";
-import {showToastSuccess} from "@/core/utils";
+import { getHabitDataByCategory } from "@/core/services/section-b";
+
+// Web-adapted rewrite (July 2026 direction: web UX over pixel-mobile parity),
+// third screen on the pattern after MyHabitStacksScreen and
+// HabitMarketSeelAllScreen. State/data stay in useMyFriendsAndHabitsForm; card
+// props mirror the mobile Row components prop-for-prop (HabitStacksRow,
+// HabitsRow, HabitLinksRow, HabitLinkItemsRow) so behavior is unchanged.
+
+const EMPTY_LABEL: Record<number, string> = {
+  1: "No habit stacks yet.",
+  2: "No habits yet.",
+  3: "No habit links yet.",
+  4: "No habit link items yet.",
+};
+
+type SectorSectionProps = {
+  sector: any;
+  stacks: any[] | undefined;
+  onNeedFetch: (sectorId: string) => void;
+  selectedCategoryId: number;
+  renderCard: (item: any, idx: number) => React.ReactNode;
+};
+
+const SectorSection: React.FC<SectorSectionProps> = ({
+  sector,
+  stacks,
+  onNeedFetch,
+  selectedCategoryId,
+  renderCard,
+}) => {
+  const sectorId = sector?.documentId ?? "";
+
+  // Per-sector lazy fetch, verbatim from HabitStacksRow's effect.
+  useEffect(() => {
+    if (!stacks && sectorId) {
+      onNeedFetch(sectorId);
+    }
+  }, [stacks, sectorId, onNeedFetch]);
+
+  const items =
+    (getHabitDataByCategory(stacks ?? [], selectedCategoryId) as any[]) ?? [];
+
+  return (
+    <section className="mt-8 first:mt-6">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="h-4 w-1 rounded bg-[#2D9CDB]" />
+        <h2 className="text-lg font-semibold text-foreground">
+          {sector?.label ?? "—"}
+        </h2>
+      </div>
+
+      {!stacks ? (
+        <div className="animate-pulse rounded-2xl bg-white/5 h-24" />
+      ) : items.length ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
+          {items.map((item, idx) => (
+            <div
+              key={`${item?.documentId ?? item?.id ?? idx}`}
+              className="min-w-0"
+            >
+              {renderCard(item, idx)}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          {EMPTY_LABEL[selectedCategoryId] ?? "Nothing here yet."}
+        </p>
+      )}
+    </section>
+  );
+};
 
 const MyFriendsAndHabitsScreen: React.FC<{ navigation: any; route: any }> = ({
   navigation,
   route,
 }) => {
   const form = useMyFriendsAndHabitsForm({ navigation, route });
-  const [key, setKey] = useState(0);
-
-  // Force reload FlatList when screen is focused
-  useFocusEffect(
-    useCallback(() => {
-      // Reset the stacks and reload
-      form.load?.();
-      // Force FlatList to remount by changing key
-      setKey((prev) => prev + 1);
-    }, [form.load])
-  );
+  const username = form.userdata?.collectdata?.username;
 
   const onOpenLinkItem = (habitLink: any) =>
     navigation.navigate("habitlinks", {
@@ -59,152 +98,273 @@ const MyFriendsAndHabitsScreen: React.FC<{ navigation: any; route: any }> = ({
       habitLink: habitLink,
     });
 
-  const renderHabitStacksRow = useCallback(
-    (sectorDocId?: string) => {
-      const sid = sectorDocId ?? "";
-      return (
-        <HabitStacksRow
-          showCopyButton={true}
-          showCopyButtonText="Copy HabitStack"
-          onCopyPress={form.copyItem}
-          mustReloadUser={true}
-          userdata={undefined}
-          habitCategoryId={1}
-          sectorId={sid}
-          stacks={sid ? form.filteredStacksBySector[sid] : []}
-          onNeedFetch={form.fetchStacks}
-          onOpenLinkItem={onOpenLinkItem}
-        />
-      );
-    },
-    [form.filteredStacksBySector, form.fetchStacks]
-  );
-
-
-
-  const renderHabitsRow = useCallback(
-    (sectorDocId?: string) => {
-      const sid = sectorDocId ?? "";
-      return (
-        <HabitsRow
-          showCopyButton={form.showCopyButton}
-          showCopyButtonText="Copy Habit"
-          onCopyPress={form.copyItem}
-          userdata={null}
-          habitCategoryId={form.selectedCategoryId}
-          sectorId={sid}
-          stacks={sid ? form.filteredStacksBySector[sid] : []}
-          onNeedFetch={form.fetchStacks}
-          onOpenLinkItem={onOpenLinkItem}
-          showHabitBanner={true}
-          mustReloadUser={true}
-        />
-      );
-    },
-    [form.filteredStacksBySector, form.fetchStacks]
-  );
-
-  const renderHabitLinksRow = useCallback(
-    (sectorDocId?: string) => {
-      const sid = sectorDocId ?? "";
-      return (
-        <HabitLinksRow
-          showCopyButton={form.showCopyButton}
-          showCopyButtonText="Copy HabitLink"
-          onCopyPress={form.copyItem}
-          showHabitLinkBanner={true}
-          userdata={null}
-          habitCategoryId={form.selectedCategoryId}
-          sectorId={sid}
-          stacks={sid ? form.filteredStacksBySector[sid] : []}
-          onNeedFetch={form.fetchStacks}
-          onOpenLinkItem={onOpenLinkItem}
-          showHabitLinkNav={false}
-          showExpandedButton={true}
-        />
-      );
-    },
-    [form.filteredStacksBySector, form.fetchStacks]
-  );
-
-  const renderHabitLinkItemsRow = useCallback(
-    (sectorDocId?: string) => {
-      const sid = sectorDocId ?? "";
-      return (
-        <HabitLinkItemsRow
-          showCopyButton={false}
-          showCopyButtonText="None"
-          showCopyButtonForItem={form.showCopyButton}
-          showCopyButtonTextForItem="Copy"
-          onCopyPress={form.copyItem}
-          showHabitLinkBanner={true}
-          userdata={null}
-          habitCategoryId={form.selectedCategoryId}
-          sectorId={sid}
-          stacks={sid ? form.filteredStacksBySector[sid] : []}
-          onNeedFetch={form.fetchStacks}
-          onOpenLinkItem={onOpenLinkItem}
-          showHabitLinkItems={true}
-          showHabitLinkNav={false}
-          showExpandedButton={true}
-        />
-      );
-    },
-    [form.filteredStacksBySector, form.fetchStacks]
-  );
+  const renderCard = (item: any, idx: number) => {
+    const key = `${item?.documentId ?? item?.id ?? idx}`;
+    switch (form.selectedCategoryId) {
+      case 2:
+        return (
+          <HabitCard
+            key={key}
+            showCopyButton={form.showCopyButton}
+            showCopyButtonText="Copy Habit"
+            onCopyPress={form.copyItem}
+            username={username}
+            mustReloadUser={true}
+            showHabitBanner={true}
+            habit={item}
+            onOpenItem={onOpenLinkItem}
+            hideCalendar={false}
+            selectedMarketActionId={0}
+            marketOwnerId={item?.marketOwnerId}
+            showExpandedButton={true}
+            showHabitLinkNav={false}
+          />
+        );
+      case 3:
+        return (
+          <HabitLinkCard
+            key={key}
+            showCopyButton={form.showCopyButton}
+            showCopyButtonText="Copy HabitLink"
+            onCopyPress={form.copyItem}
+            showHabitLinkBanner={true}
+            link={item}
+            onOpenItem={onOpenLinkItem}
+            costSymbol=""
+            hideCalendar={false}
+            showHabitLinkNav={false}
+            showExpandedButton={true}
+            selectedMarketActionId={0}
+            marketOwnerId={item?.marketOwnerId}
+            mustReloadUser={false}
+          />
+        );
+      case 4:
+        return (
+          <HabitLinkCard
+            key={key}
+            showCopyButton={false}
+            showCopyButtonText="None"
+            showCopyButtonForItem={form.showCopyButton}
+            showCopyButtonTextForItem="Copy"
+            onCopyPress={form.copyItem}
+            showHabitLinkBanner={true}
+            link={item}
+            onOpenItem={onOpenLinkItem}
+            costSymbol=""
+            showHabitLinkNav={false}
+            showExpandedButton={true}
+            hideCalendar={false}
+            selectedMarketActionId={0}
+            marketOwnerId={item?.marketOwnerId}
+            mustReloadUser={false}
+          />
+        );
+      case 1:
+      default:
+        return (
+          <HabitStackCard
+            key={key}
+            showCopyButton={true}
+            showCopyButtonText="Copy HabitStack"
+            onCopyPress={form.copyItem}
+            stack={item}
+            canEdit={false}
+            username={username}
+            onOpenLinkItem={onOpenLinkItem}
+            mustReloadUser={true}
+            hideCalendar={false}
+            selectedMarketActionId={0}
+            showExpandedButton={true}
+            showHabitLinkNav={false}
+          />
+        );
+    }
+  };
 
   return (
-    <View style={MainStyles.root2}>
-
-      <Header2
+    <View
+      style={[
+        MainStyles.root2,
+        Platform.OS === "web" && { paddingHorizontal: 0, paddingTop: 0 },
+      ]}
+    >
+      {/* Sticky top bar — shared web dashboard header */}
+      <WebDashboardHeader
         title={form.destinationScreenTitle}
-        titleTextFormat={1}
-        titleVisibilityIcon={false}
-        showSettingsIcon={true}
-        navigation={navigation}
-        cameFromDrawerTab={form.cameFromDrawerTab}
-      />
-
-      { form.cameFromDrawerTab && <FriendsLinks form={form} /> }
-
-      {/* Habit categories Filter row */}
-      <HabitCategories form={form} />
-
-      {/* Friends List Filter row */}
-      <FriendsFilterRow
-        friends={form.friends}
-        selectedFriendUserId={form.selectedFriendUserId}
-        onSelectFriend={form.setSelectedFriendUserId}
-      />
-
-      <FlatList
-        data={form.sectors}
-        keyExtractor={(item) => `${item?.documentId ?? item?.id}`}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: hp(6) }}
-        renderItem={({ item }) => (
-          <View style={styles.sectorBlock}>
-            <View style={styles.sectorLabelRow}>
-              <View style={styles.sectorAccent} />
-              <Text style={styles.sectorLabel}>{item?.label ?? "—"}</Text>
-            </View>
-            {form.selectedCategoryId == 1 &&
-              renderHabitStacksRow(item?.documentId)}
-            {form.selectedCategoryId == 2 && renderHabitsRow(item?.documentId)}
-            {form.selectedCategoryId == 3 &&
-              renderHabitLinksRow(item?.documentId)}
-            {form.selectedCategoryId == 4 &&
-              renderHabitLinkItemsRow(item?.documentId)}
-          </View>
-        )}
-        ListEmptyComponent={
-          !form.loading ? (
-            <View style={styles.notfound}>
-              <Text style={styles.notfoundText}>No sectors found.</Text>
-            </View>
-          ) : null
+        onBack={
+          form.cameFromDrawerTab ? undefined : () => navigation.goBack()
+        }
+        onOpenDrawer={
+          form.cameFromDrawerTab ? () => navigation.openDrawer() : undefined
         }
       />
+
+      <div className="px-4 md:px-6 lg:px-8 py-6 max-w-screen-2xl mx-auto w-full">
+        {/* Page header */}
+        <h1 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+          {form.destinationScreenTitle}
+        </h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          See what your friends are building — copy their habits into your
+          library.
+        </p>
+
+        {/* Friend navigation links (drawer entry only, as on mobile) */}
+        {form.cameFromDrawerTab && (
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            {form.friendLinks.map((link: any) => (
+              <button
+                key={link.id}
+                onClick={() => {
+                  form.setSelectedFriendLinkId(link.id);
+                  link.OnPress();
+                }}
+                className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 pl-4 pr-2.5 py-1.5 text-sm font-medium text-muted-foreground hover:bg-white/10 hover:text-foreground transition-colors"
+              >
+                {link.name}
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={16}
+                  color={Colors.gray}
+                />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Category tabs */}
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          {form.habitCategories.map((category: any) => {
+            const active = category.id === form.selectedCategoryId;
+            return (
+              <button
+                key={category.id}
+                onClick={() => form.setSelectedCategoryId(category.id)}
+                className={
+                  active
+                    ? "rounded-full bg-white text-neutral-900 px-4 py-1.5 text-sm font-semibold transition-colors"
+                    : "rounded-full bg-white/5 border border-white/10 text-muted-foreground px-4 py-1.5 text-sm font-medium hover:bg-white/10 hover:text-foreground transition-colors"
+                }
+              >
+                {category.name}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Friend filter row */}
+        {form.friends.length > 0 && (
+          <div className="mt-5 flex gap-4 overflow-x-auto pb-2 border-b border-white/10">
+            <button
+              onClick={() => form.setSelectedFriendUserId(null)}
+              className="flex flex-col items-center shrink-0"
+            >
+              <span
+                className={
+                  form.selectedFriendUserId === null
+                    ? "grid place-items-center h-14 w-14 rounded-full bg-[#2D9CDB]/20 ring-2 ring-[#2D9CDB]"
+                    : "grid place-items-center h-14 w-14 rounded-full bg-card ring-1 ring-white/10 hover:ring-white/25 transition-shadow"
+                }
+              >
+                <MaterialCommunityIcons
+                  name="account-group-outline"
+                  size={26}
+                  color={
+                    form.selectedFriendUserId === null
+                      ? Colors.primary
+                      : Colors.text_color
+                  }
+                />
+              </span>
+              <span
+                className={
+                  form.selectedFriendUserId === null
+                    ? "mt-1.5 w-16 truncate text-center text-xs font-semibold text-foreground"
+                    : "mt-1.5 w-16 truncate text-center text-xs text-muted-foreground"
+                }
+              >
+                All
+              </span>
+            </button>
+
+            {form.friends.map((friend: any) => {
+              const active = form.selectedFriendUserId === friend.userId;
+              const initial = (friend.username?.[0] ?? "?").toUpperCase();
+              return (
+                <button
+                  key={friend.userId}
+                  onClick={() => form.setSelectedFriendUserId(friend.userId)}
+                  className="flex flex-col items-center shrink-0"
+                >
+                  <span
+                    className={
+                      active
+                        ? "grid place-items-center h-14 w-14 rounded-full overflow-hidden bg-card ring-2 ring-[#2D9CDB]"
+                        : "grid place-items-center h-14 w-14 rounded-full overflow-hidden bg-card ring-1 ring-white/10 hover:ring-white/25 transition-shadow"
+                    }
+                  >
+                    {friend.photo ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={friend.photo}
+                        alt={friend.username}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-lg font-semibold text-[#2D9CDB]">
+                        {initial}
+                      </span>
+                    )}
+                  </span>
+                  <span
+                    className={
+                      active
+                        ? "mt-1.5 w-16 truncate text-center text-xs font-semibold text-foreground"
+                        : "mt-1.5 w-16 truncate text-center text-xs text-muted-foreground"
+                    }
+                  >
+                    {friend.username}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Sector sections */}
+        {form.sectors.length ? (
+          form.sectors.map((sector: any) => {
+            const sectorId = sector?.documentId ?? "";
+            return (
+              <SectorSection
+                key={`${sector?.documentId ?? sector?.id}`}
+                sector={sector}
+                stacks={
+                  sectorId ? form.filteredStacksBySector[sectorId] : []
+                }
+                onNeedFetch={form.fetchStacks}
+                selectedCategoryId={form.selectedCategoryId}
+                renderCard={renderCard}
+              />
+            );
+          })
+        ) : !form.loading ? (
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <MaterialCommunityIcons
+              name="account-group-outline"
+              size={48}
+              color={Colors.text_color}
+            />
+            <p className="mt-4 text-lg font-semibold text-foreground">
+              No sectors found.
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Add friends to see their habits here.
+            </p>
+          </div>
+        ) : null}
+      </div>
 
       <Loader status={form.loading} />
     </View>
@@ -212,161 +372,3 @@ const MyFriendsAndHabitsScreen: React.FC<{ navigation: any; route: any }> = ({
 };
 
 export default MyFriendsAndHabitsScreen;
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: hp("1%"),
-  },
-  logoBox: {
-    width: wp("12%"),
-    height: wp("12%"),
-    backgroundColor: Colors.title_background,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: wp("3%"),
-    marginRight: wp("3%"),
-  },
-  logo: {
-    width: wp("7%"),
-    height: wp("7%"),
-  },
-  listWrap: {
-    flex: 1,
-    marginTop: hp("2%"),
-  },
-  notfound: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: hp("55%"),
-  },
-  nottxt: {
-    color: Colors.white,
-    fontSize: 16,
-    fontFamily: "semibold",
-  },
-  box: {
-    width: wp(12),
-    height: wp(12),
-    backgroundColor: Colors.title_background,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: wp(3),
-    marginRight: wp(3),
-  },
-
-  searchContainer: {
-    flexDirection: "row",
-    height: hp(6),
-    alignItems: "center",
-    marginHorizontal: wp(6),
-    marginVertical: hp(1),
-    paddingHorizontal: wp(3),
-    borderRadius: wp(3),
-    backgroundColor: "#F5F5F8",
-  },
-  searchIcon: {
-    height: hp(2.5),
-    width: wp(5),
-    tintColor: "#000",
-  },
-  searchInput: {
-    flex: 1,
-    marginLeft: wp(3),
-    fontFamily: "poppins_regular",
-    fontSize: wp(4),
-    lineHeight: hp(3),
-    color: Colors.black || "#000",
-  },
-  filterButton: {
-    padding: wp(2),
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  filterIcon: {
-    height: hp(2.5),
-    width: wp(5),
-    tintColor: "#000",
-  },
-
-  listContent: {
-    paddingVertical: hp(1.5),
-  },
-  chip: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: hp(6.5),
-    paddingHorizontal: wp(2.4),
-    borderRadius: wp(3),
-  },
-  chipText: {
-    alignSelf: "center",
-    fontSize: wp(3.6),
-    fontFamily: "poppins_semibold",
-  },
-
-  sectorBlock: {
-    marginHorizontal: wp(4),
-    marginBottom: hp(1.2),
-  },
-  sectorLabelRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: hp(0.8),
-  },
-  sectorAccent: {
-    width: wp(1),
-    height: hp(2.2),
-    backgroundColor: Colors.primary,
-    borderRadius: wp(1),
-    marginRight: wp(2),
-  },
-  sectorLabel: {
-    color: Colors.white,
-    fontSize: wp(4),
-    fontFamily: "poppins_semibold",
-  },
-
-  stacksContent: {
-    paddingVertical: hp(1),
-    paddingLeft: wp(0.5),
-    paddingRight: wp(0.5),
-  },
-  stackCard: {
-    width: wp(90),
-    minHeight: hp(10),
-    marginRight: wp(3),
-    borderRadius: wp(3),
-    backgroundColor: Colors.text_background,
-    paddingVertical: hp(1.2),
-    paddingHorizontal: wp(3),
-  },
-  stackTitle: {
-    color: Colors.white,
-    fontSize: wp(3.8),
-    fontFamily: "poppins_semibold",
-  },
-  stackMeta: {
-    marginTop: hp(0.6),
-    color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.2),
-    fontFamily: "poppins_regular",
-  },
-
-  emptyRow: {
-    paddingVertical: hp(1.5),
-  },
-  emptyRowText: {
-    color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.4),
-    fontFamily: "poppins_regular",
-  },
-
-  notfoundText: {
-    color: Colors.white,
-    fontSize: wp(4),
-    fontFamily: "poppins_semibold",
-  },
-});
