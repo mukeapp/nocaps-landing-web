@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     overflow: "visible",
     backgroundColor: Colors.title_background,
     position: "relative",
+    zIndex: 1,
   },
   coverImage: {
     width: "100%",
@@ -215,11 +216,18 @@ const styles = StyleSheet.create({
     width: wwp(18),
     height: wwp(18),
     borderRadius: wwp(9),
-    borderWidth: 3,
+    borderWidth: 4,
     borderColor: Colors.white,
     overflow: "visible",
     backgroundColor: Colors.black,
     zIndex: 10,
+    // Shadow for iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    // Elevation for Android
+    elevation: 6,
   },
   avatar: {
     width: "100%",
