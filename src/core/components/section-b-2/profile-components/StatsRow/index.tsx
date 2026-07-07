@@ -1,12 +1,14 @@
 // src/screens/ProfileScreen/components/StatsRow.tsx
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Platform, View, Text, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
 import { StatGroup, StatItem, StatsRowProps } from "@/core/models/section-b";
+
+const isWeb = Platform.OS === "web";
 
 // Fallback for when no stats are passed in
 const testStats: { postStats: StatGroup; habitStats: StatGroup } = {
@@ -73,10 +75,10 @@ const styles = StyleSheet.create({
   statBox: {
     flex: 1,
     backgroundColor: Colors.content_back ?? "#262626", // slightly lighter than root
-    borderRadius: wp("4.5%"),
-    paddingVertical: hp("1.8%"),
+    borderRadius: isWeb ? 14 : wp("4.5%"),
+    paddingVertical: isWeb ? 18 : hp("1.8%"),
     alignItems: "center",
-    marginHorizontal: wp("1.2%"),
+    marginHorizontal: isWeb ? 6 : wp("1.2%"),
   },
   statValue: {
     color: Colors.white,

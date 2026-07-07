@@ -8,6 +8,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { Images } from "@/core/constants/Images";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 
 const isWeb = Platform.OS === "web";
 
@@ -21,6 +22,22 @@ const Header2 = ({
   originScreen = "",
 }) => {
   const router = useRouter();
+
+  // On web, every Header2 screen shows the shared sticky dashboard bar:
+  // hamburger (drawer-level screens) or back arrow (pushed screens) + brand + title.
+  if (isWeb) {
+    return (
+      <WebDashboardHeader
+        title={title}
+        onOpenDrawer={
+          cameFromDrawerTab ? () => (navigation as any)?.openDrawer?.() : undefined
+        }
+        onBack={
+          !cameFromDrawerTab ? () => (navigation as any)?.goBack?.() : undefined
+        }
+      />
+    );
+  }
 
   return (
     <View style={styles.main}>

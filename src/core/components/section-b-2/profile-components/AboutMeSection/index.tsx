@@ -1,12 +1,14 @@
 // src/screens/ProfileScreen/components/AboutMeSection.tsx
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Platform, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
+
+const isWeb = Platform.OS === "web";
 
 interface AboutMeSectionProps {
   about: string;
@@ -48,10 +50,10 @@ const styles = StyleSheet.create({
   sectionCard: {
     marginTop: hp("0%"),
     backgroundColor: Colors.background_color,
-    borderBottomLeftRadius: wp("4%"),
-    borderBottomRightRadius: wp("4%"),
-    paddingHorizontal: wp("5%"),
-    paddingVertical: hp("2.5%"),
+    borderBottomLeftRadius: isWeb ? 16 : wp("4%"),
+    borderBottomRightRadius: isWeb ? 16 : wp("4%"),
+    paddingHorizontal: isWeb ? 20 : wp("5%"),
+    paddingVertical: isWeb ? 20 : hp("2.5%"),
   },
   sectionHeaderRow: {
     flexDirection: "row",
@@ -68,9 +70,9 @@ const styles = StyleSheet.create({
     fontFamily: "semibold",
   },
   collapseButton: {
-    width: wp("8%"),
-    height: wp("8%"),
-    borderRadius: wp("4%"),
+    width: isWeb ? 32 : wp("8%"),
+    height: isWeb ? 32 : wp("8%"),
+    borderRadius: isWeb ? 16 : wp("4%"),
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     justifyContent: "center",
     alignItems: "center",

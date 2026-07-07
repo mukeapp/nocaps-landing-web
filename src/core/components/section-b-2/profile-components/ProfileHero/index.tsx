@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Platform, View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Images } from "@/core/constants/Images";
 import {
   widthPercentageToDP as wp,
@@ -10,6 +10,8 @@ import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { getDefaultImageUrl, getDefaultImageUrl2 } from "@/core/utils";
+
+const isWeb = Platform.OS === "web";
 
 interface ProfileHeroProps {
   user: any;
@@ -141,9 +143,9 @@ const styles = StyleSheet.create({
   },
   coverImage: {
     width: "100%",
-    height: hp("28%"),
-    borderTopLeftRadius: wp("4%"),
-    borderTopRightRadius: wp("4%"),
+    height: isWeb ? 260 : hp("28%"),
+    borderTopLeftRadius: isWeb ? 16 : wp("4%"),
+    borderTopRightRadius: isWeb ? 16 : wp("4%"),
   },
 
   /* Top right icons */
@@ -156,9 +158,9 @@ const styles = StyleSheet.create({
     gap: wp("2.5%"),
   },
   iconButton: {
-    width: wp("9%"),
-    height: wp("9%"),
-    borderRadius: wp("4.5%"),
+    width: isWeb ? 36 : wp("9%"),
+    height: isWeb ? 36 : wp("9%"),
+    borderRadius: isWeb ? 18 : wp("4.5%"),
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
@@ -284,9 +286,9 @@ const styles = StyleSheet.create({
     bottom: hp("2%"),
   },
   actionButton: {
-    width: wp("10%"),
-    height: wp("10%"),
-    borderRadius: wp("5%"),
+    width: isWeb ? 44 : wp("10%"),
+    height: isWeb ? 44 : wp("10%"),
+    borderRadius: isWeb ? 22 : wp("5%"),
     backgroundColor: Colors.content_back,
     justifyContent: "center",
     alignItems: "center",

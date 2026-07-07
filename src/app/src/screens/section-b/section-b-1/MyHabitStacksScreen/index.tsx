@@ -44,8 +44,8 @@ import {
 } from "@/core/redux/subscription-plan";
 import {ButtonSignIn as Button} from "@/core/components/section-a";
 import {HabitStackCard} from "@/core/components/section-b";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import {Colors} from "@/core/constants/Colors";
-import {Images} from "@/core/constants/Images";
 import {MainStyles} from "@/core/constants/styles";
 import {
   HabitLinkComponent,
@@ -384,27 +384,8 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
         },
       ]}
     >
-      {/* Sticky top bar — web native */}
-      <div className="sticky top-0 z-40 flex items-center justify-between px-4 h-14 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => navigation.openDrawer()}
-            className="grid place-items-center h-9 w-9 rounded-lg hover:bg-accent transition-colors"
-            aria-label="Open menu"
-          >
-            <MaterialCommunityIcons name="menu" size={22} color={Colors.white} />
-          </button>
-          <div className="h-8 w-8 rounded-lg bg-card grid place-items-center overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={(Images.logo as any)?.default ?? Images.logo}
-              alt="NoCaps"
-              className="h-5 w-5 object-contain"
-            />
-          </div>
-          <span className="text-base font-semibold text-foreground">NoCaps</span>
-        </div>
-      </div>
+      {/* Sticky top bar — shared web dashboard header */}
+      <WebDashboardHeader onOpenDrawer={() => navigation.openDrawer()} />
 
       {/* Scrollable content */}
       <div className="px-4 md:px-6 lg:px-8 py-6 max-w-screen-2xl mx-auto w-full">

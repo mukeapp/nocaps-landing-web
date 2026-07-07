@@ -1,12 +1,14 @@
 // src/screens/ProfileScreen/components/HabitStacksChipsRow.tsx
 import React, { useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Platform, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
+
+const isWeb = Platform.OS === "web";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {HabitStackChips, HabitStacksChipsRowProps} from "@/core/models/section-b";
@@ -130,10 +132,10 @@ const styles = StyleSheet.create({
   sectionCard: {
     marginTop: hp("0%"),
     backgroundColor: Colors.background_color,
-    borderTopLeftRadius: wp("4%"),
-    borderTopRightRadius: wp("4%"),
-    paddingHorizontal: wp("4%"),
-    paddingVertical: hp("2%"),
+    borderTopLeftRadius: isWeb ? 16 : wp("4%"),
+    borderTopRightRadius: isWeb ? 16 : wp("4%"),
+    paddingHorizontal: isWeb ? 20 : wp("4%"),
+    paddingVertical: isWeb ? 18 : hp("2%"),
     marginHorizontal: wp("0%"),
   },
   sectionHeaderRow: {
@@ -148,9 +150,9 @@ const styles = StyleSheet.create({
     fontFamily: "semibold",
   },
   collapseButton: {
-    width: wp("8%"),
-    height: wp("8%"),
-    borderRadius: wp("4%"),
+    width: isWeb ? 32 : wp("8%"),
+    height: isWeb ? 32 : wp("8%"),
+    borderRadius: isWeb ? 16 : wp("4%"),
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     justifyContent: "center",
     alignItems: "center",

@@ -1,11 +1,13 @@
 // src/screens/ProfileScreen/components/PostHabitToggle.tsx
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Platform, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
+
+const isWeb = Platform.OS === "web";
 
 interface PostHabitToggleProps {
   activeToggle: "post" | "habitStacks";
@@ -68,14 +70,15 @@ const styles = StyleSheet.create({
   togglePill: {
     flexDirection: "row",
     backgroundColor: "#2A2A2A",
-    borderRadius: wp("10%"),
-    padding: wp("1%"),
-    width: wp("90%"),
+    borderRadius: 999,
+    padding: isWeb ? 4 : wp("1%"),
+    width: isWeb ? 420 : wp("90%"),
+    maxWidth: "100%",
   },
   toggleButton: {
     flex: 1,
-    borderRadius: wp("9%"),
-    paddingVertical: hp("1.8%"),
+    borderRadius: 999,
+    paddingVertical: isWeb ? 10 : hp("1.8%"),
     justifyContent: "center",
     alignItems: "center",
   },
