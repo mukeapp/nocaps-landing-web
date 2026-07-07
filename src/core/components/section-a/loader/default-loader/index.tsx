@@ -1,5 +1,5 @@
-import { ActivityIndicator, Modal, View } from "react-native";
-import React, { useState } from "react";
+import { ActivityIndicator, Modal, Platform, View } from "react-native";
+import React from "react";
 
 const DefaultLoader = ({ status = false }) => {
   return (
@@ -7,9 +7,10 @@ const DefaultLoader = ({ status = false }) => {
       <View
         style={{
           flex: 1,
-          backgroundColor: "rgba(255, 255, 255, 0.64)",
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
           alignItems: "center",
           justifyContent: "center",
+          ...(Platform.OS === "web" ? { backdropFilter: "blur(4px)" } : {}),
         }}
       >
         <ActivityIndicator size="large" color={"#ffffff"} />
