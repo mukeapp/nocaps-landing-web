@@ -1,11 +1,15 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
 } from "@/core/utils/responsive";
 import {Plan} from "../types";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number => (isWeb ? +(p * 3.8).toFixed(1) : _wp(p));
+const hp = (p: number): number => (isWeb ? +(p * 3.8).toFixed(1) : _hp(p));
 
 interface Props {
   plan: Plan;

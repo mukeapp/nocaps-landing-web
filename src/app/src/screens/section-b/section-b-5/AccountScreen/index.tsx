@@ -15,6 +15,8 @@ import {
     getInitials,
     toUIPlan,
 } from "@/core/components/section-b-5";
+import {DefaultLoader as Loader} from "@/core/components/section-a";
+import {Header2} from "@/core/components/section-b";
 import {Colors} from "@/core/constants/Colors";
 import {
     BillingType,
@@ -65,12 +67,18 @@ import Purchases, {
     PurchasesPackage,
 } from "react-native-purchases";
 import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
+    heightPercentageToDP as _hp,
+    widthPercentageToDP as _wp,
 } from "@/core/utils/responsive";
 import Toast from "react-native-root-toast";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {useDispatch, useSelector} from "react-redux";
+
+const isWeb = Platform.OS === "web";
+
+// Web: use fixed px scaling so fonts/icons don't inflate with browser width.
+// Native: keep original responsive-screen percentages.
+const wp = (p: number): number => (isWeb ? +(p * 3.8).toFixed(1) : _wp(p));
+const hp = (p: number): number => (isWeb ? +(p * 3.8).toFixed(1) : _hp(p));
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -547,25 +555,21 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   // ─── render ────────────────────────────────────────────────────────────────
 
   return (
-    <SafeAreaView style={s.root}>
-      <StatusBar barStyle="light-content" backgroundColor="#0f0f1a" />
-
-      {/* Header */}
-      <View style={s.header}>
-        <TouchableOpacity
-          style={s.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={s.backArrow}>‹</Text>
-        </TouchableOpacity>
-        <Text style={s.headerTitle}>Account</Text>
-        <View style={s.headerRight} />
-      </View>
+    <View style={s.root}>
+      <Header2
+        title="Account"
+        titleTextFormat={1}
+        titleVisibilityIcon={false}
+        showSettingsIcon={true}
+        navigation={navigation}
+        cameFromDrawerTab={false}
+      />
 
       <ScrollView
         contentContainerStyle={s.scroll}
         showsVerticalScrollIndicator={false}
       >
+        <View style={isWeb ? s.webContainer : undefined}>
         {/* ── Profile card ── */}
         <View style={s.profileCard}>
           <Avatar initials={getInitials(firstName, lastName)} photo={photo} />
@@ -611,7 +615,7 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               activeOpacity={0.7}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              <MaterialIcons name="content-copy" size={wp(3.8)} color="#6b7280" />
+              <MaterialIcons name="content-copy" size={wp(3.5)} color="#6b7280" />
               <Text style={s.userIdValue} numberOfLines={1}>{userId || "—"}</Text>
             </TouchableOpacity>
           </View>
@@ -635,7 +639,7 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               <View style={s.creditsCol}>
                 <Text style={s.creditsLabel}>REMAINING</Text>
                 <View style={s.creditsValueRow}>
-                  <MaterialIcons name="bolt" size={wp(5)} color="#f59e0b" />
+                  <MaterialIcons name="bolt" size={wp(4.5)} color="#f59e0b" />
                   <Text style={s.creditsValue}>
                     {formatCredits(revenueCat?.remainingCredits ?? 0)}
                   </Text>
@@ -659,7 +663,7 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 <ActivityIndicator size="small" color="#fff" />
               ) : (
                 <>
-                  <MaterialIcons name="add" size={wp(4)} color="#fff" />
+                  <MaterialIcons name="add" size={wp(3.5)} color="#fff" />
                   <Text style={s.addCreditsBtnText}>Add Credits</Text>
                 </>
               )}
@@ -685,7 +689,7 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                 >
                   <MaterialIcons
                     name="info-outline"
-                    size={wp(3.5)}
+                    size={wp(3.2)}
                     color="#6b7280"
                   />
                 </TouchableOpacity>
@@ -822,6 +826,7 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         <Text style={s.footer}>
           NoCaps v{Constants.expoConfig?.version ?? "1.0.0"}
         </Text>
+        </View>{/* end webContainer */}
       </ScrollView>
 
       <PlanInfoModal planId={infoPlanId} onClose={() => setInfoPlanId(null)} />
@@ -844,12 +849,8 @@ const AccountScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         }}
       />
 
-      {loading && (
-        <View style={s.loaderOverlay} pointerEvents="none">
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
-      )}
-    </SafeAreaView>
+      <Loader status={loading} />
+    </View>
   );
 };
 
@@ -860,20 +861,14 @@ export default AccountScreen;
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0f0f1a" },
 
-  // header
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: wp(5),
-    paddingVertical: hp(1),
-  },
-  backButton: { width: wp(8), alignItems: "center", justifyContent: "center" },
-  backArrow: { fontSize: wp(8), color: Colors.colorred, lineHeight: wp(9) },
-  headerTitle: { fontSize: wp(4.5), fontFamily: "bold", color: "#f1f5f9" },
-  headerRight: { width: wp(8) },
-
   scroll: { paddingBottom: hp(5) },
+  webContainer: isWeb ? {
+    maxWidth: 1200,
+    width: '100%',
+    marginLeft: 'auto' as any,
+    marginRight: 'auto' as any,
+    paddingHorizontal: wp(3),
+  } : {},
 
   // profile card
   profileCard: {
@@ -1112,13 +1107,5 @@ const s = StyleSheet.create({
     fontFamily: "regular",
     color: "#374151",
     paddingTop: hp(2),
-  },
-
-  loaderOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 10,
   },
 });
