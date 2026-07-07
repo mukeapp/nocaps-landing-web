@@ -9,6 +9,10 @@ import {
 import { Colors } from "@/core/constants/Colors";
 
 const isWeb = Platform.OS === "web";
+// On web, render at a fixed iPad Pro-equivalent size (1024×1366 × 0.55 cap) so
+// chips/icons don't inflate with the browser width; native keeps wp/hp.
+const wwp = (p: number) => (isWeb ? +(p * 5.632).toFixed(1) : wp(`${p}%`));
+const whp = (p: number) => (isWeb ? +(p * 7.513).toFixed(1) : hp(`${p}%`));
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {HabitStackChips, HabitStacksChipsRowProps} from "@/core/models/section-b";
@@ -130,19 +134,19 @@ export default HabitStacksChipsRow;
 
 const styles = StyleSheet.create({
   sectionCard: {
-    marginTop: hp("0%"),
+    marginTop: whp(0),
     backgroundColor: Colors.background_color,
-    borderTopLeftRadius: isWeb ? 16 : wp("4%"),
-    borderTopRightRadius: isWeb ? 16 : wp("4%"),
-    paddingHorizontal: isWeb ? 20 : wp("4%"),
-    paddingVertical: isWeb ? 18 : hp("2%"),
-    marginHorizontal: wp("0%"),
+    borderTopLeftRadius: wwp(4),
+    borderTopRightRadius: wwp(4),
+    paddingHorizontal: wwp(4),
+    paddingVertical: whp(2),
+    marginHorizontal: wwp(0),
   },
   sectionHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: hp("0%"),
+    marginBottom: whp(0),
   },
   sectionTitle: {
     color: Colors.white,
@@ -150,9 +154,9 @@ const styles = StyleSheet.create({
     fontFamily: "semibold",
   },
   collapseButton: {
-    width: isWeb ? 32 : wp("8%"),
-    height: isWeb ? 32 : wp("8%"),
-    borderRadius: isWeb ? 16 : wp("4%"),
+    width: wwp(8),
+    height: wwp(8),
+    borderRadius: wwp(4),
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     justifyContent: "center",
     alignItems: "center",
@@ -160,26 +164,26 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: hp("1%"),
+    marginBottom: whp(1),
   },
   iconWrapper: {
-    width: wp("8%"),
-    height: wp("8%"),
-    borderRadius: wp("4%"),
+    width: wwp(8),
+    height: wwp(8),
+    borderRadius: wwp(4),
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     justifyContent: "center",
     alignItems: "center",
-    marginRight: wp("2%"),
+    marginRight: wwp(2),
   },
   chipsScroll: {
-    paddingVertical: hp("0.5%"),
+    paddingVertical: whp(0.5),
   },
   chip: {
-    paddingHorizontal: wp("4.5%"),
-    paddingVertical: hp("1%"),
-    borderRadius: wp("6%"),
+    paddingHorizontal: wwp(4.5),
+    paddingVertical: whp(1),
+    borderRadius: wwp(6),
     backgroundColor: Colors.sub_title,
-    marginRight: wp("2%"),
+    marginRight: wwp(2),
   },
   chipText: {
     color: Colors.white,

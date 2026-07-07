@@ -9,6 +9,10 @@ import { Colors } from "@/core/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 const isWeb = Platform.OS === "web";
+// On web, render at a fixed iPad Pro-equivalent size (1024×1366 × 0.55 cap) so
+// the card doesn't inflate with the browser width; native keeps wp/hp.
+const wwp = (p: number) => (isWeb ? +(p * 5.632).toFixed(1) : wp(`${p}%`));
+const whp = (p: number) => (isWeb ? +(p * 7.513).toFixed(1) : hp(`${p}%`));
 
 interface AboutMeSectionProps {
   about: string;
@@ -48,18 +52,18 @@ export default AboutMeSection;
 
 const styles = StyleSheet.create({
   sectionCard: {
-    marginTop: hp("0%"),
+    marginTop: whp(0),
     backgroundColor: Colors.background_color,
-    borderBottomLeftRadius: isWeb ? 16 : wp("4%"),
-    borderBottomRightRadius: isWeb ? 16 : wp("4%"),
-    paddingHorizontal: isWeb ? 20 : wp("5%"),
-    paddingVertical: isWeb ? 20 : hp("2.5%"),
+    borderBottomLeftRadius: wwp(4),
+    borderBottomRightRadius: wwp(4),
+    paddingHorizontal: wwp(5),
+    paddingVertical: whp(2.5),
   },
   sectionHeaderRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: hp("2%"),
+    marginBottom: whp(2),
   },
   headerCollapsed: {
     marginBottom: 0,
@@ -70,9 +74,9 @@ const styles = StyleSheet.create({
     fontFamily: "semibold",
   },
   collapseButton: {
-    width: isWeb ? 32 : wp("8%"),
-    height: isWeb ? 32 : wp("8%"),
-    borderRadius: isWeb ? 16 : wp("4%"),
+    width: wwp(8),
+    height: wwp(8),
+    borderRadius: wwp(4),
     backgroundColor: "rgba(255, 255, 255, 0.1)",
     justifyContent: "center",
     alignItems: "center",
@@ -86,6 +90,6 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: Colors.sub_title,
-    marginBottom: hp("2%"),
+    marginBottom: whp(2),
   },
 });
