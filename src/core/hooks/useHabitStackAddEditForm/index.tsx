@@ -512,6 +512,8 @@ export default function useHabitStackAddEditForm({
     cancel,
     // description
     DescriptionInput,
+    description,
+    setDescription,
     // navigate
     navigateToMarket,
     navigateToFriendsHabits,
