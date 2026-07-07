@@ -299,18 +299,20 @@ const styles = StyleSheet.create({
   seeAllButton: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: wp(2.5),
-    paddingVertical: hp(0.4),
-    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 14,
     backgroundColor: 'rgba(255,255,255,0.06)',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.08)',
-    gap: wp(0.5),
+    gap: 4,
   },
   seeAllText: {
     ...MainStyles.text12,
     color: Colors.gray,
     fontWeight: "500",
+    top: 0, // cancel MainStyles.text12's top: hp(1) misalignment
+    textDecorationLine: "none", // cancel MainStyles.text12's underline
   },
 });
 
