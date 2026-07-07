@@ -27,6 +27,12 @@ export function useInfiniteListHabitStack<T>(fetchPage: PageFetcherHabitStack<T>
       setData((prev) => [...prev, ...res.items]);
       setHasMore(res.hasMore);
       setPage((p) => p + 1);
+    } catch (e) {
+      // A failed page must stop auto-fetching: FlatList's onEndReached refires after
+      // every loading toggle on a short/empty list, so leaving hasMore=true on error
+      // creates an infinite retry storm against the backend.
+      setHasMore(false);
+      console.error("useInfiniteListHabitStack loadNext failed:", e);
     } finally {
       setLoading(false);
       loadingRef.current = false;
