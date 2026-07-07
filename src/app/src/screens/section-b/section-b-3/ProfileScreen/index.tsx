@@ -78,71 +78,105 @@ const ProfileScreen: React.FC<{ navigation: any; route: any }> = ({
           canEditProfile={form.canEditProfile}
         />
 
-        {/* Friendship action row - only for other users' profiles */}
+        {/* Friendship action row - only for other users' profiles.
+            Web-adapted (July 2026 direction): compact centered pills instead of
+            flex-1 full-width mobile buttons; spinner replaces the "..." label
+            swap so buttons keep their width while friendshipLoading. */}
         {!form.isMyUserProfile && (
-          <View style={styles.friendshipRow}>
+          <div className="flex items-center justify-center gap-2 px-4 py-4">
             {form.friendshipStatus === "none" && (
-              <TouchableOpacity
-                style={styles.addFriendBtn}
-                onPress={form.sendFriendRequest}
+              <button
+                onClick={form.sendFriendRequest}
                 disabled={form.friendshipLoading}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#2D9CDB] px-6 py-2 text-sm font-semibold text-white min-w-[11rem] hover:bg-[#2D9CDB]/85 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                <Text style={styles.addFriendBtnText}>
-                  {form.friendshipLoading ? "..." : "Add Friend"}
-                </Text>
-              </TouchableOpacity>
+                {form.friendshipLoading ? (
+                  <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="account-plus-outline"
+                    size={18}
+                    color={Colors.white}
+                  />
+                )}
+                Add Friend
+              </button>
             )}
 
             {form.friendshipStatus === "pending-sent" && (
-              <TouchableOpacity
-                style={styles.pendingBtn}
-                onPress={form.cancelFriendRequest}
+              <button
+                onClick={form.cancelFriendRequest}
                 disabled={form.friendshipLoading}
+                title="Cancel friend request"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white/5 border border-white/10 px-6 py-2 text-sm font-semibold text-muted-foreground min-w-[11rem] hover:bg-white/10 hover:text-foreground disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                <Text style={styles.pendingBtnText}>
-                  {form.friendshipLoading ? "..." : "Pending"}
-                </Text>
-              </TouchableOpacity>
+                {form.friendshipLoading ? (
+                  <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="clock-outline"
+                    size={18}
+                    color={Colors.gray}
+                  />
+                )}
+                Pending
+              </button>
             )}
 
             {form.friendshipStatus === "pending-received" && (
-              <TouchableOpacity
-                style={styles.acceptBtn}
-                onPress={form.acceptFriendRequest}
+              <button
+                onClick={form.acceptFriendRequest}
                 disabled={form.friendshipLoading}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#27AE60] px-6 py-2 text-sm font-semibold text-white min-w-[11rem] hover:bg-[#27AE60]/85 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                <Text style={styles.acceptBtnText}>
-                  {form.friendshipLoading ? "..." : "Accept"}
-                </Text>
-              </TouchableOpacity>
+                {form.friendshipLoading ? (
+                  <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="account-check-outline"
+                    size={18}
+                    color={Colors.white}
+                  />
+                )}
+                Accept
+              </button>
             )}
 
             {form.friendshipStatus === "friends" && (
-              <TouchableOpacity
-                style={styles.friendsBtn}
-                onPress={form.unfriend}
+              <button
+                onClick={form.unfriend}
                 disabled={form.friendshipLoading}
+                title="Unfriend"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white/5 border border-white/10 px-6 py-2 text-sm font-semibold text-foreground min-w-[11rem] hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                <Text style={styles.friendsBtnText}>
-                  {form.friendshipLoading ? "..." : "Friends"}
-                </Text>
-              </TouchableOpacity>
+                {form.friendshipLoading ? (
+                  <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                ) : (
+                  <MaterialCommunityIcons
+                    name="check"
+                    size={18}
+                    color={Colors.white}
+                  />
+                )}
+                Friends
+              </button>
             )}
 
             {/* 3-dots button */}
             {form.friendshipStatus !== "none" && (
-              <TouchableOpacity
-                style={styles.threeDotsBtn}
-                onPress={() => rbSheetRef.current?.open()}
+              <button
+                onClick={() => rbSheetRef.current?.open()}
+                aria-label="More options"
+                className="grid place-items-center h-10 w-10 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
               >
                 <MaterialCommunityIcons
                   name="dots-vertical"
-                  size={22}
+                  size={20}
                   color={Colors.white}
                 />
-              </TouchableOpacity>
+              </button>
             )}
-          </View>
+          </div>
         )}
 
         <HabitStacksChipsRow habitStacksChips={form.habitStacksChips} isOwnProfile={form.canEditProfile} />
@@ -420,71 +454,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: wp("0%"),
     paddingBottom: hp("2%"),
-  },
-  // Friendship row
-  friendshipRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1.5),
-    gap: wp(2),
-  },
-  addFriendBtn: {
-    flex: 1,
-    backgroundColor: "#007AFF",
-    paddingVertical: hp(1.2),
-    borderRadius: wp(2),
-    alignItems: "center",
-  },
-  addFriendBtnText: {
-    color: Colors.white,
-    fontSize: wp(3.8),
-    fontWeight: "600",
-  },
-  pendingBtn: {
-    flex: 1,
-    backgroundColor: "#555",
-    paddingVertical: hp(1.2),
-    borderRadius: wp(2),
-    alignItems: "center",
-  },
-  pendingBtnText: {
-    color: Colors.white,
-    fontSize: wp(3.8),
-    fontWeight: "600",
-  },
-  acceptBtn: {
-    flex: 1,
-    backgroundColor: "#32D74B",
-    paddingVertical: hp(1.2),
-    borderRadius: wp(2),
-    alignItems: "center",
-  },
-  acceptBtnText: {
-    color: Colors.white,
-    fontSize: wp(3.8),
-    fontWeight: "600",
-  },
-  friendsBtn: {
-    flex: 1,
-    backgroundColor: "#3a3a3a",
-    paddingVertical: hp(1.2),
-    borderRadius: wp(2),
-    alignItems: "center",
-  },
-  friendsBtnText: {
-    color: Colors.white,
-    fontSize: wp(3.8),
-    fontWeight: "600",
-  },
-  threeDotsBtn: {
-    width: wp(10),
-    height: wp(10),
-    borderRadius: wp(2),
-    backgroundColor: "#3a3a3a",
-    justifyContent: "center",
-    alignItems: "center",
   },
   // Bottom sheet styles
   bottomSheetContent: {
