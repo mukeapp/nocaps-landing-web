@@ -6,13 +6,16 @@ import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
 import {InfiniteFetching} from "@/core/models/section-a";
 import { HabitStackComponent } from "@/core/models/section-b/habit";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
 import {HabitLinkItemsRowInfiniteLoader, HabitLinksRowInfiniteLoader, HabitsRowInfiniteLoader, HabitStacksRowInfiniteLoader} from "../../section-b-1";
+
+const isWeb = Platform.OS === "web";
 
 
 
@@ -93,8 +96,9 @@ const MarketSection: React.FC<MarketSectionProps> = ({
       {!hideSeeAllButton && (
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
-          <TouchableOpacity onPress={onSeeAll}>
-            <Text style={styles.seeAll}>See all</Text>
+          <TouchableOpacity style={styles.seeAllButton} onPress={onSeeAll}>
+            <Text style={styles.seeAllText}>See all</Text>
+            <MaterialCommunityIcons name="chevron-right" size={16} color={Colors.gray} />
           </TouchableOpacity>
         </View>
       )}
@@ -277,14 +281,14 @@ const MarketSection: React.FC<MarketSectionProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: hp(2),
+    marginBottom: hp(2.5),
     paddingVertical: hp(1),
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: hp(0.5),
+    marginBottom: hp(1),
     paddingHorizontal: wp(3),
   },
   title: {
@@ -292,10 +296,21 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontWeight: "600",
   },
-  seeAll: {
+  seeAllButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: wp(2.5),
+    paddingVertical: hp(0.4),
+    borderRadius: 16,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.08)',
+    gap: wp(0.5),
+  },
+  seeAllText: {
     ...MainStyles.text12,
     color: Colors.gray,
-    textDecorationLine: "underline",
+    fontWeight: "500",
   },
 });
 

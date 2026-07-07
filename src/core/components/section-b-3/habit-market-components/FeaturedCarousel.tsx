@@ -3,11 +3,13 @@ import { GetFeaturedCarouselSlides } from "@/core/api/section-b/section-b-3/mark
 import { CarouselSlide, DEFAULT_SLIDES } from "@/core/models/section-b/market/carousel";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useEffect, useState } from "react";
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 interface FeaturedCarouselProps {
   slides?: CarouselSlide[];
@@ -51,10 +53,10 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ slides: slidesProp 
         style={styles.imageWrapper}
         resizeMode="cover"
       >
-        {/* Dim overlay — absolute, doesn't affect flex layout of siblings */}
-        <View style={styles.overlay} />
+        {/* Gradient overlay — dark at bottom, transparent at top */}
+        <View style={styles.gradientOverlay} />
 
-        {/* Text block — normal flex child pushed to bottom by imageWrapper's justifyContent */}
+        {/* Text block at bottom of carousel */}
         {(showTitle || showSubtitle) && (
           <View style={styles.textBlock}>
             {showSubtitle && (
@@ -62,23 +64,22 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ slides: slidesProp 
                 {activeSlide.subtitle}
               </Text>
             )}
-            { (
+            {showTitle && (
               <Text style={styles.title} numberOfLines={2}>
-                {showTitle && activeSlide.title}
+                {activeSlide.title}
               </Text>
             )}
           </View>
         )}
       </ImageBackground>
 
-      {/* Controls */}
+      {/* Arrow controls */}
       <View style={styles.controlsContainer}>
-        <TouchableOpacity onPress={handlePrev} style={styles.arrowButton}>
-          <MaterialCommunityIcons name="chevron-left" size={30} color={Colors.white} />
+        <TouchableOpacity onPress={handlePrev} style={styles.arrowButton} {...(isWeb ? { className: "carousel-arrow" } : {})}>
+          <MaterialCommunityIcons name="chevron-left" size={24} color={Colors.white} />
         </TouchableOpacity>
-        <View style={{ flex: 1 }} />
-        <TouchableOpacity onPress={handleNext} style={styles.arrowButton}>
-          <MaterialCommunityIcons name="chevron-right" size={30} color={Colors.white} />
+        <TouchableOpacity onPress={handleNext} style={styles.arrowButton} {...(isWeb ? { className: "carousel-arrow" } : {})}>
+          <MaterialCommunityIcons name="chevron-right" size={24} color={Colors.white} />
         </TouchableOpacity>
       </View>
 
@@ -97,37 +98,51 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = ({ slides: slidesProp 
 
 const styles = StyleSheet.create({
   container: {
-    height: hp(25),
     borderRadius: 12,
     overflow: 'hidden',
     backgroundColor: Colors.inputback,
     marginBottom: hp(2),
     position: 'relative',
+    ...(isWeb ? { minHeight: 200, maxHeight: 300 } : { height: hp(25) }),
   },
   imageWrapper: {
     width: '100%',
     height: '100%',
-    justifyContent: 'flex-start',
+    minHeight: 200,
+    justifyContent: 'flex-end',
   },
-  overlay: {
+  gradientOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    backgroundColor: 'transparent',
+    ...(isWeb
+      ? {
+          background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.1) 70%, transparent 100%)',
+        }
+      : {
+          // Native fallback: darker overlay at bottom via two layers
+          borderBottomWidth: 120,
+          borderBottomColor: 'rgba(0,0,0,0.5)',
+          borderLeftWidth: 0,
+          borderRightWidth: 0,
+          opacity: 0.6,
+        }),
   },
   textBlock: {
-    backgroundColor: 'rgba(0,0,0,0.72)',
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1),
+    paddingHorizontal: wp(5),
+    paddingBottom: hp(3.5),
+    paddingTop: hp(2),
+    zIndex: 2,
   },
   subtitle: {
-    fontSize: 11,
-    color: 'rgba(255,255,255,0.70)',
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.75)',
     fontWeight: '500',
-    letterSpacing: 0.4,
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
-    marginBottom: 2,
+    marginBottom: 4,
   },
   title: {
-    fontSize: 15,
+    fontSize: 18,
     color: Colors.white,
     fontWeight: '700',
   },
@@ -136,25 +151,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: wp(2),
+    paddingHorizontal: wp(3),
+    zIndex: 3,
+    pointerEvents: 'box-none',
   },
   arrowButton: {
-    padding: 5,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...(isWeb ? { cursor: 'pointer', transition: 'background-color 0.2s ease, transform 0.2s ease' } : {}),
   },
   dotsContainer: {
     position: 'absolute',
-    bottom: hp(1.5),
+    bottom: hp(1.2),
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 4,
   },
   dot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(255,255,255,0.5)',
+    backgroundColor: 'rgba(255,255,255,0.4)',
     marginHorizontal: 4,
   },
   activeDot: {

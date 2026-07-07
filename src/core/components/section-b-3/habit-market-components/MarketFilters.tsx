@@ -4,6 +4,7 @@ import { HabitCategory, Sector } from "@/core/models/section-b";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React from "react";
 import {
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,6 +15,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 interface MarketFiltersProps {
   habitCategoryFilters: HabitCategory[];
@@ -91,6 +94,7 @@ const MarketFilters: React.FC<MarketFiltersProps> = ({
                   styles.statusChip,
                   habitCategory === filter.name && styles.statusChipActive,
                 ]}
+                {...(isWeb ? { className: "market-chip" } : {})}
                 onPress={() => {
                   onHabitCategoryChange(filter.name);
                   onSelectedCategoryIdChange(filter.id);
@@ -126,6 +130,7 @@ const MarketFilters: React.FC<MarketFiltersProps> = ({
                 styles.categoryChip,
                 activeSector === filter.id && styles.categoryChipActive,
               ]}
+              {...(isWeb ? { className: "market-chip" } : {})}
               onPress={() => onSectorChange(filter.id)}
             >
               <Text
@@ -174,18 +179,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statusChip: {
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.5),
+    paddingHorizontal: wp(3.5),
+    paddingVertical: hp(0.7),
     borderRadius: 20,
-    backgroundColor: Colors.white,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.12)',
     marginRight: wp(2),
   },
   statusChipActive: {
-    backgroundColor: "#29B6F6", // Cyan/Light Blue
+    backgroundColor: Colors.white,
+    borderColor: Colors.white,
   },
   statusText: {
     ...MainStyles.text10,
-    color: Colors.black,
+    color: 'rgba(255,255,255,0.7)',
     fontWeight: "600",
   },
   statusTextActive: {
@@ -200,24 +208,24 @@ const styles = StyleSheet.create({
     marginRight: wp(1),
   },
   iconButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.title_background, // Assuming background needs to be distinctive or same as other dark bg
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(255,255,255,0.06)',
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: Colors.borderline,
+    borderColor: 'rgba(255,255,255,0.08)',
   },
 
   categoryChip: {
     paddingHorizontal: wp(4),
-    paddingVertical: hp(1),
+    paddingVertical: hp(0.8),
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: Colors.borderline,
+    borderColor: 'rgba(255,255,255,0.12)',
     marginRight: wp(2),
-    backgroundColor: "transparent",
+    backgroundColor: 'rgba(255,255,255,0.04)',
   },
   categoryChipActive: {
     backgroundColor: Colors.white,
@@ -225,11 +233,12 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     ...MainStyles.text14,
-    color: Colors.gray,
-    fontWeight: "600",
+    color: 'rgba(255,255,255,0.6)',
+    fontWeight: "500",
   },
   categoryTextActive: {
     color: Colors.black,
+    fontWeight: "600",
   },
 });
 

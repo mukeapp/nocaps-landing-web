@@ -1,15 +1,16 @@
 import React from "react";
-import {ActivityIndicator, ScrollView, StyleSheet, View} from "react-native";
+import {ActivityIndicator, Platform, ScrollView, StyleSheet, View} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+import {DefaultLoader as Loader} from "@/core/components/section-a";
 import {Header2} from "@/core/components/section-b";
 import {MainStyles} from "@/core/constants/styles";
 import {useHabitMarketForm} from "@/core/hooks";
-import FeaturedCarousel from "../../../../../../core/components/section-b-3/habit-market-components/FeaturedCarousel";
-import MarketFilters from "../../../../../../core/components/section-b-3/habit-market-components/MarketFilters";
-import MarketSection from "../../../../../../core/components/section-b-3/habit-market-components/MarketSection";
+import { FeaturedCarousel, MarketFilters, MarketSection } from "@/core/components/section-b-3";
+
+const isWeb = Platform.OS === "web";
 
 const HabitMarketScreen: React.FC<{ navigation: any; route: any }> = ({
   navigation,
@@ -31,20 +32,21 @@ const HabitMarketScreen: React.FC<{ navigation: any; route: any }> = ({
       <ScrollView
         style={styles.container}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: hp(5) }}
+        contentContainerStyle={styles.scrollContent}
       >
-        <FeaturedCarousel />
+        <View style={isWeb ? styles.webContainer : undefined}>
+          <FeaturedCarousel />
 
-        <MarketFilters
-          habitCategoryFilters={form.habitCategories}
-          habitCategory={form.habitCategory}
-          onHabitCategoryChange={form.setHabitCategory}
-          onSelectedCategoryIdChange={form.setSelectedCategoryId}
-          sectorFilters={form.sectors}
-          activeSector={form.activeSector}
-          onSectorChange={form.setActiveSector}
-          navigateToHabitMarketManager={form.navigateToHabitMarketManager}
-        />
+          <MarketFilters
+            habitCategoryFilters={form.habitCategories}
+            habitCategory={form.habitCategory}
+            onHabitCategoryChange={form.setHabitCategory}
+            onSelectedCategoryIdChange={form.setSelectedCategoryId}
+            sectorFilters={form.sectors}
+            activeSector={form.activeSector}
+            onSectorChange={form.setActiveSector}
+            navigateToHabitMarketManager={form.navigateToHabitMarketManager}
+          />
 
         {/* Finance */}
         {(form.activeSector === "sector-all-000" ||
@@ -154,13 +156,10 @@ const HabitMarketScreen: React.FC<{ navigation: any; route: any }> = ({
           />
         )}
 
+        </View>{/* end webContainer */}
       </ScrollView>
 
-      {form.loading && (
-        <View style={styles.loaderOverlay} pointerEvents="none">
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
-      )}
+      <Loader status={form.loading} />
     </View>
   );
 };
@@ -170,12 +169,9 @@ export default HabitMarketScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: wp(0),
   },
-  loaderOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0,0,0,0.45)",
-    alignItems: "center",
-    justifyContent: "center",
+  scrollContent: {
+    paddingBottom: hp(5),
   },
+  webContainer: isWeb ? {} : {},
 });
