@@ -41,10 +41,16 @@ import {AIModelSelector} from "@/core/components/section-b";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
   isTablet,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number | string): number =>
+  isWeb ? +(Number(p) * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number | string): number =>
+  isWeb ? +(Number(p) * 3.8).toFixed(1) : _hp(p);
 
 type Props = { navigation: any; route: any };
 

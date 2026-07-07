@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
+  widthPercentageToDP as _wp,
+  heightPercentageToDP as _hp,
   fs,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
+const _fs = (size: number): number =>
+  isWeb ? size : fs(size);
 import { useNavigation } from "@react-navigation/native";
 import { MainStyles } from "@/core/constants/styles";
 import { Colors } from "@/core/constants/Colors";

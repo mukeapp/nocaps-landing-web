@@ -12,6 +12,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import React, {useEffect, useRef, useState} from "react";
 import {
+  Platform,
   Image,
   Modal,
   ScrollView,
@@ -25,10 +26,18 @@ import {BlurView} from "expo-blur";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {
   fs,
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
   isTablet,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
+const _fs = (size: number): number =>
+  isWeb ? size : fs(size);
 
 const HabitLinkItemPreview = ({
   rnsheet = false,

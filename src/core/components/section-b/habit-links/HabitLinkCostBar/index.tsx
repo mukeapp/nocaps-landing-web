@@ -2,11 +2,17 @@ import {Colors} from "@/core/constants/Colors";
 import {HabitLinkComponent} from "@/core/models/section-b";
 import {formatCost} from "@/core/utils/utilities/numberUtils";
 import React from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Platform, StyleSheet, Text, View} from "react-native";
 import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp,
+    heightPercentageToDP as _hp,
+    widthPercentageToDP as _wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 interface Props {
   habitLinkComponent: HabitLinkComponent;
