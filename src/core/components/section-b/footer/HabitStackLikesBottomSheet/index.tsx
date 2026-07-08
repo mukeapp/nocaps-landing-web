@@ -157,7 +157,19 @@ const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesB
 
       return (
         <View style={s.row}>
-          <View style={s.avatarWrap}>
+          <TouchableOpacity
+            style={s.avatarWrap}
+            activeOpacity={0.7}
+            onPress={() => {
+              if (like.userId) {
+                setVisible(false);
+                navigation.navigate('profile', {
+                  originScreen: 'likes',
+                  routerData: { destinationScreenTitle: 'Profile', userId: like.userId },
+                });
+              }
+            }}
+          >
             {user.photo ? (
               <Image source={{ uri: user.photo }} style={s.avatar} />
             ) : (
@@ -168,7 +180,7 @@ const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesB
               </View>
             )}
             <Text style={s.reactionBadge}>❤️</Text>
-          </View>
+          </TouchableOpacity>
 
           <View style={s.nameWrap}>
             <Text style={s.username} numberOfLines={1}>
