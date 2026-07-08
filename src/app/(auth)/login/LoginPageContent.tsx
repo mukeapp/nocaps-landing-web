@@ -8,7 +8,7 @@ import { auth } from "@/core/firebase";
 import { GetUserByEmail } from "@/core/api/section-a/user";
 import { UserDataAction } from "@/core/redux/user-data";
 import { useDispatch, useSelector } from "react-redux";
-import { Eye, EyeOff, Loader2, Mail, Lock, Globe } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, Loader2, Mail, Lock, Globe } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
@@ -148,6 +148,17 @@ export default function LoginPageContent() {
 
       <Card className="w-full max-w-md relative border-border/50 bg-background/80 backdrop-blur-xl shadow-2xl">
         <CardHeader className="space-y-1 text-center pb-2">
+          {/* Back button to home */}
+          <div className="absolute top-4 left-4">
+            <Link
+              href="/"
+              className="w-9 h-9 rounded-full bg-accent/50 hover:bg-accent flex items-center justify-center transition-colors"
+              aria-label="Back to home"
+            >
+              <ArrowLeft className="w-4 h-4 text-muted-foreground" />
+            </Link>
+          </div>
+
           <div className="flex items-center justify-center gap-2 mb-4">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
               <Globe className="w-5 h-5 text-primary" />
