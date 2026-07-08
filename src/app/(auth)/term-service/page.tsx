@@ -1,13 +1,21 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "@/core/redux/store";
 
-const ScreenPage = dynamic(() => import("@/shims/react-navigation/ScreenPage"), { ssr: false });
-const Screen = dynamic(
-  () => import("@/app/src/screens/section-a").then((m) => m.TermService),
+const TermServiceContent = dynamic(
+  () => import("./TermServiceContent"),
   { ssr: false }
 );
 
-export default function Page() {
-  return <ScreenPage name="termservice" component={Screen} section="auth" />;
+export default function TermServicePage() {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <TermServiceContent />
+      </PersistGate>
+    </Provider>
+  );
 }
