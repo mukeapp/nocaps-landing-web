@@ -64,16 +64,17 @@ export default PostHabitToggle;
 
 const styles = StyleSheet.create({
   toggleContainer: {
-    marginTop: hp("2%"),
+    marginTop: 16,
     alignItems: "center",
+    paddingHorizontal: 16,
   },
   togglePill: {
     flexDirection: "row",
     backgroundColor: "#2A2A2A",
     borderRadius: 999,
     padding: isWeb ? 4 : wp("1%"),
-    width: isWeb ? 420 : wp("90%"),
-    maxWidth: "100%",
+    width: "100%",
+    maxWidth: 400,
   },
   toggleButton: {
     flex: 1,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     color: "#6B7280",
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: "semibold",
   },
   toggleTextActive: {

@@ -140,22 +140,23 @@ const styles = StyleSheet.create({
   webGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 16,
+    gap: 12,
     paddingHorizontal: 16,
     paddingBottom: 24,
   },
   stackCard: {
-    width: isWeb ? 460 : wp(65),
+    width: isWeb ? wp(140): wp(65),
     minHeight: hp(10),
     marginRight: isWeb ? 0 : wp(3),
-    borderRadius: isWeb ? 14 : wp(3),
+    borderRadius: isWeb ? 12 : wp(3),
     backgroundColor: Colors.text_background,
     paddingVertical: hp(1.2),
-    paddingHorizontal: isWeb ? 12 : wp(3),
+    paddingHorizontal: isWeb ? 10 : wp(3),
   },
   emptyRow: {
     marginHorizontal: isWeb ? 24 : wp(10),
-    paddingBottom: hp(2),
+    paddingVertical: hp(3),
+    alignItems: "center",
   },
   emptyRowText: {
     color: Colors.gray || "#A9A9A9",

@@ -49,15 +49,18 @@ export default TabBar;
 const styles = StyleSheet.create({
   tabsRow: {
     flexDirection: "row",
-    margin: hp("2.4%"),
+    marginHorizontal: 16,
+    marginVertical: 12,
+    gap: 4,
   },
   tabItem: {
-    marginRight: wp("6%"),
+    marginRight: 20,
     alignItems: "center",
+    paddingVertical: 6,
   },
   tabText: {
     color: Colors.sub_title,
-    fontSize: 13,
+    fontSize: 14,
     fontFamily: "regular",
   },
   tabTextActive: {
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
     fontFamily: "semibold",
   },
   tabUnderline: {
-    marginTop: hp("0.6%"),
+    marginTop: 6,
     height: 2,
     width: "100%",
     borderRadius: 1,

@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingHorizontal: wp("0%"),
-    paddingBottom: hp("2%"),
+    paddingBottom: hp(8),
   },
   // Bottom sheet styles
   bottomSheetContent: {
