@@ -16,6 +16,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import {
@@ -63,7 +64,15 @@ const HabitLinkDetailSheet: React.FC<HabitLinkDetailSheetProps> = ({
   onClose,
   ScreenOrigin = "Unknown",
 }) => {
+  // Hooks must run before any conditional return.
+  const {width: winWidth} = useWindowDimensions();
+  const [descExpanded, setDescExpanded] = useState(false);
+
   if (!link) return null;
+
+  // Responsive column count for the web layout: 3 wide → 2 medium → 1 narrow.
+  const cols = winWidth >= 900 ? 3 : winWidth >= 600 ? 2 : 1;
+
   let scorePct = getLinkScore(link);
 
   if (ScreenOrigin === "HabitStacksAIScreen" || ScreenOrigin === "HabitsAIScreen" || ScreenOrigin === "HabitLinksAIScreen" || ScreenOrigin === "HabitLinkItemsAIScreen") {
@@ -76,11 +85,102 @@ const HabitLinkDetailSheet: React.FC<HabitLinkDetailSheetProps> = ({
   const items = getLinkItems(link);
   const tier = getScoreTier(scorePct);
   const scoreColor = tier.hex;
-  const [descExpanded, setDescExpanded] = useState(false);
 
   const tags = [link.company, link.location].filter(
     (t): t is string => !!t && t.trim() !== "",
   );
+
+  // ---- Web panel contents (written once, reused across 3/2/1 column tiers) ----
+  const overviewContent = (
+    <>
+      <Text style={styles.colHeading}>OVERVIEW</Text>
+
+      <View style={styles.nameRow}>
+        <Text style={styles.name} numberOfLines={3}>
+          {link.name ?? "—"}
+        </Text>
+      </View>
+
+      <View
+        style={[
+          styles.tierBadge,
+          styles.tierBadgeWeb,
+          {
+            backgroundColor: `${scoreColor}22`,
+            borderColor: `${scoreColor}44`,
+          },
+        ]}
+      >
+        <View style={[styles.tierDot, {backgroundColor: scoreColor}]} />
+        <Text style={[styles.tierText, {color: scoreColor}]}>
+          {tier.label.toUpperCase()}
+        </Text>
+      </View>
+
+      {tags.length > 0 && (
+        <View style={styles.tagsRow}>
+          {tags.map((t) => (
+            <View key={t} style={styles.tag}>
+              <Text style={styles.tagText}>{t}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+
+      <View style={styles.scoreBarRow}>
+        <View style={styles.scoreBarTrack}>
+          <View
+            style={[
+              styles.scoreBarFill,
+              {
+                width: `${scorePct}%` as any,
+                backgroundColor: scoreColor,
+              },
+            ]}
+          />
+        </View>
+        <Text style={[styles.scorePercent, {color: scoreColor}]}>
+          {scorePct}%
+        </Text>
+      </View>
+
+      <View style={styles.costCard}>
+        <Text style={styles.costAmount}>
+          {costSymbol}{totalCost.toFixed(2)}
+        </Text>
+        <Text style={styles.costLabel}>total cost</Text>
+      </View>
+    </>
+  );
+
+  const descriptionBody = link.description ? (
+    <View style={[styles.descCard, {borderLeftColor: scoreColor}]}>
+      <Text style={styles.description}>{link.description}</Text>
+    </View>
+  ) : (
+    <Text style={styles.emptyText}>No description provided.</Text>
+  );
+
+  const itemsBody =
+    items.length > 0 ? (
+      items.map((item, idx) => (
+        <View key={item.id ?? idx} style={styles.itemRow}>
+          <ItemImage
+            uri={item.imageUrl ?? ""}
+            imageStyle={styles.itemImage}
+            fallbackStyle={styles.itemImageFallback}
+          />
+          <Text style={styles.itemName} numberOfLines={1}>
+            {item.name ?? "—"}
+          </Text>
+          <Text style={styles.itemCost}>
+            {costSymbol}{(item.cost ?? 0).toFixed(2)}
+          </Text>
+        </View>
+      ))
+    ) : (
+      <Text style={styles.emptyText}>No items in this link.</Text>
+    );
 
   return (
     <Modal visible transparent animationType="slide" onRequestClose={onClose}>
@@ -102,119 +202,57 @@ const HabitLinkDetailSheet: React.FC<HabitLinkDetailSheetProps> = ({
           ) : null}
 
           {isWeb ? (
-            /* ---------- WEB: 3-column layout, no full-sheet scroll ---------- */
-            <View style={styles.columnsRow}>
-              {/* Column 1 — Overview */}
-              <View style={[styles.col, styles.colPanel]}>
-                <Text style={styles.colHeading}>OVERVIEW</Text>
+            cols === 3 ? (
+              /* ---------- WEB wide: 3 columns side-by-side, no full-sheet scroll ---------- */
+              <View style={styles.columnsRow}>
+                <View style={[styles.col, styles.colPanel]}>{overviewContent}</View>
 
-                <View style={styles.nameRow}>
-                  <Text style={styles.name} numberOfLines={3}>
-                    {link.name ?? "—"}
-                  </Text>
+                <View style={[styles.col, styles.colPanel]}>
+                  <Text style={styles.colHeading}>DESCRIPTION</Text>
+                  <ScrollView
+                    style={styles.colScroll}
+                    showsVerticalScrollIndicator={false}
+                    nestedScrollEnabled
+                  >
+                    {descriptionBody}
+                  </ScrollView>
                 </View>
 
-                <View
-                  style={[
-                    styles.tierBadge,
-                    styles.tierBadgeWeb,
-                    {
-                      backgroundColor: `${scoreColor}22`,
-                      borderColor: `${scoreColor}44`,
-                    },
-                  ]}
-                >
-                  <View style={[styles.tierDot, { backgroundColor: scoreColor }]} />
-                  <Text style={[styles.tierText, { color: scoreColor }]}>
-                    {tier.label.toUpperCase()}
-                  </Text>
+                <View style={[styles.col, styles.colPanel]}>
+                  <Text style={styles.colHeading}>ITEMS ({items.length})</Text>
+                  <ScrollView
+                    style={styles.colScroll}
+                    showsVerticalScrollIndicator={false}
+                    nestedScrollEnabled
+                  >
+                    {itemsBody}
+                  </ScrollView>
                 </View>
-
-                {tags.length > 0 && (
-                  <View style={styles.tagsRow}>
-                    {tags.map((t) => (
-                      <View key={t} style={styles.tag}>
-                        <Text style={styles.tagText}>{t}</Text>
-                      </View>
-                    ))}
+              </View>
+            ) : (
+              /* ---------- WEB medium/narrow: reflow to 2 or 1 column, sheet scrolls ---------- */
+              <ScrollView
+                style={styles.flowScroll}
+                contentContainerStyle={styles.flowContent}
+                showsVerticalScrollIndicator={false}
+              >
+                <View style={cols === 2 ? styles.flowRow : styles.flowCol}>
+                  <View style={[styles.colPanel, cols === 2 && styles.flowHalf]}>
+                    {overviewContent}
                   </View>
-                )}
 
-                <View style={styles.scoreBarRow}>
-                  <View style={styles.scoreBarTrack}>
-                    <View
-                      style={[
-                        styles.scoreBarFill,
-                        {
-                          width: `${scorePct}%` as any,
-                          backgroundColor: scoreColor,
-                        },
-                      ]}
-                    />
+                  <View style={[styles.colPanel, cols === 2 && styles.flowHalf]}>
+                    <Text style={styles.colHeading}>DESCRIPTION</Text>
+                    {descriptionBody}
                   </View>
-                  <Text style={[styles.scorePercent, { color: scoreColor }]}>
-                    {scorePct}%
-                  </Text>
                 </View>
 
-                <View style={styles.costCard}>
-                  <Text style={styles.costAmount}>
-                    {costSymbol}{totalCost.toFixed(2)}
-                  </Text>
-                  <Text style={styles.costLabel}>total cost</Text>
+                <View style={styles.colPanel}>
+                  <Text style={styles.colHeading}>ITEMS ({items.length})</Text>
+                  {itemsBody}
                 </View>
-              </View>
-
-              {/* Column 2 — Description */}
-              <View style={[styles.col, styles.colPanel]}>
-                <Text style={styles.colHeading}>DESCRIPTION</Text>
-                <ScrollView
-                  style={styles.colScroll}
-                  showsVerticalScrollIndicator={false}
-                  nestedScrollEnabled
-                >
-                  {link.description ? (
-                    <View
-                      style={[styles.descCard, { borderLeftColor: scoreColor }]}
-                    >
-                      <Text style={styles.description}>{link.description}</Text>
-                    </View>
-                  ) : (
-                    <Text style={styles.emptyText}>No description provided.</Text>
-                  )}
-                </ScrollView>
-              </View>
-
-              {/* Column 3 — Items */}
-              <View style={[styles.col, styles.colPanel]}>
-                <Text style={styles.colHeading}>ITEMS ({items.length})</Text>
-                <ScrollView
-                  style={styles.colScroll}
-                  showsVerticalScrollIndicator={false}
-                  nestedScrollEnabled
-                >
-                  {items.length > 0 ? (
-                    items.map((item, idx) => (
-                      <View key={item.id ?? idx} style={styles.itemRow}>
-                        <ItemImage
-                          uri={item.imageUrl ?? ""}
-                          imageStyle={styles.itemImage}
-                          fallbackStyle={styles.itemImageFallback}
-                        />
-                        <Text style={styles.itemName} numberOfLines={1}>
-                          {item.name ?? "—"}
-                        </Text>
-                        <Text style={styles.itemCost}>
-                          {costSymbol}{(item.cost ?? 0).toFixed(2)}
-                        </Text>
-                      </View>
-                    ))
-                  ) : (
-                    <Text style={styles.emptyText}>No items in this link.</Text>
-                  )}
-                </ScrollView>
-              </View>
-            </View>
+              </ScrollView>
+            )
           ) : (
             /* ---------- NATIVE: original single-column layout ---------- */
             <>
@@ -425,6 +463,26 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
   colScroll: {
+    flex: 1,
+  },
+  // --- Web reflow (2 / 1 column) layout ---
+  flowScroll: {
+    flex: 1,
+  },
+  flowContent: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 6,
+    gap: 12,
+  },
+  flowRow: {
+    flexDirection: "row",
+    gap: 12,
+  },
+  flowCol: {
+    gap: 12,
+  },
+  flowHalf: {
     flex: 1,
   },
   emptyText: {
