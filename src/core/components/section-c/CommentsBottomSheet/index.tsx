@@ -401,7 +401,9 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
             style={s.headerClose}
             onPress={() => rbSheetRef.current?.close()}
           >
-            <AntDesign name="close" size={18} color="#fff" />
+            <View style={s.headerCloseCircle}>
+              <AntDesign name="close" size={16} color="#000" />
+            </View>
           </TouchableOpacity>
         )}
       </View>
@@ -470,7 +472,11 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
         }}
       >
         <View
-          style={[s.sheetContainer, { paddingBottom: keyboardOffset }]}
+          style={[
+            s.sheetContainer,
+            isWeb && { height: sheetHeight },
+            { paddingBottom: keyboardOffset },
+          ]}
           pointerEvents={menuCommentId || editCommentId ? "none" : "auto"}
         >
           {twoCol ? (
@@ -678,10 +684,13 @@ const s = StyleSheet.create({
   webRow: {
     flex: 1,
     flexDirection: "row",
+    minHeight: 0,
   },
   webCommentsCol: {
     flex: 1,
     minWidth: 0,
+    minHeight: 0,
+    overflow: "hidden",
   },
   webComposerCol: {
     width: 320,
@@ -697,6 +706,14 @@ const s = StyleSheet.create({
     right: 12,
     top: 0,
     bottom: 0,
+    justifyContent: "center",
+  },
+  headerCloseCircle: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "#fff",
+    alignItems: "center",
     justifyContent: "center",
   },
   composerHeading: {
