@@ -23,7 +23,13 @@ const HabitLinkLocationSection: React.FC<Props> = ({
 
   useEffect(() => {
     if (placesRef.current && location) {
-      placesRef.current.setAddressText(location);
+      // setAddressText is a native-only method on GooglePlacesAutocomplete.
+      // On web it doesn't exist, so guard against the error.
+      try {
+        (placesRef.current as any).setAddressText?.(location);
+      } catch {
+        // silently ignore — web doesn't support setAddressText
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
