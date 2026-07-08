@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.6),
+    fontSize: 14,
     fontFamily: "poppins_regular",
   },
   footer: {
@@ -367,8 +367,8 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: "#000",
-    borderTopLeftRadius: wp(5),
-    borderTopRightRadius: wp(5),
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     height: '90%',
     paddingBottom: hp(4),
   },
@@ -376,18 +376,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: wp(5),
-    paddingVertical: hp(2),
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     borderBottomColor: "#333",
     borderBottomWidth: 0.5,
   },
   modalTitle: {
     color: "#fff",
-    fontSize: wp(4.5),
+    fontSize: 18,
     fontWeight: "700",
   },
   modalClose: {
-    fontSize: wp(6),
+    fontSize: 24,
     color: "#fff",
   },
   modalScroll: {
