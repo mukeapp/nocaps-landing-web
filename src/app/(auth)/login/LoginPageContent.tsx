@@ -67,6 +67,7 @@ export default function LoginPageContent() {
           dispatch(UserDataAction.setUserEmail(normalizedEmail));
         }
 
+        document.cookie = "nocap_session=1; path=/; max-age=31536000; samesite=lax";
         router.push("/dashboard");
       } catch (apiErr: any) {
         if (apiErr?.data?.error === "Not Found") {
@@ -121,6 +122,7 @@ export default function LoginPageContent() {
           dispatch(UserDataAction.setUserEmail(email));
         }
 
+        document.cookie = "nocap_session=1; path=/; max-age=31536000; samesite=lax";
         router.push("/dashboard");
       } catch (apiErr: any) {
         if (apiErr?.data?.error === "Not Found") {
