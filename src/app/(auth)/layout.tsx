@@ -6,7 +6,7 @@ interface Props {
 
 const AuthLayout = ({ children }: Props) => {
     return (
-        <div style={{ minHeight: '100vh', backgroundColor: '#0D0D0D' }}>
+        <div className="min-h-screen bg-background">
             {children}
         </div>
     )
