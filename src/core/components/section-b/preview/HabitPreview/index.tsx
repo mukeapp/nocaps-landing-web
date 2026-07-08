@@ -102,7 +102,7 @@ const HabitPreview: React.FC<HabitPreviewProps> = ({
       <RBSheet
         ref={refRBSheet}
         useNativeDriver={false}
-        height={hp(140)}
+        height={hp(170)}
         customStyles={{
           container: {
             backgroundColor: Colors.content_back,
