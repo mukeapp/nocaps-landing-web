@@ -45,17 +45,20 @@ const HeroAppButtons = () => (
             </button>
         </div>
 
-        {/* Website — not available */}
-        <div className="flex items-center gap-3 rounded-xl bg-red-600/20 border border-red-500/30 px-5 py-3 text-red-400 opacity-70 cursor-not-allowed select-none">
-            <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-            </svg>
-            <div className="flex flex-col items-start">
-                <span className="text-xs opacity-80">Not available yet</span>
-                <span className="text-sm font-bold leading-tight">Website — End of 2027</span>
-            </div>
+        {/* Website — available soon */}
+        <div className="relative group">
+            <Tooltip />
+            <button className="flex items-center gap-3 rounded-xl bg-[#5865F2] hover:bg-[#4752c4] px-5 py-3 text-white transition-colors">
+                <svg className="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                </svg>
+                <div className="flex flex-col items-start">
+                    <span className="text-xs opacity-80">Available soon</span>
+                    <span className="text-sm font-bold leading-tight">Website</span>
+                </div>
+            </button>
         </div>
 
         </div>{/* end row 1 */}
