@@ -106,7 +106,12 @@ const HabitPreview: React.FC<HabitPreviewProps> = ({
         customStyles={{
           container: {
             backgroundColor: Colors.content_back,
-            borderRadius: 20,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            width: "50%",
+            maxWidth: 600,
+            minWidth: 500,
+            alignSelf: "center",
           },
           wrapper: {
             backgroundColor: "#000000ab",
