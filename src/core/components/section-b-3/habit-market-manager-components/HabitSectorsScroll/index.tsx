@@ -1,19 +1,12 @@
 // FILE 3: HabitSectors.tsx
 import { Colors } from "@/core/constants/Colors";
-import { MainStyles } from "@/core/constants/styles";
 import { Sector } from "@/core/models/section-b";
 import React from "react";
-import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
-  heightPercentageToDP as _hp,
-  widthPercentageToDP as _wp,
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
-
-const isWeb = Platform.OS === "web";
-const wp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
-const hp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 interface HabitSectorsProps {
   sectorFilters: Sector[];
@@ -73,25 +66,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   categoryChip: {
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1),
+    paddingHorizontal: wp(4.5),
+    paddingVertical: hp(0.8),
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: Colors.borderline,
+    borderColor: "rgba(255,255,255,0.12)",
     marginRight: wp(2),
-    backgroundColor: "transparent",
+    backgroundColor: "rgba(255,255,255,0.04)",
   },
   categoryChipActive: {
     backgroundColor: Colors.white,
     borderColor: Colors.white,
   },
   categoryText: {
-    ...MainStyles.text14,
-    color: Colors.gray,
-    fontWeight: "600",
+    fontSize: 13,
+    color: "rgba(255,255,255,0.6)",
+    fontFamily: "poppins_semibold",
+    fontWeight: "500",
   },
   categoryTextActive: {
     color: Colors.black,
+    fontWeight: "600",
   },
 });
 

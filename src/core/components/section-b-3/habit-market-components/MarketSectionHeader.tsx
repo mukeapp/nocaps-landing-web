@@ -2,17 +2,11 @@ import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
-import { Image, Platform, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import {
-    heightPercentageToDP as _hp,
-    widthPercentageToDP as _wp,
+    heightPercentageToDP as hp,
+    widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
-
-const isWeb = Platform.OS === "web";
-const wp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
-const hp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 import { HabitStackMarketCardProps } from "./HabitStackMarketCard";
 
 const MarketSectionHeader: React.FC<HabitStackMarketCardProps> = ({
@@ -50,24 +44,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar: {
-    width: wp(6),
-    height: wp(6),
-    borderRadius: wp(3),
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     marginRight: wp(2),
   },
   userName: {
-    ...MainStyles.text12,
+    fontSize: 13,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
     marginRight: wp(2),
-    maxWidth: wp(15),
+    maxWidth: 120,
   },
   rating: {
-    ...MainStyles.text12,
+    fontSize: 12,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
   },
   price: {
-    ...MainStyles.text12,
+    fontSize: 14,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
   },
 });
 

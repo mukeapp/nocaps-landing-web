@@ -1,5 +1,4 @@
 import { Colors } from "@/core/constants/Colors";
-import { MainStyles } from "@/core/constants/styles";
 import { HabitCategory, Sector } from "@/core/models/section-b";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React from "react";
@@ -179,12 +178,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statusChip: {
-    paddingHorizontal: wp(3.5),
+    paddingHorizontal: wp(4),
     paddingVertical: hp(0.7),
     borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.08)',
+    backgroundColor: "rgba(255,255,255,0.08)",
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.12)',
+    borderColor: "rgba(255,255,255,0.12)",
     marginRight: wp(2),
   },
   statusChipActive: {
@@ -192,8 +191,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.white,
   },
   statusText: {
-    ...MainStyles.text10,
-    color: 'rgba(255,255,255,0.7)',
+    fontSize: 13,
+    color: "rgba(255,255,255,0.7)",
+    fontFamily: "poppins_semibold",
     fontWeight: "600",
   },
   statusTextActive: {
@@ -208,9 +208,9 @@ const styles = StyleSheet.create({
     marginRight: wp(1),
   },
   iconButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: 'rgba(255,255,255,0.06)',
     alignItems: "center",
     justifyContent: "center",
@@ -219,21 +219,22 @@ const styles = StyleSheet.create({
   },
 
   categoryChip: {
-    paddingHorizontal: wp(4),
+    paddingHorizontal: wp(4.5),
     paddingVertical: hp(0.8),
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.12)',
+    borderColor: "rgba(255,255,255,0.12)",
     marginRight: wp(2),
-    backgroundColor: 'rgba(255,255,255,0.04)',
+    backgroundColor: "rgba(255,255,255,0.04)",
   },
   categoryChipActive: {
     backgroundColor: Colors.white,
     borderColor: Colors.white,
   },
   categoryText: {
-    ...MainStyles.text14,
-    color: 'rgba(255,255,255,0.6)',
+    fontSize: 13,
+    color: "rgba(255,255,255,0.6)",
+    fontFamily: "poppins_semibold",
     fontWeight: "500",
   },
   categoryTextActive: {

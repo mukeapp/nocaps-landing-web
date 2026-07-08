@@ -206,10 +206,10 @@ const styles = StyleSheet.create({
     paddingRight: wp(0.5),
   },
   stackCard: {
-    width: wp(62),
+    width: wp(140),
     minHeight: hp(10),
     marginRight: wp(3),
-    borderRadius: wp(3),
+    borderRadius: 12,
     backgroundColor: Colors.text_background,
     paddingVertical: hp(1.2),
     paddingHorizontal: wp(3),
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   },
   emptyRowText: {
     color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.4),
+    fontSize: 13,
     fontFamily: "poppins_regular",
   },
 

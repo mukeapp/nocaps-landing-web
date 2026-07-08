@@ -6,18 +6,11 @@ import {
   TouchableOpacity,
   Modal,
   Pressable,
-  Platform,
 } from "react-native";
 import {
-  widthPercentageToDP as _wp,
-  heightPercentageToDP as _hp,
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
-
-const isWeb = Platform.OS === "web";
-const wp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
-const hp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 import { Colors } from "@/core/constants/Colors";
 import {useSelector} from "react-redux";
 import {ConstantsUtils, showToastSuccess} from "@/core/utils";
@@ -208,12 +201,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   button: {
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1),
-    borderRadius: wp(2),
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
-    minWidth: wp(30),
+    minWidth: 120,
   },
   sendToPendingButton: {
     backgroundColor: "transparent",
@@ -222,7 +215,7 @@ const styles = StyleSheet.create({
   },
   sendToPendingText: {
     color: Colors.blue,
-    fontSize: wp(3.2),
+    fontSize: 13,
     fontFamily: "poppins_semibold",
   },
   deleteButton: {
@@ -232,7 +225,7 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: "#FF4444",
-    fontSize: wp(3.2),
+    fontSize: 13,
     fontFamily: "poppins_semibold",
   },
   // Modal styles
@@ -244,23 +237,23 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "#1E1E1E",
-    borderRadius: wp(4),
-    padding: wp(6),
-    width: wp(85),
-    maxWidth: 400,
+    borderRadius: 16,
+    padding: 24,
+    width: 360,
+    maxWidth: "90%",
   },
   modalTitle: {
-    fontSize: wp(5),
+    fontSize: 18,
     fontFamily: "poppins_semibold",
     color: Colors.white || "#FFFFFF",
     marginBottom: hp(1.5),
   },
   modalMessage: {
-    fontSize: wp(3.8),
+    fontSize: 14,
     fontFamily: "poppins_regular",
     color: Colors.gray || "#A9A9A9",
     marginBottom: hp(3),
-    lineHeight: hp(3),
+    lineHeight: 20,
   },
   modalButtons: {
     flexDirection: "row",
@@ -280,7 +273,7 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     color: Colors.white || "#FFFFFF",
-    fontSize: wp(3.8),
+    fontSize: 14,
     fontFamily: "poppins_semibold",
   },
   confirmButton: {
@@ -288,7 +281,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonText: {
     color: Colors.white || "#FFFFFF",
-    fontSize: wp(3.8),
+    fontSize: 14,
     fontFamily: "poppins_semibold",
   },
 });

@@ -3,21 +3,16 @@ import HabitLinksRow from "@/core/components/section-b-1/habit-library/HabitLink
 import HabitsRow from "@/core/components/section-b-1/habit-library/HabitsRow";
 import HabitStacksRow from "@/core/components/section-b-1/habit-library/HabitStacksRow";
 import { Colors } from "@/core/constants/Colors";
-import { MainStyles } from "@/core/constants/styles";
 import {InfiniteFetching} from "@/core/models/section-a";
 import { HabitStackComponent } from "@/core/models/section-b/habit";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React from "react";
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
 import {HabitLinkItemsRowInfiniteLoader, HabitLinksRowInfiniteLoader, HabitsRowInfiniteLoader, HabitStacksRowInfiniteLoader} from "../../section-b-1";
-
-const isWeb = Platform.OS === "web";
-
-
 
 interface MarketSectionProps {
   title: string;
@@ -289,11 +284,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: hp(1),
-    paddingHorizontal: wp(3),
+    paddingHorizontal: wp(2),
   },
   title: {
-    ...MainStyles.text16,
+    fontSize: 16,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
     fontWeight: "600",
   },
   seeAllButton: {
@@ -308,11 +304,10 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   seeAllText: {
-    ...MainStyles.text12,
+    fontSize: 12,
     color: Colors.gray,
+    fontFamily: "poppins_semibold",
     fontWeight: "500",
-    top: 0, // cancel MainStyles.text12's top: hp(1) misalignment
-    textDecorationLine: "none", // cancel MainStyles.text12's underline
   },
 });
 

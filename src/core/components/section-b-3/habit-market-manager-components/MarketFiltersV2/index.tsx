@@ -1,12 +1,8 @@
 // FILE 4: MarketFilters.tsx
 import { HabitCategory, Sector } from "@/core/models/section-b";
 import React from "react";
-import { Platform, StyleSheet, View } from "react-native";
-import { heightPercentageToDP as _hp } from "@/core/utils/responsive";
-
-const isWeb = Platform.OS === "web";
-const hp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
+import { StyleSheet, View } from "react-native";
+import { heightPercentageToDP as hp } from "@/core/utils/responsive";
 import HabitSectorsScroll from "../HabitSectorsScroll";
 import HabitCategoryButtons from "../ActionsButtons";
 import ActionNavigationIcons from "../ActionNavigationIcons";

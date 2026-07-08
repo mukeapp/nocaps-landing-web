@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     paddingRight: wp(0.5),
   },
   stackCard: {
-    width: wp(90),
+    width: wp(140),
     minHeight: hp(10),
     marginRight: wp(3),
     borderRadius: wp(3),

@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
 
   // stacks card
   stackCard: {
-    width: wp(90),
+    width: wp(140),
     minHeight: hp(10),
     borderRadius: wp(3),
     backgroundColor: Colors.text_background,

@@ -2,17 +2,11 @@
 import { Colors } from "@/core/constants/Colors";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
-  heightPercentageToDP as _hp,
-  widthPercentageToDP as _wp,
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
-
-const isWeb = Platform.OS === "web";
-const wp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
-const hp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 interface ActionIconsProps {
   navigateToHabitMarketManager: () => void;
@@ -54,14 +48,14 @@ const styles = StyleSheet.create({
     marginRight: wp(1),
   },
   iconButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.title_background,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "rgba(255,255,255,0.06)",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: Colors.borderline,
+    borderColor: "rgba(255,255,255,0.08)",
   },
 });
 

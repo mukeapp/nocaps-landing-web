@@ -1,19 +1,12 @@
 // FILE 2: HabitDataTypes.tsx
 import { Colors } from "@/core/constants/Colors";
-import { MainStyles } from "@/core/constants/styles";
-import { Action, HabitCategory } from "@/core/models/section-b";
+import { Action } from "@/core/models/section-b";
 import React from "react";
-import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
-  heightPercentageToDP as _hp,
-  widthPercentageToDP as _wp,
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
-
-const isWeb = Platform.OS === "web";
-const wp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
-const hp = (p: number): number =>
-  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 interface ActionButtonsProps {
   actionButtonFilters: Action[];
@@ -77,18 +70,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   statusChip: {
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.5),
+    paddingHorizontal: wp(4),
+    paddingVertical: hp(0.7),
     borderRadius: 20,
-    backgroundColor: Colors.white,
+    backgroundColor: "rgba(255,255,255,0.08)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.12)",
     marginRight: wp(2),
   },
   statusChipActive: {
-    backgroundColor: "#29B6F6",
+    backgroundColor: Colors.white,
+    borderColor: Colors.white,
   },
   statusText: {
-    ...MainStyles.text10,
-    color: Colors.black,
+    fontSize: 13,
+    color: "rgba(255,255,255,0.7)",
+    fontFamily: "poppins_semibold",
     fontWeight: "600",
   },
   statusTextActive: {
