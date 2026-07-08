@@ -21,14 +21,13 @@ import React, {useRef, useState} from "react";
 import {
   Alert,
   Image,
-  Modal,
   Share,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from "react-native";
-import CommentsBottomSheet from "../CommentsBottomSheet";
+import CommentsBottomSheetWeb from "../CommentsBottomSheetWeb";
 import PostLikesBottomSheet from "../PostLikesBottomSheet";
 
 interface RBSheetRef {
@@ -74,7 +73,7 @@ const PostItem = ({
   const [menuOpen, setMenuOpen] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showPostPreview, setShowPostPreview] = useState(false);
-  const commentsSheetRef = useRef<RBSheetRef>(null);
+  const [showComments, setShowComments] = useState(false);
   const likesSheetRef = useRef<RBSheetRef>(null);
 
   const navigation = useNavigation<any>();
@@ -91,7 +90,7 @@ const PostItem = ({
   };
 
   const openComments = () => {
-    commentsSheetRef.current?.open();
+    setShowComments(true);
   };
 
   const handleDeleteClick = () => {
@@ -353,94 +352,82 @@ const PostItem = ({
       </View>
 
       {/* Menu Modal */}
-      <Modal
-        visible={menuOpen}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setMenuOpen(false)}
-      >
+      <View style={[s.modalOverlay, !menuOpen && s.modalHidden]}>
         <TouchableOpacity
-          style={s.modalOverlay}
+          style={StyleSheet.absoluteFillObject}
           activeOpacity={1}
           onPress={() => setMenuOpen(false)}
-        >
-          <View style={s.menuModal}>
-            <TouchableOpacity style={s.menuItem} onPress={handleShare}>
-              <Feather name="share" size={fs(20)} color={Colors.white} />
-              <Text style={s.menuItemText}>Share</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={s.menuItem} onPress={handleReport}>
-              <MaterialIcons name="report" size={fs(20)} color={Colors.white} />
-              <Text style={s.menuItemText}>Report</Text>
-            </TouchableOpacity>
-            {canEdit && (
-              <>
-                <View style={s.menuDivider} />
-                <TouchableOpacity
-                  style={s.menuItem}
-                  onPress={handleDeleteClick}
-                >
-                  <MaterialIcons
-                    name="delete"
-                    size={fs(20)}
-                    color={Colors.red}
-                  />
-                  <Text style={[s.menuItemText, { color: Colors.red }]}>
-                    Delete
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-        </TouchableOpacity>
-      </Modal>
+        />
+        <View style={s.menuModal}>
+          <TouchableOpacity style={s.menuItem} onPress={handleShare}>
+            <Feather name="share" size={fs(20)} color={Colors.white} />
+            <Text style={s.menuItemText}>Share</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={s.menuItem} onPress={handleReport}>
+            <MaterialIcons name="report" size={fs(20)} color={Colors.white} />
+            <Text style={s.menuItemText}>Report</Text>
+          </TouchableOpacity>
+          {canEdit && (
+            <>
+              <View style={s.menuDivider} />
+              <TouchableOpacity
+                style={s.menuItem}
+                onPress={handleDeleteClick}
+              >
+                <MaterialIcons
+                  name="delete"
+                  size={fs(20)}
+                  color={Colors.red}
+                />
+                <Text style={[s.menuItemText, { color: Colors.red }]}>
+                  Delete
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      </View>
 
       {/* Delete Confirmation Modal */}
-      <Modal
-        visible={showDeleteConfirm}
-        transparent
-        animationType="fade"
-        onRequestClose={handleCancelDelete}
-      >
-        <View style={s.deleteModalOverlay}>
-          <View style={s.deleteModal}>
-            <View style={s.deleteIconContainer}>
-              <AntDesign
-                name="exclamation-circle"
-                size={fs(46)}
-                color={Colors.red}
-              />
-            </View>
+      <View style={[s.deleteModalOverlay, !showDeleteConfirm && s.modalHidden]}>
+        <View style={s.deleteModal}>
+          <View style={s.deleteIconContainer}>
+            <AntDesign
+              name="exclamation-circle"
+              size={fs(46)}
+              color={Colors.red}
+            />
+          </View>
 
-            <Text style={s.deleteTitle}>Delete Post</Text>
-            <Text style={s.deleteMessage}>
-              Are you sure you want to delete{" "}
-              <Text style={s.deleteItemName}>{post.title}</Text>?
-            </Text>
-            <Text style={s.deleteWarning}>This action cannot be undone.</Text>
+          <Text style={s.deleteTitle}>Delete Post</Text>
+          <Text style={s.deleteMessage}>
+            Are you sure you want to delete{" "}
+            <Text style={s.deleteItemName}>{post.title}</Text>?
+          </Text>
+          <Text style={s.deleteWarning}>This action cannot be undone.</Text>
 
-            <View style={s.deleteButtons}>
-              <TouchableOpacity
-                style={[s.deleteButton, s.cancelButton]}
-                onPress={handleCancelDelete}
-              >
-                <Text style={s.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
+          <View style={s.deleteButtons}>
+            <TouchableOpacity
+              style={[s.deleteButton, s.cancelButton]}
+              onPress={handleCancelDelete}
+            >
+              <Text style={s.cancelButtonText}>Cancel</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={[s.deleteButton, s.confirmButton]}
-                onPress={handleConfirmDelete}
-              >
-                <Text style={s.confirmButtonText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={[s.deleteButton, s.confirmButton]}
+              onPress={handleConfirmDelete}
+            >
+              <Text style={s.confirmButtonText}>Delete</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </Modal>
+      </View>
 
       {/* Comments Bottom Sheet */}
-      <CommentsBottomSheet
-        ref={commentsSheetRef}
+      <CommentsBottomSheetWeb
+        visible={showComments}
+        onClose={() => setShowComments(false)}
         nocapPostId={post.id ?? post.documentId ?? ""}
         currentUserId={currentUserId}
         postTitle={post.title}
@@ -510,10 +497,18 @@ const s = StyleSheet.create({
     fontWeight: "700",
   },
   modalOverlay: {
-    flex: 1,
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 99998,
+  },
+  modalHidden: {
+    display: "none",
   },
   menuModal: {
     backgroundColor: Colors.content_back,
@@ -541,10 +536,15 @@ const s = StyleSheet.create({
     marginHorizontal: 16,
   },
   deleteModalOverlay: {
-    flex: 1,
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
     justifyContent: "center",
     alignItems: "center",
+    zIndex: 99998,
   },
   deleteModal: {
     backgroundColor: Colors.content_back,
