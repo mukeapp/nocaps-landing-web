@@ -11,6 +11,7 @@ import {
   Platform,
   Image,
   Pressable,
+  useWindowDimensions,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -88,6 +89,14 @@ const getTimeAgo = (date?: Date | string | { _seconds: number; _nanoseconds: num
 const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProps>(
   ({ nocapPostId, currentUserId, postTitle }, ref) => {
     const navigation = useNavigation<any>();
+    const isWeb = Platform.OS === "web";
+    const { width: winWidth, height: winHeight } = useWindowDimensions();
+    const twoCol = isWeb && winWidth >= 768;
+    const sheetHeight = isWeb
+      ? Math.round(winHeight * 0.65)
+      : isTablet
+      ? hp(150)
+      : hp(70);
     const [comments, setComments] = useState<NocapPostCommentComponent[]>([]);
     const [userMap, setUserMap] = useState<Record<string, IUser>>({});
     const [loading, setLoading] = useState(false);
@@ -384,17 +393,65 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
       ? comments.find((c) => (c.id ?? c.documentId) === menuCommentId)?.userId === currentUserId
       : false;
 
+    const headerNode = (
+      <View style={s.sheetHeader}>
+        <Text style={s.sheetTitle}>Comments</Text>
+        {isWeb && (
+          <TouchableOpacity
+            style={s.headerClose}
+            onPress={() => rbSheetRef.current?.close()}
+          >
+            <AntDesign name="close" size={18} color="#fff" />
+          </TouchableOpacity>
+        )}
+      </View>
+    );
+
+    const postPreviewNode = postTitle ? (
+      <View style={s.postPreview}>
+        <Text style={s.postPreviewText} numberOfLines={2}>
+          {postTitle}
+        </Text>
+      </View>
+    ) : null;
+
+    const commentsListNode = loading ? (
+      <View style={s.loadingContainer}>
+        <ActivityIndicator size="large" color={Colors.blueback} />
+      </View>
+    ) : comments.length === 0 ? (
+      <View style={s.emptyContainer}>
+        <Text style={s.emptyText}>No comments yet. Be the first!</Text>
+      </View>
+    ) : (
+      <FlatList
+        ref={flatListRef}
+        style={s.listFlex}
+        data={comments}
+        keyExtractor={(item) => item.id ?? item.documentId ?? String(Math.random())}
+        renderItem={renderComment}
+        contentContainerStyle={s.commentsList}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={renderFooter}
+        showsVerticalScrollIndicator={false}
+      />
+    );
+
     return (
       <RBSheet
         ref={rbSheetRef}
         useNativeDriver={false}
-        height={isTablet ? hp(150) : hp(70)}
+        height={sheetHeight}
         onOpen={() => loadComments(1, false)}
         customStyles={{
           container: {
             backgroundColor: "#1c1e1c",
             borderTopLeftRadius: wp(5),
             borderTopRightRadius: wp(5),
+            ...(isWeb
+              ? { width: "100%", maxWidth: 1000, alignSelf: "center" }
+              : {}),
           },
           wrapper: {
             backgroundColor: "#000000ab",
@@ -416,69 +473,81 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
           style={[s.sheetContainer, { paddingBottom: keyboardOffset }]}
           pointerEvents={menuCommentId || editCommentId ? "none" : "auto"}
         >
-          {/* Header */}
-          <View style={s.sheetHeader}>
-            <Text style={s.sheetTitle}>Comments</Text>
-          </View>
+          {twoCol ? (
+            /* ---------- WEB wide: comments | composer, side by side ---------- */
+            <View style={s.webRow}>
+              <View style={s.webCommentsCol}>
+                {headerNode}
+                {postPreviewNode}
+                {commentsListNode}
+              </View>
 
-          {/* Post title preview */}
-          {postTitle ? (
-            <View style={s.postPreview}>
-              <Text style={s.postPreviewText} numberOfLines={2}>
-                {postTitle}
-              </Text>
-            </View>
-          ) : null}
-
-          {/* Comments list */}
-          {loading ? (
-            <View style={s.loadingContainer}>
-              <ActivityIndicator size="large" color={Colors.blueback} />
-            </View>
-          ) : comments.length === 0 ? (
-            <View style={s.emptyContainer}>
-              <Text style={s.emptyText}>No comments yet. Be the first!</Text>
+              <View style={s.webComposerCol}>
+                <Text style={s.composerHeading}>ADD A COMMENT</Text>
+                <TextInput
+                  style={s.composerInput}
+                  placeholder="Write your comment..."
+                  placeholderTextColor="#666"
+                  value={newComment}
+                  onChangeText={setNewComment}
+                  multiline
+                  maxLength={500}
+                />
+                <Text style={s.charCount}>{newComment.length}/500</Text>
+                <TouchableOpacity
+                  style={[
+                    s.composerSendBtn,
+                    !newComment.trim() && s.sendButtonDisabled,
+                  ]}
+                  onPress={handleSendComment}
+                  disabled={!newComment.trim() || sending}
+                >
+                  {sending ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <>
+                      <Feather name="send" size={16} color="#fff" />
+                      <Text style={s.composerSendText}>Send</Text>
+                    </>
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
           ) : (
-            <FlatList
-              ref={flatListRef}
-              data={comments}
-              keyExtractor={(item) => item.id ?? item.documentId ?? String(Math.random())}
-              renderItem={renderComment}
-              contentContainerStyle={s.commentsList}
-              onEndReached={handleLoadMore}
-              onEndReachedThreshold={0.3}
-              ListFooterComponent={renderFooter}
-              showsVerticalScrollIndicator={false}
-            />
-          )}
+            /* ---------- Native / narrow web: stacked (list on top, input below) ---------- */
+            <>
+              {headerNode}
+              {postPreviewNode}
+              {commentsListNode}
 
-          {/* Input area */}
-          <View style={s.inputContainer}>
-            <TextInput
-              style={s.input}
-              placeholder="Add a comment..."
-              placeholderTextColor="#666"
-              value={newComment}
-              onChangeText={setNewComment}
-              multiline
-              maxLength={500}
-            />
-            <TouchableOpacity
-              style={[
-                s.sendButton,
-                !newComment.trim() && s.sendButtonDisabled,
-              ]}
-              onPress={handleSendComment}
-              disabled={!newComment.trim() || sending}
-            >
-              {sending ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Feather name="send" size={wp(4.5)} color="#fff" />
-              )}
-            </TouchableOpacity>
-          </View>
+              {/* Input area */}
+              <View style={s.inputContainer}>
+                <TextInput
+                  style={s.input}
+                  placeholder="Add a comment..."
+                  placeholderTextColor="#666"
+                  value={newComment}
+                  onChangeText={setNewComment}
+                  multiline
+                  maxLength={500}
+                />
+                <TouchableOpacity
+                  style={[
+                    s.sendButton,
+                    !newComment.trim() && s.sendButtonDisabled,
+                  ]}
+                  onPress={handleSendComment}
+                  disabled={!newComment.trim() || sending}
+                >
+                  {sending ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <Feather name="send" size={wp(4.5)} color="#fff" />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </>
+          )}
         </View>
 
         {/* Comment Menu Modal */}
@@ -604,6 +673,70 @@ export default CommentsBottomSheet;
 const s = StyleSheet.create({
   sheetContainer: {
     flex: 1,
+  },
+  // --- Web 2-column layout (comments | composer) ---
+  webRow: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  webCommentsCol: {
+    flex: 1,
+    minWidth: 0,
+  },
+  webComposerCol: {
+    width: 320,
+    padding: 16,
+    borderLeftWidth: 0.5,
+    borderLeftColor: "#333",
+  },
+  listFlex: {
+    flex: 1,
+  },
+  headerClose: {
+    position: "absolute",
+    right: 12,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center",
+  },
+  composerHeading: {
+    color: "#6b7280",
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 2,
+    marginBottom: 12,
+  },
+  composerInput: {
+    backgroundColor: "#2C2C2E",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    color: "#fff",
+    fontSize: 14,
+    minHeight: 120,
+    maxHeight: 240,
+    textAlignVertical: "top",
+  },
+  charCount: {
+    color: "#666",
+    fontSize: 11,
+    alignSelf: "flex-end",
+    marginTop: 6,
+  },
+  composerSendBtn: {
+    marginTop: 12,
+    flexDirection: "row",
+    gap: 8,
+    backgroundColor: Colors.blueback,
+    borderRadius: 12,
+    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  composerSendText: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "700",
   },
   sheetHeader: {
     alignItems: "center",
