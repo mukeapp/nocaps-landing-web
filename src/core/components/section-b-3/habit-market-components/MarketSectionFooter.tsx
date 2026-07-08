@@ -1,10 +1,14 @@
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
-    heightPercentageToDP as hp,
+    heightPercentageToDP as _hp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 import { HabitStackMarketCardProps } from "./HabitStackMarketCard";
 
 const MarketSectionFooter: React.FC<HabitStackMarketCardProps> = ({

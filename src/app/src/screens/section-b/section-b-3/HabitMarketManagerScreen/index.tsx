@@ -10,12 +10,19 @@ import {
   ScrollView,
   Alert,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import { useSelector } from "react-redux";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
+  widthPercentageToDP as _wp,
+  heightPercentageToDP as _hp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 import { useFocusEffect } from "@react-navigation/native";
 import { MainStyles } from "@/core/constants/styles";
