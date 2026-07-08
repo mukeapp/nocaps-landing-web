@@ -17,10 +17,11 @@ import Feather from "@expo/vector-icons/Feather";
 import Ionic from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {useNavigation} from "@react-navigation/native";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
   Alert,
   Image,
+  Modal,
   Share,
   StyleSheet,
   Text,
@@ -77,6 +78,21 @@ const PostItem = ({
   const likesSheetRef = useRef<RBSheetRef>(null);
 
   const navigation = useNavigation<any>();
+
+  // Lock the page scroll while a popup is open — the page scroller is the
+  // html element (globals.css sets overflow-y there), so lock both.
+  const popupOpen = menuOpen || showDeleteConfirm;
+  useEffect(() => {
+    if (!popupOpen || typeof document === "undefined") return;
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
+    };
+  }, [popupOpen]);
 
   const goToProfileScreen = () => {
     const routerData: RouterData = {
@@ -351,8 +367,16 @@ const PostItem = ({
         </TouchableOpacity>
       </View>
 
-      {/* Menu Modal */}
-      <View style={[s.modalOverlay, !menuOpen && s.modalHidden]}>
+      {/* Menu Modal — RNW Modal portals to document.body; rendered inline, the
+          feed FlatList's translateZ(0) would rescope position:fixed to the feed
+          and the popup would center on the whole feed, not the viewport. */}
+      <Modal
+        visible={menuOpen}
+        transparent
+        animationType="none"
+        onRequestClose={() => setMenuOpen(false)}
+      >
+      <View style={s.modalOverlay}>
         <TouchableOpacity
           style={StyleSheet.absoluteFillObject}
           activeOpacity={1}
@@ -387,9 +411,16 @@ const PostItem = ({
           )}
         </View>
       </View>
+      </Modal>
 
       {/* Delete Confirmation Modal */}
-      <View style={[s.deleteModalOverlay, !showDeleteConfirm && s.modalHidden]}>
+      <Modal
+        visible={showDeleteConfirm}
+        transparent
+        animationType="none"
+        onRequestClose={handleCancelDelete}
+      >
+      <View style={s.deleteModalOverlay}>
         <View style={s.deleteModal}>
           <View style={s.deleteIconContainer}>
             <AntDesign
@@ -423,6 +454,7 @@ const PostItem = ({
           </View>
         </View>
       </View>
+      </Modal>
 
       {/* Comments Bottom Sheet */}
       <CommentsBottomSheetWeb
@@ -497,7 +529,7 @@ const s = StyleSheet.create({
     fontWeight: "700",
   },
   modalOverlay: {
-    position: "fixed",
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -505,10 +537,6 @@ const s = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 99998,
-  },
-  modalHidden: {
-    display: "none",
   },
   menuModal: {
     backgroundColor: Colors.content_back,
@@ -536,7 +564,7 @@ const s = StyleSheet.create({
     marginHorizontal: 16,
   },
   deleteModalOverlay: {
-    position: "fixed",
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -544,7 +572,6 @@ const s = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 99998,
   },
   deleteModal: {
     backgroundColor: Colors.content_back,
