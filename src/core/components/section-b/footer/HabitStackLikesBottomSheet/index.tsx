@@ -1,4 +1,4 @@
-import React, { useState, useRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, useImperativeHandle, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,11 @@ import {
   FlatList,
   ActivityIndicator,
   StyleSheet,
+  Modal,
+  Platform,
+  Pressable,
+  useWindowDimensions,
 } from 'react-native';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-root-toast';
 import {
@@ -27,6 +30,8 @@ import {
   fetchFriendsRequestsAndMapForPagination,
 } from '@/core/services/section-b/section-b-1';
 import { IUserComponent } from '@/core/models/section-a';
+
+const isWeb = Platform.OS === 'web';
 
 interface RBSheetRef {
   open: () => void;
@@ -51,12 +56,19 @@ const AVATAR_SIZE = wp(12);
 const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesBottomSheetProps>(
   ({ habitStackLikes, currentUserId, localLiked }, ref) => {
     const navigation = useNavigation<any>();
-    const rbSheetRef = useRef<any>(null);
+    const { width: winWidth, height: winHeight } = useWindowDimensions();
+    const [visible, setVisible] = useState(false);
 
     useImperativeHandle(ref, () => ({
-      open: () => rbSheetRef.current?.open(),
-      close: () => rbSheetRef.current?.close(),
+      open: () => setVisible(true),
+      close: () => setVisible(false),
     }));
+
+    useEffect(() => {
+      if (visible) {
+        fetchLikers();
+      }
+    }, [visible]);
 
     const [likerUsers, setLikerUsers] = useState<LikerEntry[]>([]);
     const [loading, setLoading] = useState(false);
@@ -171,10 +183,10 @@ const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesB
 
           {!isMe && (
             <TouchableOpacity
-              style={[s.addBtn, isPending && s.addBtnSent]}
+              style={[s.addBtn, isFriend && s.addBtnFriend, isPending && s.addBtnSent]}
               onPress={() => {
                 if (isFriend) {
-                  rbSheetRef.current?.close();
+                  setVisible(false);
                   navigation.navigate('my-friends-and-habits');
                 } else if (!isPending) {
                   handleAddFriend(like.userId!);
@@ -182,7 +194,7 @@ const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesB
               }}
               disabled={isPending && !isFriend}
             >
-              <Text style={[s.addBtnText, isPending && s.addBtnTextSent]}>
+              <Text style={[s.addBtnText, isFriend && s.addBtnTextFriend, isPending && s.addBtnTextSent]}>
                 {isFriend ? 'Friends' : isPending ? 'Pending' : 'Add Friend'}
               </Text>
             </TouchableOpacity>
@@ -192,62 +204,68 @@ const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesB
     };
 
     return (
-      <RBSheet
-        ref={rbSheetRef}
-        useNativeDriver={false}
-        height={isTablet ? hp(150) : hp(75)}
-        onOpen={fetchLikers}
-        customStyles={{
-          container: {
-            backgroundColor: '#1c1e1c',
-            borderTopLeftRadius: wp(5),
-            borderTopRightRadius: wp(5),
-          },
-          wrapper: { backgroundColor: '#000000ab' },
-          draggableIcon: { backgroundColor: Colors.gray, width: wp(10) },
-        }}
-        customModalProps={{ animationType: 'fade', statusBarTranslucent: true }}
-        customAvoidingViewProps={{ enabled: false }}
-      >
-        <View style={s.header}>
-          <Text style={s.headerTitle}>People who reacted</Text>
-        </View>
+      <Modal visible={visible} transparent animationType="slide" onRequestClose={() => setVisible(false)}>
+        <View style={[s.modalContainer, isWeb && s.modalContainerWeb]}>
+          {/* Backdrop — tap outside sheet to close */}
+          <Pressable style={StyleSheet.absoluteFillObject} onPress={() => setVisible(false)} />
 
-        <View style={s.tabRow}>
-          {emotionTabs.map((tab) => (
-            <TouchableOpacity
-              key={tab.key}
-              style={[s.tab, selectedEmotion === tab.key && s.tabActive]}
-              onPress={() => setSelectedEmotion(tab.key)}
-            >
-              {tab.emoji ? <Text style={s.tabEmoji}>{tab.emoji}</Text> : null}
-              <Text style={[s.tabLabel, selectedEmotion === tab.key && s.tabLabelActive]}>
-                {tab.label}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+          <View style={[s.sheet, isWeb && s.sheetWeb]}>
+            {/* Handle */}
+            <View style={s.handle} />
 
-        {loading ? (
-          <View style={s.loader}>
-            <ActivityIndicator size="large" color={Colors.blueback} />
-          </View>
-        ) : (
-          <FlatList
-            data={filteredLikers}
-            keyExtractor={(item) =>
-              item.like.userId ?? item.like.id ?? Math.random().toString()
-            }
-            renderItem={renderItem}
-            contentContainerStyle={{ paddingHorizontal: wp(4), paddingBottom: hp(4) }}
-            ListEmptyComponent={
-              <View style={s.empty}>
-                <Text style={s.emptyText}>No reactions yet</Text>
+            {/* Header */}
+            <View style={s.header}>
+              <Text style={s.headerTitle}>People who reacted</Text>
+            </View>
+
+            {/* Emotion tabs */}
+            <View style={s.tabRow}>
+              {emotionTabs.map((tab) => (
+                <TouchableOpacity
+                  key={tab.key}
+                  style={[s.tab, selectedEmotion === tab.key && s.tabActive]}
+                  onPress={() => setSelectedEmotion(tab.key)}
+                >
+                  {tab.emoji ? <Text style={s.tabEmoji}>{tab.emoji}</Text> : null}
+                  <Text style={[s.tabLabel, selectedEmotion === tab.key && s.tabLabelActive]}>
+                    {tab.label}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Content */}
+            {loading ? (
+              <View style={s.loader}>
+                <ActivityIndicator size="large" color={Colors.blueback} />
               </View>
-            }
-          />
-        )}
-      </RBSheet>
+            ) : (
+              <FlatList
+                data={filteredLikers}
+                keyExtractor={(item) =>
+                  item.like.userId ?? item.like.id ?? Math.random().toString()
+                }
+                renderItem={renderItem}
+                contentContainerStyle={s.listContent}
+                ListEmptyComponent={
+                  <View style={s.empty}>
+                    <Text style={s.emptyText}>No reactions yet</Text>
+                  </View>
+                }
+              />
+            )}
+
+            {/* Close button */}
+            <TouchableOpacity
+              style={[s.closeBtn, isWeb && s.closeBtnWeb]}
+              onPress={() => setVisible(false)}
+              activeOpacity={0.7}
+            >
+              <Text style={s.closeBtnText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     );
   }
 );
@@ -255,23 +273,58 @@ const HabitStackLikesBottomSheet = React.forwardRef<RBSheetRef, HabitStackLikesB
 export default HabitStackLikesBottomSheet;
 
 const s = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.78)',
+  },
+  modalContainerWeb: {
+    alignItems: 'center',
+  },
+  sheet: {
+    backgroundColor: '#1a1a2e',
+    borderTopLeftRadius: wp(7),
+    borderTopRightRadius: wp(7),
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    height: isTablet ? hp(150) : hp(85),
+    paddingBottom: Platform.OS === 'ios' ? hp(5.5) : hp(3),
+  },
+  sheetWeb: {
+    width: '100%',
+    maxWidth: 600,
+    height: '65%',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingBottom: 18,
+  },
+  handle: {
+    width: wp(10),
+    height: hp(0.5),
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: wp(0.5),
+    alignSelf: 'center',
+    marginTop: hp(1.5),
+    marginBottom: hp(1),
+  },
   header: {
     paddingHorizontal: wp(4),
     paddingVertical: hp(1.5),
     borderBottomWidth: 0.5,
-    borderBottomColor: '#333',
+    borderBottomColor: 'rgba(255,255,255,0.08)',
   },
   headerTitle: {
-    color: '#fff',
+    color: '#f1f5f9',
     fontSize: fs(16),
-    fontWeight: '600',
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   tabRow: {
     flexDirection: 'row',
     paddingHorizontal: wp(4),
     paddingVertical: hp(1),
     borderBottomWidth: 0.5,
-    borderBottomColor: '#333',
+    borderBottomColor: 'rgba(255,255,255,0.08)',
     gap: wp(2),
   },
   tab: {
@@ -281,20 +334,20 @@ const s = StyleSheet.create({
     paddingVertical: hp(0.7),
     borderRadius: wp(5),
     borderWidth: 1.5,
-    borderColor: '#555',
+    borderColor: 'rgba(255,255,255,0.2)',
     gap: wp(1),
   },
   tabActive: {
     borderColor: '#fff',
-    backgroundColor: '#2a2a2a',
+    backgroundColor: 'rgba(255,255,255,0.08)',
   },
   tabEmoji: {
     fontSize: fs(14),
   },
   tabLabel: {
-    color: '#888',
+    color: 'rgba(255,255,255,0.5)',
     fontSize: fs(13),
-    fontWeight: '500',
+    fontWeight: '600',
   },
   tabLabelActive: {
     color: '#fff',
@@ -304,11 +357,17 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  listContent: {
+    paddingHorizontal: wp(4),
+    paddingBottom: hp(4),
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: hp(1.2),
     gap: wp(3),
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'rgba(255,255,255,0.04)',
   },
   avatarWrap: {
     position: 'relative',
@@ -321,7 +380,7 @@ const s = StyleSheet.create({
     borderRadius: AVATAR_SIZE / 2,
   },
   avatarFallback: {
-    backgroundColor: '#333',
+    backgroundColor: 'rgba(255,255,255,0.08)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -341,12 +400,12 @@ const s = StyleSheet.create({
     flex: 1,
   },
   username: {
-    color: '#fff',
+    color: '#f1f5f9',
     fontSize: fs(14),
     fontWeight: '600',
   },
   subname: {
-    color: '#888',
+    color: 'rgba(255,255,255,0.4)',
     fontSize: fs(12),
     marginTop: hp(0.2),
   },
@@ -357,23 +416,53 @@ const s = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: Colors.blueback,
   },
+  addBtnFriend: {
+    borderColor: 'rgba(255,255,255,0.2)',
+    backgroundColor: 'rgba(255,255,255,0.06)',
+  },
   addBtnSent: {
-    borderColor: '#555',
+    borderColor: 'rgba(255,255,255,0.15)',
+    opacity: 0.6,
   },
   addBtnText: {
     color: Colors.blueback,
     fontSize: fs(13),
-    fontWeight: '600',
+    fontWeight: '700',
+  },
+  addBtnTextFriend: {
+    color: 'rgba(255,255,255,0.6)',
   },
   addBtnTextSent: {
-    color: '#555',
+    color: 'rgba(255,255,255,0.4)',
+  },
+  closeBtn: {
+    marginHorizontal: wp(5),
+    marginTop: hp(1.5),
+    paddingVertical: hp(1.8),
+    borderRadius: wp(3.5),
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    alignItems: 'center',
+  },
+  closeBtnWeb: {
+    marginHorizontal: 20,
+    marginTop: 10,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  closeBtnText: {
+    color: '#9ca3af',
+    fontSize: fs(15),
+    fontWeight: '700',
   },
   empty: {
     paddingTop: hp(5),
     alignItems: 'center',
   },
   emptyText: {
-    color: '#888',
+    color: 'rgba(255,255,255,0.3)',
     fontSize: fs(14),
+    fontStyle: 'italic',
   },
 });
