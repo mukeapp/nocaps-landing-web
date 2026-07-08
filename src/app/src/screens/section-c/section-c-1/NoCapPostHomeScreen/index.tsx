@@ -118,21 +118,29 @@ const NoCapPostHomeScreen: React.FC<{ navigation: any; route: any }> = ({
     ({ item }: { item: PostListItem }) => {
       if (item.type === 'ad') {
         return (
-          <BannerAd
-            unitId={TestIds.BANNER}
-            size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-            requestOptions={{ requestNonPersonalizedAdsOnly: true }}
-          />
+          <View style={styles.postItemWrapper}>
+            <View style={styles.postItemInner}>
+              <BannerAd
+                unitId={TestIds.BANNER}
+                size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+                requestOptions={{ requestNonPersonalizedAdsOnly: true }}
+              />
+            </View>
+          </View>
         );
       }
       return (
-        <PostItem
-          post={item.data}
-          canEdit={form.userId === item.data.userId}
-          currentUserId={form.userId ?? ""}
-          onHabitPress={handleHabitPress}
-          onDeletePost={form.deletePurgeNoCapPost}
-        />
+        <View style={styles.postItemWrapper}>
+          <View style={styles.postItemInner}>
+            <PostItem
+              post={item.data}
+              canEdit={form.userId === item.data.userId}
+              currentUserId={form.userId ?? ""}
+              onHabitPress={handleHabitPress}
+              onDeletePost={form.deletePurgeNoCapPost}
+            />
+          </View>
+        </View>
       );
     },
     [form.userId, handleHabitPress, form.deletePurgeNoCapPost]
@@ -347,6 +355,14 @@ const NoCapPostHomeScreen: React.FC<{ navigation: any; route: any }> = ({
 export default NoCapPostHomeScreen;
 
 const styles = StyleSheet.create({
+  postItemWrapper: {
+    alignItems: "center",
+    backgroundColor: "#000",
+  },
+  postItemInner: {
+    width: "100%",
+    maxWidth: 1000,
+  },
   empty: {
     height: hp(30),
     alignItems: "center",

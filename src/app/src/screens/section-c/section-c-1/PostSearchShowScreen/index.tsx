@@ -8,7 +8,6 @@ import {
   Modal,
   ScrollView,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -89,13 +88,17 @@ const PostSearchShowScreen: React.FC<{ navigation: any; route: any }> = ({
 
   const renderItem = useCallback(
     ({ item }: { item: NocapPost }) => (
-      <PostItem
-        post={item}
-        canEdit={form.userId === item.userId}
-        currentUserId={form.userId ?? ""}
-        onHabitPress={handleHabitPress}
-        onDeletePost={form.deletePurgeNoCapPost}
-      />
+      <View style={styles.postItemWrapper}>
+        <View style={styles.postItemInner}>
+          <PostItem
+            post={item}
+            canEdit={form.userId === item.userId}
+            currentUserId={form.userId ?? ""}
+            onHabitPress={handleHabitPress}
+            onDeletePost={form.deletePurgeNoCapPost}
+          />
+        </View>
+      </View>
     ),
     [form.userId, handleHabitPress, form.deletePurgeNoCapPost]
   );
@@ -317,48 +320,55 @@ const PostSearchShowScreen: React.FC<{ navigation: any; route: any }> = ({
 export default PostSearchShowScreen;
 
 const styles = StyleSheet.create({
-
-    header: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingHorizontal: wp(4),
-      paddingTop: Platform.OS === 'android' ? hp(1.5) : hp(1),
-      paddingBottom: hp(2),
-      gap: wp(3),
-    },
-    backBtn: { flexShrink: 0 },
-    backCircle: {
-      width: wp(9),
-      height: wp(9),
-      borderRadius: wp(4.5),
-      backgroundColor: 'rgba(255,255,255,0.08)',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: 'rgba(255,255,255,0.1)',
-    },
-    headerTitleContainer: {
-      flexShrink: 1,
-      flexDirection: 'column',
-      gap: hp(0.5),
-    },
-    headerTitle: {
-      color: '#f1f5f9',
-      fontSize: wp(4.3),
-      fontFamily: 'poppins_semibold',
-    },
-    sectorPill: {
-      alignSelf: 'flex-start',
-      backgroundColor: '#ffffff',
-      borderRadius: wp(4),
-      paddingHorizontal: wp(3),
-      paddingVertical: hp(0.4),
-    },
-    sectorPillText: {
-      color: '#000000',
-      fontSize: wp(3),
-      fontFamily: 'poppins_medium',
-    },
+  postItemWrapper: {
+    alignItems: "center",
+    backgroundColor: "#000",
+  },
+  postItemInner: {
+    width: "100%",
+    maxWidth: 1000,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 16,
+    gap: 12,
+  },
+  backBtn: { flexShrink: 0 },
+  backCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+  },
+  headerTitleContainer: {
+    flexShrink: 1,
+    flexDirection: 'column',
+    gap: 6,
+  },
+  headerTitle: {
+    color: '#f1f5f9',
+    fontSize: 18,
+    fontFamily: 'poppins_semibold',
+  },
+  sectorPill: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#ffffff',
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  sectorPillText: {
+    color: '#000000',
+    fontSize: 12,
+    fontFamily: 'poppins_medium',
+  },
   empty: {
     height: hp(30),
     alignItems: "center",
@@ -366,7 +376,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.6),
+    fontSize: 14,
     fontFamily: "poppins_regular",
   },
   footer: {
@@ -379,32 +389,32 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: "#000",
-    borderTopLeftRadius: wp(5),
-    borderTopRightRadius: wp(5),
-    height: hp(90),
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    height: '90%',
     paddingBottom: hp(4),
   },
   modalHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: wp(5),
-    paddingVertical: hp(2),
+    paddingHorizontal: 20,
+    paddingVertical: 16,
     borderBottomColor: "#333",
     borderBottomWidth: 0.5,
   },
   modalTitle: {
     color: "#fff",
-    fontSize: wp(4.5),
+    fontSize: 18,
     fontWeight: "700",
   },
   modalClose: {
-    fontSize: wp(6),
+    fontSize: 24,
     color: "#fff",
   },
   modalScroll: {
-    paddingHorizontal: wp(3),
-    paddingTop: hp(1.5),
+    paddingHorizontal: 12,
+    paddingTop: 12,
   },
   modalEmpty: {
     height: hp(15),
@@ -414,6 +424,6 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: 'rgba(255,255,255,0.05)',
-    marginHorizontal: wp(3.5),
+    marginHorizontal: 14,
   },
 });
