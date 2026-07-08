@@ -109,6 +109,7 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
     const [hasMore, setHasMore] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [keyboardOffset, setKeyboardOffset] = useState(0);
+    const [listAreaH, setListAreaH] = useState(0);
 
     const flatListRef = useRef<FlatList>(null);
     const rbSheetRef = useRef<any>(null);
@@ -417,6 +418,21 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
       </View>
     ) : null;
 
+    const listElement = (
+      <FlatList
+        ref={flatListRef}
+        style={isWeb ? { height: listAreaH || 1 } : s.listFlex}
+        data={comments}
+        keyExtractor={(item) => item.id ?? item.documentId ?? String(Math.random())}
+        renderItem={renderComment}
+        contentContainerStyle={s.commentsList}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={renderFooter}
+        showsVerticalScrollIndicator={isWeb}
+      />
+    );
+
     const commentsListNode = loading ? (
       <View style={s.loadingContainer}>
         <ActivityIndicator size="large" color={Colors.blueback} />
@@ -425,19 +441,21 @@ const CommentsBottomSheet = React.forwardRef<RBSheetRef, CommentsBottomSheetProp
       <View style={s.emptyContainer}>
         <Text style={s.emptyText}>No comments yet. Be the first!</Text>
       </View>
+    ) : isWeb ? (
+      // Measure the available space so the FlatList gets an explicit pixel height
+      // (a reliable scroll viewport on RNW; flex:1 through RBSheet's animated
+      // container doesn't clamp the height, so the list wouldn't scroll).
+      <View
+        style={s.listArea}
+        onLayout={(e) => {
+          const h = e.nativeEvent.layout.height;
+          setListAreaH((prev) => (Math.abs(prev - h) > 1 ? h : prev));
+        }}
+      >
+        {listElement}
+      </View>
     ) : (
-      <FlatList
-        ref={flatListRef}
-        style={s.listFlex}
-        data={comments}
-        keyExtractor={(item) => item.id ?? item.documentId ?? String(Math.random())}
-        renderItem={renderComment}
-        contentContainerStyle={s.commentsList}
-        onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.3}
-        ListFooterComponent={renderFooter}
-        showsVerticalScrollIndicator={false}
-      />
+      listElement
     );
 
     return (
@@ -700,6 +718,10 @@ const s = StyleSheet.create({
   },
   listFlex: {
     flex: 1,
+  },
+  listArea: {
+    flex: 1,
+    minHeight: 0,
   },
   headerClose: {
     position: "absolute",
