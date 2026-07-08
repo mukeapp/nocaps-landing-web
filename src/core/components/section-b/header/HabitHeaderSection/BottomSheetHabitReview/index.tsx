@@ -1,4 +1,4 @@
-import React, { useState, useRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, useImperativeHandle, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,11 @@ import {
   TextInput,
   Alert,
   Modal,
+  Platform,
   Pressable,
+  useWindowDimensions,
 } from 'react-native';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
@@ -34,6 +36,8 @@ import {
   DeleteHabitRating,
 } from '@/core/api/section-b/section-b-0/habit';
 import Toast from 'react-native-root-toast';
+
+const isWeb = Platform.OS === 'web';
 
 export const SCORE_COLORS = ['#6B7280', '#e74c3c', '#8e44ad', '#e67e22', '#27ae60', '#f1c40f'];
 const SCORE_LABELS = ['UNKNOWN', 'BAD', 'POOR', 'AVERAGE', 'GOOD', 'EXCELLENT'];
@@ -85,11 +89,20 @@ const AVATAR_SIZE = wp(11);
 
 const BottomSheetHabitReview = React.forwardRef<RBSheetRef, Props>(
   ({ habit, habitRatings, onRatingsChange, currentUserId }, ref) => {
-    const rbSheetRef = useRef<any>(null);
+    const navigation = useNavigation<any>();
+    const { width: winWidth, height: winHeight } = useWindowDimensions();
+    const [visible, setVisible] = useState(false);
+
     useImperativeHandle(ref, () => ({
-      open: () => rbSheetRef.current?.open(),
-      close: () => rbSheetRef.current?.close(),
+      open: () => setVisible(true),
+      close: () => setVisible(false),
     }));
+
+    useEffect(() => {
+      if (visible) {
+        fetchEntries();
+      }
+    }, [visible]);
 
     const [entries, setEntries] = useState<RatingEntry[]>([]);
     const [loading, setLoading] = useState(false);
@@ -311,13 +324,26 @@ const BottomSheetHabitReview = React.forwardRef<RBSheetRef, Props>(
       return (
         <View style={s.ratingRow}>
           <View style={s.rowTop}>
-            {user.photo ? (
-              <Image source={{ uri: user.photo }} style={s.avatar} />
-            ) : (
-              <View style={[s.avatar, s.avatarFallback]}>
-                <Text style={s.avatarInitial}>{(displayName[0] ?? '?').toUpperCase()}</Text>
-              </View>
-            )}
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                if (rating.userId) {
+                  setVisible(false);
+                  navigation.navigate('profile', {
+                    originScreen: 'reviews',
+                    routerData: { destinationScreenTitle: 'Profile', userId: rating.userId },
+                  });
+                }
+              }}
+            >
+              {user.photo ? (
+                <Image source={{ uri: user.photo }} style={s.avatar} />
+              ) : (
+                <View style={[s.avatar, s.avatarFallback]}>
+                  <Text style={s.avatarInitial}>{(displayName[0] ?? '?').toUpperCase()}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
             <View style={s.nameStars}>
               <Text style={s.username} numberOfLines={1}>{displayName}</Text>
               {isOwner ? (
@@ -399,67 +425,72 @@ const BottomSheetHabitReview = React.forwardRef<RBSheetRef, Props>(
     };
 
     return (
-      <RBSheet
-        ref={rbSheetRef}
-        useNativeDriver={false}
-        height={isTablet ? hp(150) : hp(75)}
-        onOpen={fetchEntries}
-        customStyles={{
-          container: {
-            backgroundColor: '#1c1e1c',
-            borderTopLeftRadius: wp(5),
-            borderTopRightRadius: wp(5),
-          },
-          wrapper: { backgroundColor: '#000000ab' },
-          draggableIcon: { backgroundColor: Colors.gray, width: wp(10) },
-        }}
-        customModalProps={{ animationType: 'fade', statusBarTranslucent: true }}
-        customAvoidingViewProps={{ enabled: false }}
-      >
-        <View style={s.header}>
-          <View style={s.headerLeft}>
-            <Text style={s.headerTitle}>Habit Review</Text>
-            {rateScore > 0 && (
-              <View style={[s.scoreChip, { backgroundColor: SCORE_COLORS[scoreIdx] + '33' }]}>
-                <AntDesign name="star" size={fs(11)} color={SCORE_COLORS[scoreIdx]} />
-                <Text style={[s.scoreChipText, { color: SCORE_COLORS[scoreIdx] }]}>
-                  {rateScore.toFixed(1)} · {SCORE_LABELS[scoreIdx]}
-                </Text>
-              </View>
-            )}
-          </View>
-          {!hasRated && (
-            <TouchableOpacity
-              style={[s.addBtn, addLoading && { opacity: 0.5 }]}
-              onPress={handleAddInitialReview}
-              disabled={addLoading}
-            >
-              <AntDesign name="plus" size={fs(16)} color="#000" />
-            </TouchableOpacity>
-          )}
-        </View>
+      <Modal visible={visible} transparent animationType="slide" onRequestClose={() => setVisible(false)}>
+        <View style={[s.modalContainer, isWeb && s.modalContainerWeb]}>
+          {/* Backdrop — tap outside sheet to close */}
+          <Pressable style={StyleSheet.absoluteFillObject} onPress={() => setVisible(false)} />
 
-        {loading ? (
-          <View style={s.loader}>
-            <ActivityIndicator size="large" color={Colors.blueback} />
-          </View>
-        ) : (
-          <FlatList
-            data={[...entries].sort((a, b) =>
-              a.rating.userId === currentUserId ? -1 : b.rating.userId === currentUserId ? 1 : 0
-            )}
-            keyExtractor={(item) =>
-              item.rating.id ?? item.rating.documentId ?? Math.random().toString()
-            }
-            renderItem={renderItem}
-            contentContainerStyle={{ paddingHorizontal: wp(4), paddingBottom: hp(4) }}
-            ListEmptyComponent={
-              <View style={s.empty}>
-                <Text style={s.emptyText}>No reviews yet</Text>
+          <View style={[s.sheet, isWeb && s.sheetWeb]}>
+            {/* Handle */}
+            <View style={s.handle} />
+
+            {/* Header */}
+            <View style={s.header}>
+              <View style={s.headerLeft}>
+                <Text style={s.headerTitle}>Habit Review</Text>
+                {rateScore > 0 && (
+                  <View style={[s.scoreChip, { backgroundColor: SCORE_COLORS[scoreIdx] + '33' }]}>
+                    <AntDesign name="star" size={isWeb ? 12 : fs(11)} color={SCORE_COLORS[scoreIdx]} />
+                    <Text style={[s.scoreChipText, { color: SCORE_COLORS[scoreIdx] }]}>
+                      {rateScore.toFixed(1)} · {SCORE_LABELS[scoreIdx]}
+                    </Text>
+                  </View>
+                )}
               </View>
-            }
-          />
-        )}
+              {!hasRated && (
+                <TouchableOpacity
+                  style={[s.addBtn, addLoading && { opacity: 0.5 }]}
+                  onPress={handleAddInitialReview}
+                  disabled={addLoading}
+                >
+                  <AntDesign name="plus" size={isWeb ? 16 : fs(16)} color="#000" />
+                </TouchableOpacity>
+              )}
+            </View>
+
+            {/* Content */}
+            {loading ? (
+              <View style={s.loader}>
+                <ActivityIndicator size="large" color={Colors.blueback} />
+              </View>
+            ) : (
+              <FlatList
+                data={[...entries].sort((a, b) =>
+                  a.rating.userId === currentUserId ? -1 : b.rating.userId === currentUserId ? 1 : 0
+                )}
+                keyExtractor={(item) =>
+                  item.rating.id ?? item.rating.documentId ?? Math.random().toString()
+                }
+                renderItem={renderItem}
+                contentContainerStyle={s.listContent}
+                ListEmptyComponent={
+                  <View style={s.empty}>
+                    <Text style={s.emptyText}>No reviews yet</Text>
+                  </View>
+                }
+              />
+            )}
+
+            {/* Close button */}
+            <TouchableOpacity
+              style={[s.closeBtn, isWeb && s.closeBtnWeb]}
+              onPress={() => setVisible(false)}
+              activeOpacity={0.7}
+            >
+              <Text style={s.closeBtnText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <Modal
           visible={menuEntryId !== null}
@@ -477,13 +508,13 @@ const BottomSheetHabitReview = React.forwardRef<RBSheetRef, Props>(
                   Toast.show('Report submitted');
                 }}
               >
-                <Feather name="flag" size={fs(16)} color="#e74c3c" />
+                <Feather name="flag" size={isWeb ? 16 : fs(16)} color="#e74c3c" />
                 <Text style={s.menuOptionTextRed}>Report</Text>
               </TouchableOpacity>
             </View>
           </Pressable>
         </Modal>
-      </RBSheet>
+      </Modal>
     );
   }
 );
@@ -491,41 +522,76 @@ const BottomSheetHabitReview = React.forwardRef<RBSheetRef, Props>(
 export default BottomSheetHabitReview;
 
 const s = StyleSheet.create({
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.78)',
+  },
+  modalContainerWeb: {
+    alignItems: 'center',
+  },
+  sheet: {
+    backgroundColor: '#1a1a2e',
+    borderTopLeftRadius: wp(7),
+    borderTopRightRadius: wp(7),
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    height: isTablet ? hp(150) : hp(85),
+    paddingBottom: Platform.OS === 'ios' ? hp(5.5) : hp(3),
+  },
+  sheetWeb: {
+    width: '100%',
+    maxWidth: 600,
+    height: '65%',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingBottom: 18,
+  },
+  handle: {
+    width: wp(10),
+    height: hp(0.5),
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: wp(0.5),
+    alignSelf: 'center',
+    marginTop: hp(1.5),
+    marginBottom: hp(1),
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(1.5),
+    paddingHorizontal: isWeb ? 20 : wp(4),
+    paddingVertical: isWeb ? 14 : hp(1.5),
     borderBottomWidth: 0.5,
-    borderBottomColor: '#333',
+    borderBottomColor: 'rgba(255,255,255,0.08)',
   },
   headerLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: wp(2.5),
+    gap: isWeb ? 10 : wp(2.5),
   },
   headerTitle: {
-    color: '#fff',
-    fontSize: fs(16),
-    fontWeight: '600',
+    color: '#f1f5f9',
+    fontSize: isWeb ? 17 : fs(16),
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   scoreChip: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: wp(1),
-    paddingHorizontal: wp(2.5),
-    paddingVertical: hp(0.4),
-    borderRadius: wp(4),
+    gap: isWeb ? 4 : wp(1),
+    paddingHorizontal: isWeb ? 10 : wp(2.5),
+    paddingVertical: isWeb ? 4 : hp(0.4),
+    borderRadius: isWeb ? 12 : wp(4),
   },
   scoreChipText: {
-    fontSize: fs(12),
+    fontSize: isWeb ? 12 : fs(12),
     fontWeight: '600',
   },
   addBtn: {
-    width: wp(7.5),
-    height: wp(7.5),
-    borderRadius: wp(3.75),
+    width: isWeb ? 32 : wp(7.5),
+    height: isWeb ? 32 : wp(7.5),
+    borderRadius: isWeb ? 16 : wp(3.75),
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
@@ -535,122 +601,127 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  listContent: {
+    paddingHorizontal: isWeb ? 20 : wp(4),
+    paddingBottom: isWeb ? 20 : hp(4),
+  },
   ratingRow: {
-    paddingVertical: hp(1.2),
-    paddingHorizontal: wp(1),
+    paddingVertical: isWeb ? 12 : hp(1.2),
+    paddingHorizontal: isWeb ? 4 : wp(1),
     borderBottomWidth: 0.5,
-    borderBottomColor: '#2a2a2a',
+    borderBottomColor: 'rgba(255,255,255,0.04)',
   },
   rowTop: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: wp(3),
+    gap: isWeb ? 12 : wp(3),
   },
   avatar: {
-    width: AVATAR_SIZE,
-    height: AVATAR_SIZE,
-    borderRadius: AVATAR_SIZE / 2,
+    width: isWeb ? 44 : AVATAR_SIZE,
+    height: isWeb ? 44 : AVATAR_SIZE,
+    borderRadius: isWeb ? 22 : AVATAR_SIZE / 2,
   },
   avatarFallback: {
-    backgroundColor: '#333',
+    backgroundColor: 'rgba(255,255,255,0.08)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   avatarInitial: {
     color: '#fff',
-    fontSize: fs(15),
+    fontSize: isWeb ? 16 : fs(15),
     fontWeight: '700',
   },
   nameStars: {
     flex: 1,
-    gap: hp(0.3),
+    gap: isWeb ? 4 : hp(0.3),
   },
   username: {
-    color: '#fff',
-    fontSize: fs(14),
+    color: '#f1f5f9',
+    fontSize: isWeb ? 15 : fs(14),
     fontWeight: '600',
   },
   starsRow: {
     flexDirection: 'row',
-    gap: wp(0.75),
+    gap: isWeb ? 4 : wp(0.75),
   },
   rowActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: wp(1),
+    gap: isWeb ? 6 : wp(1),
   },
   chevronBtn: {
-    width: wp(6.5),
-    height: wp(6.5),
-    borderRadius: wp(3.25),
-    backgroundColor: '#fff',
+    width: isWeb ? 28 : wp(6.5),
+    height: isWeb ? 28 : wp(6.5),
+    borderRadius: isWeb ? 14 : wp(3.25),
+    backgroundColor: 'rgba(255,255,255,0.15)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   deleteBtn: {
-    width: wp(6.5),
-    height: wp(6.5),
-    borderRadius: wp(3.25),
+    width: isWeb ? 28 : wp(6.5),
+    height: isWeb ? 28 : wp(6.5),
+    borderRadius: isWeb ? 14 : wp(3.25),
     backgroundColor: 'rgba(231, 76, 60, 0.15)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   commentBubble: {
-    marginTop: hp(1),
-    marginLeft: wp(3) + AVATAR_SIZE,
-    backgroundColor: '#2a2a2a',
-    borderRadius: wp(2),
+    marginTop: isWeb ? 10 : hp(1),
+    marginLeft: isWeb ? 56 : wp(3) + AVATAR_SIZE,
+    backgroundColor: 'rgba(255,255,255,0.04)',
+    borderRadius: isWeb ? 10 : wp(2),
     borderLeftWidth: 3,
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1),
+    paddingHorizontal: isWeb ? 14 : wp(3),
+    paddingVertical: isWeb ? 10 : hp(1),
   },
   commentBubbleText: {
-    color: '#ddd',
-    fontSize: fs(13),
-    lineHeight: fs(19),
+    color: '#9ca3af',
+    fontSize: isWeb ? 13 : fs(13),
+    lineHeight: isWeb ? 20 : fs(19),
     fontStyle: 'italic',
   },
   commentInputRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginTop: hp(1),
-    gap: wp(2),
+    marginTop: isWeb ? 10 : hp(1),
+    gap: isWeb ? 8 : wp(2),
   },
   commentTextInput: {
     flex: 1,
-    backgroundColor: '#2a2a2a',
-    borderRadius: wp(2),
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: isWeb ? 10 : wp(2),
     borderWidth: 1,
-    borderColor: '#444',
+    borderColor: 'rgba(255,255,255,0.1)',
     color: '#fff',
-    fontSize: fs(13),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.8),
-    minHeight: hp(5),
-    maxHeight: hp(12),
+    fontSize: isWeb ? 13 : fs(13),
+    paddingHorizontal: isWeb ? 14 : wp(3),
+    paddingVertical: isWeb ? 10 : hp(0.8),
+    minHeight: isWeb ? 44 : hp(5),
+    maxHeight: isWeb ? 100 : hp(12),
     textAlignVertical: 'top',
   },
   submitCommentBtn: {
-    width: wp(7.5),
-    height: wp(7.5),
-    borderRadius: wp(3.75),
+    width: isWeb ? 32 : wp(7.5),
+    height: isWeb ? 32 : wp(7.5),
+    borderRadius: isWeb ? 16 : wp(3.75),
     backgroundColor: Colors.blueback,
     justifyContent: 'center',
     alignItems: 'center',
   },
   empty: {
-    paddingTop: hp(5),
+    paddingTop: isWeb ? 60 : hp(5),
     alignItems: 'center',
   },
   emptyText: {
-    color: '#888',
-    fontSize: fs(14),
+    color: 'rgba(255,255,255,0.3)',
+    fontSize: isWeb ? 15 : fs(14),
+    fontStyle: 'italic',
   },
   menuDotBtn: {
-    width: wp(6.5),
-    height: wp(6.5),
-    borderRadius: wp(3.25),
-    backgroundColor: '#000',
+    width: isWeb ? 28 : wp(6.5),
+    height: isWeb ? 28 : wp(6.5),
+    borderRadius: isWeb ? 14 : wp(3.25),
+    backgroundColor: 'rgba(255,255,255,0.08)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -660,36 +731,59 @@ const s = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   menuSheet: {
-    backgroundColor: '#1c1e1c',
-    borderTopLeftRadius: wp(5),
-    borderTopRightRadius: wp(5),
-    paddingHorizontal: wp(4),
-    paddingTop: hp(1.5),
-    paddingBottom: isTablet ? hp(40) : hp(30),
+    backgroundColor: '#1a1a2e',
+    borderTopLeftRadius: isWeb ? 24 : wp(5),
+    borderTopRightRadius: isWeb ? 24 : wp(5),
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    paddingHorizontal: isWeb ? 20 : wp(4),
+    paddingTop: isWeb ? 12 : hp(1.5),
+    paddingBottom: isWeb ? 40 : (isTablet ? hp(40) : hp(30)),
   },
   menuHandle: {
-    width: wp(10),
-    height: hp(0.5),
-    borderRadius: hp(0.25),
-    backgroundColor: '#555',
+    width: isWeb ? 40 : wp(10),
+    height: isWeb ? 4 : hp(0.5),
+    borderRadius: isWeb ? 2 : hp(0.25),
+    backgroundColor: 'rgba(255,255,255,0.2)',
     alignSelf: 'center',
-    marginBottom: hp(2),
+    marginBottom: isWeb ? 16 : hp(2),
   },
   menuOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: wp(3),
-    paddingVertical: hp(1.8),
+    gap: isWeb ? 12 : wp(3),
+    paddingVertical: isWeb ? 14 : hp(1.8),
   },
   menuOptionTextRed: {
     color: '#e74c3c',
-    fontSize: fs(15),
+    fontSize: isWeb ? 15 : fs(15),
     fontWeight: '600',
   },
   timeAgoText: {
-    color: '#666',
-    fontSize: fs(11),
-    marginTop: hp(0.4),
-    marginLeft: wp(3) + AVATAR_SIZE,
+    color: 'rgba(255,255,255,0.3)',
+    fontSize: isWeb ? 11 : fs(11),
+    marginTop: isWeb ? 4 : hp(0.4),
+    marginLeft: isWeb ? 56 : wp(3) + AVATAR_SIZE,
+  },
+  closeBtn: {
+    marginHorizontal: isWeb ? 20 : wp(5),
+    marginTop: isWeb ? 10 : hp(1.5),
+    paddingVertical: isWeb ? 12 : hp(1.8),
+    borderRadius: isWeb ? 12 : wp(3.5),
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    alignItems: 'center',
+  },
+  closeBtnWeb: {
+    marginHorizontal: 20,
+    marginTop: 10,
+    paddingVertical: 12,
+    borderRadius: 12,
+  },
+  closeBtnText: {
+    color: '#9ca3af',
+    fontSize: isWeb ? 15 : fs(15),
+    fontWeight: '700',
   },
 });
