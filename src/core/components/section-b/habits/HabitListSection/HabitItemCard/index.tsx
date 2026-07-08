@@ -6,6 +6,7 @@ import React from "react";
 import {
     Image,
     ImageBackground,
+    Platform,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -15,6 +16,8 @@ import {
     heightPercentageToDP as hp,
     widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 import HabitItemDetails from "../HabitItemDetails";
 import HabitItemHeader from "../HabitItemHeader";
 import {IUser} from "@/core/models/section-a";
@@ -96,7 +99,7 @@ const HabitItemCard: React.FC<Props> = ({
       {expanded && <HabitItemDetails item={item} onOpenItem={onOpenItem} costSymbol={costSymbol} />}
 
       <View style={s.footer}>
-        <View style={{ width: wp(70) }} />
+        <View style={isWeb ? { flex: 1 } : { width: wp(70) }} />
         <TouchableOpacity onPress={() => onEdit()}>
           <Feather name="edit-3" size={20} color={Colors.white} />
         </TouchableOpacity>
@@ -107,24 +110,24 @@ const HabitItemCard: React.FC<Props> = ({
 
 const s = StyleSheet.create({
   card: {
-    width: wp(90),
+    width: isWeb ? ("100%" as any) : wp(90),
     backgroundColor: "rgba(255,255,255,0.06)",
-    borderRadius: wp(3),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1),
-    marginBottom: hp(1),
+    borderRadius: isWeb ? 16 : wp(3),
+    paddingHorizontal: isWeb ? 14 : wp(3),
+    paddingVertical: isWeb ? 12 : hp(1),
+    marginBottom: isWeb ? 16 : hp(1),
   },
   hero: {
-    width: wp(84),
-    height: hp(17.4),
-    padding: wp(2),
+    width: isWeb ? ("100%" as any) : wp(84),
+    height: isWeb ? 180 : hp(17.4),
+    padding: isWeb ? 10 : wp(2),
     justifyContent: "flex-end",
   },
   avatar: {
-    width: wp(8.5),
-    height: wp(8.5),
-    borderRadius: wp(5),
-    marginRight: wp(2),
+    width: isWeb ? 34 : wp(8.5),
+    height: isWeb ? 34 : wp(8.5),
+    borderRadius: isWeb ? 17 : wp(5),
+    marginRight: isWeb ? 8 : wp(2),
   },
   footer: {
     flexDirection: "row",

@@ -1,5 +1,7 @@
-import { StyleSheet, Modal, TouchableOpacity, Text, View } from "react-native";
+import { Platform, StyleSheet, Modal, TouchableOpacity, Text, View, ScrollView } from "react-native";
 import React, { useState } from "react";
+
+const isWeb = Platform.OS === "web";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -78,7 +80,7 @@ const ColorModalShow = ({
       >
         <View style={styles.container}>
           <View style={MainStyles.viewtwo}>
-            <Text style={MainStyles.text20}>Select Color</Text>
+            <Text style={[MainStyles.text20, isWeb && { fontSize: 18 }]}>Select Color</Text>
             <TouchableOpacity
               style={styles.close}
               onPress={() => {
@@ -89,10 +91,11 @@ const ColorModalShow = ({
               <SimpleLineIcons name="close" size={18} color={Colors.white} />
             </TouchableOpacity>
           </View>
-          <View
+          <ScrollView
+            contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
             style={[
-              MainStyles.viewtwo,
-              { flexWrap: "wrap", marginVertical: hp(2) },
+              { marginVertical: hp(2) },
+              isWeb && { marginVertical: 16, maxHeight: "55vh" as any },
             ]}
           >
             {data?.map((obj) => {
@@ -114,19 +117,31 @@ const ColorModalShow = ({
                 />
               );
             })}
-          </View>
-          <ButtonSignIn
-            text="Apply"
-            wid="84"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.black}
-            ftn={16}
-            mov={() => {
-              clor(false, saveclr?.rgba);
-              onClose();
-            }}
-          />
+          </ScrollView>
+          {isWeb ? (
+            <TouchableOpacity
+              style={styles.webApply}
+              onPress={() => {
+                clor(false, saveclr?.rgba);
+                onClose();
+              }}
+            >
+              <Text style={styles.webApplyText}>Apply</Text>
+            </TouchableOpacity>
+          ) : (
+            <ButtonSignIn
+              text="Apply"
+              wid="84"
+              bg={Colors.white}
+              bd={Colors.white}
+              txcl={Colors.black}
+              ftn={16}
+              mov={() => {
+                clor(false, saveclr?.rgba);
+                onClose();
+              }}
+            />
+          )}
         </View>
       </BlurView>
     </Modal>
@@ -138,36 +153,51 @@ export default ColorModalShow;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    height: hp(100),
-    width: wp(100),
+    height: isWeb ? ("100%" as any) : hp(100),
+    width: isWeb ? ("100%" as any) : wp(100),
     bottom: 0,
     elevation: 8,
     shadowColor: "#000",
     shadowRadius: 8,
     shadowOpacity: 0.15,
-    paddingTop: isTablet ? hp(30) : hp(20),
+    paddingTop: isWeb ? 0 : isTablet ? hp(30) : hp(20),
+    justifyContent: isWeb ? "center" : "flex-start",
     alignItems: "center",
   },
   container: {
-    width: wp(90),
-    borderRadius: wp(3),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.5),
+    width: isWeb ? ("100%" as any) : wp(90),
+    maxWidth: isWeb ? 460 : undefined,
+    borderRadius: isWeb ? 16 : wp(3),
+    paddingHorizontal: isWeb ? 16 : wp(3),
+    paddingVertical: isWeb ? 16 : hp(1.5),
     backgroundColor: Colors.content_back,
   },
   close: {
     backgroundColor: Colors.filtertext,
-    width: wp(9),
-    height: wp(9),
-    borderRadius: wp(5),
+    width: isWeb ? 32 : wp(9),
+    height: isWeb ? 32 : wp(9),
+    borderRadius: isWeb ? 16 : wp(5),
     alignItems: "center",
     justifyContent: "center",
   },
   box: {
-    width: wp(10),
-    height: wp(10),
-    borderRadius: wp(2),
-    marginRight: wp(2),
-    marginBottom: hp(2),
+    width: isWeb ? 36 : wp(10),
+    height: isWeb ? 36 : wp(10),
+    borderRadius: isWeb ? 8 : wp(2),
+    marginRight: isWeb ? 10 : wp(2),
+    marginBottom: isWeb ? 10 : hp(2),
+  },
+  webApply: {
+    width: "100%",
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: Colors.white,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  webApplyText: {
+    color: Colors.black,
+    fontSize: 15,
+    fontFamily: "semibold",
   },
 });

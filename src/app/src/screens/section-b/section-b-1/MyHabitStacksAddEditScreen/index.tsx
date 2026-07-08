@@ -54,6 +54,8 @@ import {
   selectDefaultSelection,
 } from "@/core/redux/ai-models-cost-multiplier";
 
+const isWeb = Platform.OS === "web";
+
 interface RBSheetRef {
   open: () => void;
   close: () => void;
@@ -424,12 +426,15 @@ const MyHabitStacksAddEditScreen = ({
       <RBSheet
         ref={addHabitSheetRef}
         useNativeDriver={false}
-        height={isTablet ? hp(100) : hp(80)}
+        height={isWeb ? 470 : isTablet ? hp(100) : hp(80)}
         customStyles={{
           container: {
             backgroundColor: "#2C2C2E",
-            borderTopLeftRadius: wp(5),
-            borderTopRightRadius: wp(5),
+            borderTopLeftRadius: isWeb ? 20 : wp(5),
+            borderTopRightRadius: isWeb ? 20 : wp(5),
+            ...(isWeb
+              ? { maxWidth: 480, width: "100%", alignSelf: "center" }
+              : {}),
           },
           wrapper: {
             backgroundColor: "#000000ab",
@@ -640,11 +645,11 @@ const styles = StyleSheet.create({
   optionItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(3),
+    paddingVertical: isWeb ? 14 : hp(2),
+    paddingHorizontal: isWeb ? 14 : wp(3),
     backgroundColor: Colors.content_back,
-    borderRadius: wp(3),
-    marginBottom: hp(1.5),
+    borderRadius: isWeb ? 12 : wp(3),
+    marginBottom: isWeb ? 10 : hp(1.5),
   },
   optionText: {
     color: Colors.white,
@@ -655,33 +660,33 @@ const styles = StyleSheet.create({
   // Bottom Sheet Styles
   bottomSheetContent: {
     flex: 1,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
+    paddingHorizontal: isWeb ? 20 : wp(4),
+    paddingVertical: isWeb ? 20 : hp(2),
   },
   bottomSheetTitle: {
     color: Colors.white,
-    fontSize: wp(5),
+    fontSize: isWeb ? 18 : wp(5),
     fontFamily: "poppins_semibold",
-    marginBottom: hp(2),
+    marginBottom: isWeb ? 16 : hp(2),
   },
   optionsContainer: {
     marginTop: hp(1),
   },
   optionTextContainer: {
-    marginLeft: wp(3),
+    marginLeft: isWeb ? 12 : wp(3),
     flex: 1,
   },
   optionTitle: {
     color: Colors.white,
-    fontSize: wp(4),
+    fontSize: isWeb ? 15 : wp(4),
     fontFamily: "poppins_semibold",
-    marginBottom: hp(0.5),
+    marginBottom: isWeb ? 2 : hp(0.5),
   },
   optionSubtitle: {
     color: Colors.gray,
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 13 : wp(3.5),
     fontFamily: "poppins_regular",
-    lineHeight: wp(4.5),
+    lineHeight: isWeb ? 18 : wp(4.5),
   },
   aiConfirmOverlay: {
     flex: 1,

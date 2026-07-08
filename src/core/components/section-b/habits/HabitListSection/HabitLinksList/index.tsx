@@ -1,6 +1,8 @@
 import React from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Platform, View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
+
+const isWeb = Platform.OS === "web";
 import { Images } from "@/core/constants/Images";
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
@@ -84,22 +86,22 @@ const HabitLinksList: React.FC<Props> = ({ costSymbol = "", links, onOpenItem })
 const s = StyleSheet.create({
   row: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingBottom: hp(1), marginTop: hp(1.5) },
   iconback: {
-    width: wp(12), height: wp(12), alignItems: "center", justifyContent: "center",
-    backgroundColor: Colors.text_background, borderRadius: wp(3), marginTop: hp(1),
+    width: isWeb ? 44 : wp(12), height: isWeb ? 44 : wp(12), alignItems: "center", justifyContent: "center",
+    backgroundColor: Colors.text_background, borderRadius: isWeb ? 12 : wp(3), marginTop: hp(1),
   },
-  dollar: { width: wp(7), height: wp(7) },
+  dollar: { width: isWeb ? 26 : wp(7), height: isWeb ? 26 : wp(7) },
   fileChip: {
-    width: wp(5), height: wp(5), borderRadius: wp(3), backgroundColor: Colors.blueback,
-    position: "absolute", alignItems: "center", justifyContent: "center", top: -hp(0.7), right: -hp(0.7),
+    width: isWeb ? 18 : wp(5), height: isWeb ? 18 : wp(5), borderRadius: isWeb ? 9 : wp(3), backgroundColor: Colors.blueback,
+    position: "absolute", alignItems: "center", justifyContent: "center", top: isWeb ? -5 : -hp(0.7), right: isWeb ? -5 : -hp(0.7),
   },
-  file: { width: wp(4), height: wp(4), tintColor: Colors.white },
-  mart: { flexDirection: "row", alignItems: "center", marginLeft: wp(4) },
+  file: { width: isWeb ? 12 : wp(4), height: isWeb ? 12 : wp(4), tintColor: Colors.white },
+  mart: { flexDirection: "row", alignItems: "center", marginLeft: isWeb ? 16 : wp(4) },
   cost: {
-    borderRadius: wp(10), backgroundColor: Colors.text_background, marginLeft: wp(1),
-    alignItems: "center", justifyContent: "center", paddingVertical: hp(0.3), paddingHorizontal: wp(2), alignSelf: "flex-start", marginTop: hp(0.3),
+    borderRadius: isWeb ? 999 : wp(10), backgroundColor: Colors.text_background, marginLeft: isWeb ? 4 : wp(1),
+    alignItems: "center", justifyContent: "center", paddingVertical: isWeb ? 3 : hp(0.3), paddingHorizontal: isWeb ? 8 : wp(2), alignSelf: "flex-start", marginTop: isWeb ? 3 : hp(0.3),
   },
-  fileBtn: { width: wp(9), height: wp(9), borderRadius: wp(5), backgroundColor: Colors.blueback, alignItems: "center", justifyContent: "center" },
-  fileBig: { width: wp(6), height: wp(6), tintColor: Colors.white },
+  fileBtn: { width: isWeb ? 36 : wp(9), height: isWeb ? 36 : wp(9), borderRadius: isWeb ? 18 : wp(5), backgroundColor: Colors.blueback, alignItems: "center", justifyContent: "center" },
+  fileBig: { width: isWeb ? 20 : wp(6), height: isWeb ? 20 : wp(6), tintColor: Colors.white },
 });
 
 export default HabitLinksList;

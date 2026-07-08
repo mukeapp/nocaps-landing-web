@@ -9,12 +9,14 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import React, {useState} from "react";
-import {Image, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, Modal, Platform, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
 import MetaRow from "../MetaRow";
+
+const isWeb = Platform.OS === "web";
 
 import {HabitPreview} from "@/core/components/section-b";
 import {HabitComponent} from "@/core/models/section-b";
@@ -123,7 +125,7 @@ const HabitItemHeader: React.FC<Props> = ({
       <View style={{ marginLeft: wp(2), flex: 1 }}>
         <View style={s.header}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={MainStyles.text16Simple}>{truncateString(name ?? "", 20)}</Text>
+            <Text style={[MainStyles.text16Simple, isWeb && { fontSize: 15 }]}>{truncateString(name ?? "", 20)}</Text>
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -278,49 +280,49 @@ const s = StyleSheet.create({
     borderBottomColor: Colors.borderline,
   },
   iconback: {
-    width: wp(12),
-    height: wp(12),
+    width: isWeb ? 44 : wp(12),
+    height: isWeb ? 44 : wp(12),
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.text_background,
-    borderRadius: wp(3),
+    borderRadius: isWeb ? 12 : wp(3),
     marginTop: hp(1),
   },
-  dollar: { width: wp(7), height: wp(7) },
+  dollar: { width: isWeb ? 26 : wp(7), height: isWeb ? 26 : wp(7) },
   starview: {
-    width: wp(5),
-    height: wp(5),
-    borderRadius: wp(3),
+    width: isWeb ? 18 : wp(5),
+    height: isWeb ? 18 : wp(5),
+    borderRadius: isWeb ? 9 : wp(3),
     backgroundColor: Colors.title_background,
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
-    top: -hp(0.7),
-    right: -hp(0.7),
+    top: isWeb ? -5 : -hp(0.7),
+    right: isWeb ? -5 : -hp(0.7),
   },
-  star: { width: wp(2), height: wp(2) },
+  star: { width: isWeb ? 9 : wp(2), height: isWeb ? 9 : wp(2) },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   round: {
-    width: wp(6.5),
-    height: wp(6.5),
-    borderRadius: wp(7),
+    width: isWeb ? 30 : wp(6.5),
+    height: isWeb ? 30 : wp(6.5),
+    borderRadius: isWeb ? 15 : wp(7),
     borderWidth: 1.5,
     borderColor: "rgba(255,255,255,0.07)",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp(1),
+    marginLeft: isWeb ? 6 : wp(1),
   },
   roundWhite: {
-    width: wp(6.5),
-    height: wp(6.5),
-    borderRadius: wp(7),
+    width: isWeb ? 30 : wp(6.5),
+    height: isWeb ? 30 : wp(6.5),
+    borderRadius: isWeb ? 15 : wp(7),
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: wp(1),
+    marginLeft: isWeb ? 6 : wp(1),
     backgroundColor: Colors.white,
   },
   // Menu Modal Styles
@@ -333,7 +335,7 @@ const s = StyleSheet.create({
   menuModal: {
     backgroundColor: Colors.content_back,
     borderRadius: 12,
-    width: wp(50),
+    width: isWeb ? 220 : wp(50),
     paddingVertical: 8,
     borderWidth: 1,
     borderColor: Colors.borderline,
@@ -365,8 +367,8 @@ const s = StyleSheet.create({
   deleteModal: {
     backgroundColor: Colors.content_back,
     borderRadius: 16,
-    width: wp(85),
-    padding: wp(6),
+    width: isWeb ? 360 : wp(85),
+    padding: isWeb ? 24 : wp(6),
     alignItems: "center",
     borderWidth: 2,
     borderColor: Colors.red,
