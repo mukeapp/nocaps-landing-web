@@ -191,5 +191,8 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: wp("0%"),
     paddingBottom: hp("2%"),
+    width: "100%",
+    maxWidth: 760,
+    alignSelf: "center",
   },
 });
