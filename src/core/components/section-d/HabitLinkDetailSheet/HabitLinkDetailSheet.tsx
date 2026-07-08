@@ -25,6 +25,8 @@ import {
   getScoreTier,
 } from "../utils";
 
+const isWeb = Platform.OS === "web";
+
 const ItemImage: React.FC<{
   uri: string;
   imageStyle: any;
@@ -75,13 +77,18 @@ const HabitLinkDetailSheet: React.FC<HabitLinkDetailSheetProps> = ({
   const tier = getScoreTier(scorePct);
   const scoreColor = tier.hex;
   const [descExpanded, setDescExpanded] = useState(false);
+
+  const tags = [link.company, link.location].filter(
+    (t): t is string => !!t && t.trim() !== "",
+  );
+
   return (
     <Modal visible transparent animationType="slide" onRequestClose={onClose}>
-      <View style={styles.modalContainer}>
+      <View style={[styles.modalContainer, isWeb && styles.modalContainerWeb]}>
         {/* Backdrop — tap outside sheet to close */}
         <Pressable style={StyleSheet.absoluteFillObject} onPress={onClose} />
 
-        <View style={styles.sheet}>
+        <View style={[styles.sheet, isWeb && styles.sheetWeb]}>
           {/* Handle */}
           <View style={styles.handle} />
 
@@ -89,133 +96,250 @@ const HabitLinkDetailSheet: React.FC<HabitLinkDetailSheetProps> = ({
           {link.bannerImage ? (
             <Image
               source={{ uri: link.bannerImage }}
-              style={styles.banner}
+              style={[styles.banner, isWeb && styles.bannerWeb]}
               resizeMode="cover"
             />
           ) : null}
 
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.body}
-          >
-            {/* Name + tier */}
-            <View style={styles.nameRow}>
-              <Text style={styles.name} numberOfLines={2}>
-                {link.name ?? "—"}
-              </Text>
-              <View
-                style={[
-                  styles.tierBadge,
-                  {
-                    backgroundColor: `${scoreColor}22`,
-                    borderColor: `${scoreColor}44`,
-                  },
-                ]}
-              >
-                <View
-                  style={[styles.tierDot, { backgroundColor: scoreColor }]}
-                />
-                <Text style={[styles.tierText, { color: scoreColor }]}>
-                  {tier.label.toUpperCase()}
-                </Text>
-              </View>
-            </View>
+          {isWeb ? (
+            /* ---------- WEB: 3-column layout, no full-sheet scroll ---------- */
+            <View style={styles.columnsRow}>
+              {/* Column 1 — Overview */}
+              <View style={[styles.col, styles.colPanel]}>
+                <Text style={styles.colHeading}>OVERVIEW</Text>
 
-            {/* Tags: company, location */}
-            <View style={styles.tagsRow}>
-              {[link.company, link.location]
-                .filter((t): t is string => !!t && t.trim() !== "")
-                .map((t) => (
-                  <View key={t} style={styles.tag}>
-                    <Text style={styles.tagText}>{t}</Text>
-                  </View>
-                ))}
-            </View>
+                <View style={styles.nameRow}>
+                  <Text style={styles.name} numberOfLines={3}>
+                    {link.name ?? "—"}
+                  </Text>
+                </View>
 
-            {/* Score bar */}
-            <View style={styles.scoreBarRow}>
-              <View style={styles.scoreBarTrack}>
                 <View
                   style={[
-                    styles.scoreBarFill,
+                    styles.tierBadge,
+                    styles.tierBadgeWeb,
                     {
-                      width: `${scorePct}%` as any,
-                      backgroundColor: scoreColor,
+                      backgroundColor: `${scoreColor}22`,
+                      borderColor: `${scoreColor}44`,
                     },
                   ]}
-                />
-              </View>
-              <Text style={[styles.scorePercent, { color: scoreColor }]}>
-                {scorePct}%
-              </Text>
-            </View>
-
-            {/* Cost */}
-            <View style={styles.costRow}>
-              <Text style={styles.costAmount}>{costSymbol}{totalCost.toFixed(2)}</Text>
-              <Text style={styles.costLabel}>total cost</Text>
-            </View>
-
-            {/* Description */}
-            {!!link.description && (
-              <View style={styles.descSection}>
-                <TouchableOpacity
-                  style={styles.descHeaderRow}
-                  onPress={() => setDescExpanded((v) => !v)}
-                  activeOpacity={0.7}
                 >
-                  <View style={styles.descHeaderLeft}>
-                    <View style={[styles.descAccent, {backgroundColor: scoreColor}]} />
-                    <Text style={styles.descSectionLabel}>Description</Text>
-                  </View>
-                  <View style={styles.descToggle}>
-                    <MaterialIcons
-                      name={descExpanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                      size={fs(18)}
-                      color="#111"
-                    />
-                  </View>
-                </TouchableOpacity>
-                {descExpanded && (
-                  <View style={[styles.descCard, {borderLeftColor: scoreColor}]}>
-                    <Text style={styles.description}>{link.description}</Text>
+                  <View style={[styles.tierDot, { backgroundColor: scoreColor }]} />
+                  <Text style={[styles.tierText, { color: scoreColor }]}>
+                    {tier.label.toUpperCase()}
+                  </Text>
+                </View>
+
+                {tags.length > 0 && (
+                  <View style={styles.tagsRow}>
+                    {tags.map((t) => (
+                      <View key={t} style={styles.tag}>
+                        <Text style={styles.tagText}>{t}</Text>
+                      </View>
+                    ))}
                   </View>
                 )}
-              </View>
-            )}
-          </ScrollView>
 
-          {/* Items — dedicated vertical scroll */}
-          {items.length > 0 && (
-            <View style={styles.itemsSection}>
-              <Text style={styles.itemsLabel}>ITEMS ({items.length})</Text>
-              <ScrollView
-                style={styles.itemsScroll}
-                showsVerticalScrollIndicator={false}
-                nestedScrollEnabled
-              >
-                {items.map((item, idx) => (
-                  <View key={item.id ?? idx} style={styles.itemRow}>
-                    <ItemImage
-                      uri={item.imageUrl ?? ""}
-                      imageStyle={styles.itemImage}
-                      fallbackStyle={styles.itemImageFallback}
+                <View style={styles.scoreBarRow}>
+                  <View style={styles.scoreBarTrack}>
+                    <View
+                      style={[
+                        styles.scoreBarFill,
+                        {
+                          width: `${scorePct}%` as any,
+                          backgroundColor: scoreColor,
+                        },
+                      ]}
                     />
-                    <Text style={styles.itemName} numberOfLines={1}>
-                      {item.name ?? "—"}
-                    </Text>
-                    <Text style={styles.itemCost}>
-                      {costSymbol}{(item.cost ?? 0).toFixed(2)}
+                  </View>
+                  <Text style={[styles.scorePercent, { color: scoreColor }]}>
+                    {scorePct}%
+                  </Text>
+                </View>
+
+                <View style={styles.costCard}>
+                  <Text style={styles.costAmount}>
+                    {costSymbol}{totalCost.toFixed(2)}
+                  </Text>
+                  <Text style={styles.costLabel}>total cost</Text>
+                </View>
+              </View>
+
+              {/* Column 2 — Description */}
+              <View style={[styles.col, styles.colPanel]}>
+                <Text style={styles.colHeading}>DESCRIPTION</Text>
+                <ScrollView
+                  style={styles.colScroll}
+                  showsVerticalScrollIndicator={false}
+                  nestedScrollEnabled
+                >
+                  {link.description ? (
+                    <View
+                      style={[styles.descCard, { borderLeftColor: scoreColor }]}
+                    >
+                      <Text style={styles.description}>{link.description}</Text>
+                    </View>
+                  ) : (
+                    <Text style={styles.emptyText}>No description provided.</Text>
+                  )}
+                </ScrollView>
+              </View>
+
+              {/* Column 3 — Items */}
+              <View style={[styles.col, styles.colPanel]}>
+                <Text style={styles.colHeading}>ITEMS ({items.length})</Text>
+                <ScrollView
+                  style={styles.colScroll}
+                  showsVerticalScrollIndicator={false}
+                  nestedScrollEnabled
+                >
+                  {items.length > 0 ? (
+                    items.map((item, idx) => (
+                      <View key={item.id ?? idx} style={styles.itemRow}>
+                        <ItemImage
+                          uri={item.imageUrl ?? ""}
+                          imageStyle={styles.itemImage}
+                          fallbackStyle={styles.itemImageFallback}
+                        />
+                        <Text style={styles.itemName} numberOfLines={1}>
+                          {item.name ?? "—"}
+                        </Text>
+                        <Text style={styles.itemCost}>
+                          {costSymbol}{(item.cost ?? 0).toFixed(2)}
+                        </Text>
+                      </View>
+                    ))
+                  ) : (
+                    <Text style={styles.emptyText}>No items in this link.</Text>
+                  )}
+                </ScrollView>
+              </View>
+            </View>
+          ) : (
+            /* ---------- NATIVE: original single-column layout ---------- */
+            <>
+              <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.body}
+              >
+                {/* Name + tier */}
+                <View style={styles.nameRow}>
+                  <Text style={styles.name} numberOfLines={2}>
+                    {link.name ?? "—"}
+                  </Text>
+                  <View
+                    style={[
+                      styles.tierBadge,
+                      {
+                        backgroundColor: `${scoreColor}22`,
+                        borderColor: `${scoreColor}44`,
+                      },
+                    ]}
+                  >
+                    <View
+                      style={[styles.tierDot, { backgroundColor: scoreColor }]}
+                    />
+                    <Text style={[styles.tierText, { color: scoreColor }]}>
+                      {tier.label.toUpperCase()}
                     </Text>
                   </View>
-                ))}
+                </View>
+
+                {/* Tags: company, location */}
+                <View style={styles.tagsRow}>
+                  {tags.map((t) => (
+                    <View key={t} style={styles.tag}>
+                      <Text style={styles.tagText}>{t}</Text>
+                    </View>
+                  ))}
+                </View>
+
+                {/* Score bar */}
+                <View style={styles.scoreBarRow}>
+                  <View style={styles.scoreBarTrack}>
+                    <View
+                      style={[
+                        styles.scoreBarFill,
+                        {
+                          width: `${scorePct}%` as any,
+                          backgroundColor: scoreColor,
+                        },
+                      ]}
+                    />
+                  </View>
+                  <Text style={[styles.scorePercent, { color: scoreColor }]}>
+                    {scorePct}%
+                  </Text>
+                </View>
+
+                {/* Cost */}
+                <View style={styles.costRow}>
+                  <Text style={styles.costAmount}>{costSymbol}{totalCost.toFixed(2)}</Text>
+                  <Text style={styles.costLabel}>total cost</Text>
+                </View>
+
+                {/* Description */}
+                {!!link.description && (
+                  <View style={styles.descSection}>
+                    <TouchableOpacity
+                      style={styles.descHeaderRow}
+                      onPress={() => setDescExpanded((v) => !v)}
+                      activeOpacity={0.7}
+                    >
+                      <View style={styles.descHeaderLeft}>
+                        <View style={[styles.descAccent, {backgroundColor: scoreColor}]} />
+                        <Text style={styles.descSectionLabel}>Description</Text>
+                      </View>
+                      <View style={styles.descToggle}>
+                        <MaterialIcons
+                          name={descExpanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                          size={fs(18)}
+                          color="#111"
+                        />
+                      </View>
+                    </TouchableOpacity>
+                    {descExpanded && (
+                      <View style={[styles.descCard, {borderLeftColor: scoreColor}]}>
+                        <Text style={styles.description}>{link.description}</Text>
+                      </View>
+                    )}
+                  </View>
+                )}
               </ScrollView>
-            </View>
+
+              {/* Items — dedicated vertical scroll */}
+              {items.length > 0 && (
+                <View style={styles.itemsSection}>
+                  <Text style={styles.itemsLabel}>ITEMS ({items.length})</Text>
+                  <ScrollView
+                    style={styles.itemsScroll}
+                    showsVerticalScrollIndicator={false}
+                    nestedScrollEnabled
+                  >
+                    {items.map((item, idx) => (
+                      <View key={item.id ?? idx} style={styles.itemRow}>
+                        <ItemImage
+                          uri={item.imageUrl ?? ""}
+                          imageStyle={styles.itemImage}
+                          fallbackStyle={styles.itemImageFallback}
+                        />
+                        <Text style={styles.itemName} numberOfLines={1}>
+                          {item.name ?? "—"}
+                        </Text>
+                        <Text style={styles.itemCost}>
+                          {costSymbol}{(item.cost ?? 0).toFixed(2)}
+                        </Text>
+                      </View>
+                    ))}
+                  </ScrollView>
+                </View>
+              )}
+            </>
           )}
 
           {/* Close button */}
           <TouchableOpacity
-            style={styles.closeBtn}
+            style={[styles.closeBtn, isWeb && styles.closeBtnWeb]}
             onPress={onClose}
             activeOpacity={0.7}
           >
@@ -233,6 +357,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     backgroundColor: "rgba(0,0,0,0.78)",
   },
+  modalContainerWeb: {
+    alignItems: "center",
+  },
   sheet: {
     backgroundColor: "#1a1a2e",
     borderTopLeftRadius: wp(7),
@@ -242,6 +369,14 @@ const styles = StyleSheet.create({
     //maxHeight: isTablet ? "90%" : "80%",
     height: isTablet ? hp(150) : hp(85),
     paddingBottom: Platform.OS === "ios" ? hp(5.5) : hp(3),
+  },
+  sheetWeb: {
+    width: "100%",
+    maxWidth: 1000,
+    height: "65%",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingBottom: 18,
   },
   handle: {
     width: wp(10),
@@ -255,6 +390,63 @@ const styles = StyleSheet.create({
   banner: {
     width: "100%",
     height: isTablet ? hp(45) : hp(15),
+  },
+  bannerWeb: {
+    height: 120,
+    borderRadius: 14,
+    marginHorizontal: 20,
+    width: "auto",
+    marginBottom: 4,
+  },
+  // --- Web 3-column layout ---
+  columnsRow: {
+    flex: 1,
+    flexDirection: "row",
+    gap: 14,
+    paddingHorizontal: 20,
+    paddingTop: 10,
+    paddingBottom: 6,
+  },
+  col: {
+    flex: 1,
+  },
+  colPanel: {
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    borderRadius: 16,
+    padding: 16,
+  },
+  colHeading: {
+    color: "#6b7280",
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 2,
+    marginBottom: 14,
+  },
+  colScroll: {
+    flex: 1,
+  },
+  emptyText: {
+    color: "#6b7280",
+    fontSize: 13,
+    fontStyle: "italic",
+  },
+  tierBadgeWeb: {
+    alignSelf: "flex-start",
+    marginBottom: hp(1.5),
+  },
+  costCard: {
+    marginTop: "auto",
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: wp(1.5),
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
   },
   body: {
     padding: wp(5),
@@ -428,6 +620,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.1)",
     alignItems: "center",
+  },
+  closeBtnWeb: {
+    marginHorizontal: 20,
+    marginTop: 10,
+    paddingVertical: 12,
+    borderRadius: 12,
   },
   closeBtnText: { color: "#9ca3af", fontSize: fs(15), fontWeight: "700" },
 });
