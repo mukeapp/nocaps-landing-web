@@ -485,16 +485,17 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
               No Habit Stack Found.
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Create your first habit stack to get started.
+              Add or Create your first habit stack to get started.
+              Or Just click "Next" to skip and explore the app.
             </p>
-            <button
+            {/* <button
               onClick={() =>
                 navigation.navigate("add_edit_habitstack", { habitstackdata: {} })
               }
               className="mt-5 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 text-sm font-medium transition-colors"
             >
               Create Habit Stack
-            </button>
+            </button> */}
           </div>
         )}
 
