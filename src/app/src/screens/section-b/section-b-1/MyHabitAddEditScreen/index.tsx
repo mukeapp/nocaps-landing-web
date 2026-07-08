@@ -14,18 +14,21 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import {AIModelSelector} from "@/core/components/section-b";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
 import { MainStyles } from "@/core/constants/styles";
 import { Colors } from "@/core/constants/Colors";
+import { Images } from "@/core/constants/Images";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import {
   ColorModalShow,
-  Header,
   IconModalShow,
   ModalShow,
 } from "@/core/components/section-b";
-import { DefaultLoader, ButtonSignIn } from "@/core/components/section-a";
+import { DefaultLoader } from "@/core/components/section-a";
 import { useFocusEffect } from "@react-navigation/native";
 import {
   heightPercentageToDP as hp,
@@ -33,16 +36,9 @@ import {
   isTablet,
 } from "@/core/utils/responsive";
 import RBSheet from "react-native-raw-bottom-sheet";
+import Feather from "@expo/vector-icons/Feather";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-import {
-  BannerSectionV2,
-  HabitEditBasicSection,
-  HabitEditDateTimeRows,
-  HabitEditDescriptionSection,
-  HabitEditFrequencyPicker,
-  HabitEditStatusPicker,
-  HabitEditWeekdayChips,
-} from "@/core/components/section-b";
 import HabitEditLinksList from "@/core/components/section-b/habit-edit/HabitEditLinksList";
 import {
   useHabitAddEditForm,
@@ -60,6 +56,8 @@ import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
+const isWeb = Platform.OS === "web";
+
 interface RBSheetRef {
   open: () => void;
   close: () => void;
@@ -68,6 +66,14 @@ interface RBSheetRef {
 function ModalsPanel() {
   return null;
 }
+
+const HABIT_STATUSES: { key: string; lib: "feather" | "fa6" | "mi"; name: string }[] = [
+  { key: "play", lib: "feather", name: "play" },
+  { key: "pause", lib: "fa6", name: "pause" },
+  { key: "stop", lib: "mi", name: "check-box-outline-blank" },
+  { key: "previous", lib: "fa6", name: "backward-step" },
+  { key: "next", lib: "fa6", name: "forward-step" },
+];
 
 const MyHabitAddEditScreen = ({
   navigation,
@@ -154,6 +160,9 @@ const MyHabitAddEditScreen = ({
     },
   ];
 
+  const fmtDate = (d: Date | null) => (d ? moment(d).format("YYYY-MM-DD") : "");
+  const fmtTime = (d: Date | null) => (d ? moment(d).local().format("h:mm A") : "");
+
   const onOpenLinkItem = (habitLink: HabitLinkComponent) =>
     navigation.navigate("habitlinks", {
       originScreen: "add_edit_habit",
@@ -178,112 +187,233 @@ const MyHabitAddEditScreen = ({
   };
 
   return (
-    <View style={MainStyles.root}>
-      <Header txt="Habit" navigation={navigation} />
+    <View style={[MainStyles.root2, { paddingHorizontal: 0, paddingTop: 0 }]}>
+      <WebDashboardHeader title="Habit" onBack={() => navigation.goBack()} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <BannerSectionV2
-          image={media.local}
-          remoteImage={form.routeBannerImage}
-          onPick={media.pickImg}
-          preview={media.preview}
-        />
+        <div className="px-4 md:px-6 py-6 max-w-3xl mx-auto w-full">
+          {/* Page header */}
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+            New Habit
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Set up this habit, then link items to it.
+          </p>
 
-        <HabitEditBasicSection
-          name={form.habitname}
-          onChangeName={form.setHabitName}
-          iconKey={form.icnoname}
-          onPressIcon={() => form.setShowIcon(true)}
-          color={form.selectedColour}
-          onPressColor={() => form.setPopupClr(true)}
-        />
+          {/* Cover image */}
+          <label className="mt-6 block text-sm font-medium text-foreground">
+            Cover image
+          </label>
+          {media.preview ?? media.local ?? form.routeBannerImage ? (
+            <div className="relative mt-2 overflow-hidden rounded-2xl">
+              <img
+                src={(media.preview ?? media.local ?? form.routeBannerImage) as string}
+                alt="Cover"
+                className="w-full aspect-[16/6] object-cover"
+              />
+              <button
+                onClick={media.pickImg}
+                aria-label="Change image"
+                className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-[#27AE60] ring-2 ring-white/80"
+              >
+                <MaterialCommunityIcons name="image-plus-outline" size={18} color={Colors.white} />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={media.pickImg}
+              className="mt-2 flex aspect-[16/6] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+            >
+              <span className="grid h-14 w-14 place-items-center rounded-xl bg-white/5">
+                <MaterialCommunityIcons name="image-plus-outline" size={26} color={Colors.text_color} />
+              </span>
+              <span className="text-sm text-muted-foreground">
+                Click to upload a cover photo
+              </span>
+            </button>
+          )}
 
-        <HabitEditDescriptionSection value={form.des} onChange={form.setDes} />
-
-        <HabitEditStatusPicker
-          habitType={form.interestSelect}
-          openHabitType={() => form.openModal("interest")}
-          status={form.status}
-          onChange={form.setStatus}
-        />
-
-        <HabitEditDateTimeRows
-          startDate={pickers.startDate}
-          endDate={pickers.endDate}
-          startTime={pickers.startTime}
-          endTime={pickers.endTime}
-          onPickStartDate={() => pickers.showPicker("startDate", "date")}
-          onPickEndDate={() => pickers.showPicker("endDate", "date")}
-          onPickStartTime={() => pickers.showPicker("startTime", "time")}
-          onPickEndTime={() => pickers.showPicker("endTime", "time")}
-          isEditingExisting={form.isEditingExisting}
-        />
-
-        <HabitEditFrequencyPicker
-          frequency={form.selectedFrequency}
-          openFrequency={() => form.openModal("frequency")}
-        />
-
-        <HabitEditWeekdayChips
-          days={form.alldays}
-          selected={form.week}
-          onToggle={form.toggleDay}
-        />
-
-        <HabitEditLinksList
-          items={form.habitlinkitem}
-          onEdit={form.editHabitLink}
-          onDelete={form.deleteHabitLink}
-          onAddItem={onOpenLinkItem}
-          canInteract={form.enable}
-        />
-
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <ButtonSignIn
-            text="Add Habit Link"
-            wid="45"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            top="3"
-            mov={handleAddHabitLinkPress}
+          {/* Name */}
+          <label className="mt-6 block text-sm font-medium text-foreground">
+            Habit name
+          </label>
+          <input
+            value={form.habitname}
+            onChange={(e) => form.setHabitName(e.target.value)}
+            placeholder="e.g. Drink water"
+            className="mt-2 w-full rounded-xl bg-card px-4 py-2.5 text-sm text-foreground ring-1 ring-white/10 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#2D9CDB]"
           />
 
-          <ButtonSignIn
-            text="Create Habit Link"
-            wid="40"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            top="3"
-            mov={() => form.save("link")}
-          />
-        </View>
+          {/* Icon + Color */}
+          <div className="mt-6 grid max-w-xs grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground">Icon</label>
+              <button
+                onClick={() => form.setShowIcon(true)}
+                className="mt-2 grid h-14 w-14 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition-colors"
+              >
+                <Image
+                  source={form.icnoname ? Images[form.icnoname] : Images.dollar}
+                  resizeMode="contain"
+                  style={{ width: 28, height: 28 }}
+                />
+              </button>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground">Color</label>
+              <button
+                onClick={() => form.setPopupClr(true)}
+                aria-label="Pick color"
+                className="mt-2 h-14 w-14 rounded-xl ring-1 ring-white/10 hover:ring-white/25 transition-shadow"
+                style={{ backgroundColor: form.selectedColour }}
+              />
+            </div>
+          </div>
 
-        <View style={{ height: hp(1) }} />
-
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <ButtonSignIn
-            text="Cancel"
-            wid="48"
-            bg={Colors.background_color}
-            bd={Colors.white}
-            ftn={14}
-            mov={() => navigation.goBack()}
+          {/* Description */}
+          <label className="mt-6 block text-sm font-medium text-foreground">Description</label>
+          <textarea
+            value={form.des}
+            onChange={(e) => form.setDes(e.target.value)}
+            placeholder="Write here..."
+            rows={4}
+            className="mt-2 w-full resize-y rounded-xl bg-card px-4 py-3 text-sm text-foreground ring-1 ring-white/10 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#2D9CDB]"
           />
-          <ButtonSignIn
-            text="Save"
-            wid="40"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            mov={() => form.save("save")}
-          />
-        </View>
 
-        <View style={{ height: hp(2) }} />
+          {/* Type + Status */}
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm font-medium text-foreground">Habit type</label>
+              <button
+                onClick={() => form.openModal("interest")}
+                className="mt-2 flex w-full items-center justify-between rounded-xl bg-card px-4 py-2.5 text-sm ring-1 ring-white/10 hover:bg-white/5 transition-colors"
+              >
+                <span className={form.interestSelect ? "text-foreground" : "text-muted-foreground"}>
+                  {form.interestSelect || "Select type"}
+                </span>
+                <MaterialCommunityIcons name="chevron-down" size={18} color={Colors.text_color} />
+              </button>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground">Status</label>
+              <div className="mt-2 flex items-center justify-between rounded-xl bg-card px-4 py-2.5 ring-1 ring-white/10">
+                {HABIT_STATUSES.map((st) => {
+                  const active = form.status === st.key;
+                  const color = active ? Colors.white : Colors.music;
+                  return (
+                    <button key={st.key} onClick={() => form.setStatus(st.key)} aria-label={st.key} className="px-1">
+                      {st.lib === "feather" ? (
+                        <Feather name={st.name as any} size={18} color={color} />
+                      ) : st.lib === "mi" ? (
+                        <MaterialIcons name={st.name as any} size={18} color={color} />
+                      ) : (
+                        <FontAwesome6 name={st.name as any} size={18} color={color} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* Date / Time */}
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {[
+              { label: "Start date", val: form.isEditingExisting ? fmtDate(pickers.startDate) : pickers.startDate?.toLocaleDateString(), icon: "calendar-blank-outline", onPick: () => pickers.showPicker("startDate", "date") },
+              { label: "End date", val: form.isEditingExisting ? fmtDate(pickers.endDate) : pickers.endDate?.toLocaleDateString(), icon: "calendar-blank-outline", onPick: () => pickers.showPicker("endDate", "date") },
+              { label: "Start time", val: form.isEditingExisting ? fmtTime(pickers.startTime) : pickers.startTime?.toLocaleTimeString(), icon: "clock-outline", onPick: () => pickers.showPicker("startTime", "time") },
+              { label: "End time", val: form.isEditingExisting ? fmtTime(pickers.endTime) : pickers.endTime?.toLocaleTimeString(), icon: "clock-outline", onPick: () => pickers.showPicker("endTime", "time") },
+            ].map((f) => (
+              <div key={f.label}>
+                <label className="block text-sm font-medium text-foreground">{f.label}</label>
+                <button
+                  onClick={f.onPick}
+                  className="mt-2 flex w-full items-center gap-2 rounded-xl bg-card px-4 py-2.5 text-sm ring-1 ring-white/10 hover:bg-white/5 transition-colors"
+                >
+                  <MaterialCommunityIcons name={f.icon as any} size={18} color={Colors.text_color} />
+                  <span className={`flex-1 text-left ${f.val ? "text-foreground" : "text-muted-foreground"}`}>
+                    {f.val || f.label}
+                  </span>
+                  <MaterialCommunityIcons name="chevron-down" size={18} color={Colors.text_color} />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Frequency */}
+          <label className="mt-6 block text-sm font-medium text-foreground">Frequency</label>
+          <button
+            onClick={() => form.openModal("frequency")}
+            className="mt-2 flex w-full items-center justify-between rounded-xl bg-card px-4 py-2.5 text-sm ring-1 ring-white/10 hover:bg-white/5 transition-colors"
+          >
+            <span className={form.selectedFrequency ? "text-foreground" : "text-muted-foreground"}>
+              {form.selectedFrequency || "Once a week"}
+            </span>
+            <MaterialCommunityIcons name="chevron-down" size={18} color={Colors.text_color} />
+          </button>
+
+          {/* Weekdays */}
+          <label className="mt-6 block text-sm font-medium text-foreground">Repeat on</label>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {form.alldays?.map((d: any, i: number) => {
+              const active = form.week.some((x: any) => x.label === d.label);
+              return (
+                <button
+                  key={i}
+                  onClick={() => form.toggleDay(d)}
+                  className={
+                    active
+                      ? "min-w-[3rem] rounded-lg bg-white px-3 py-2 text-sm font-semibold text-neutral-900 transition-colors"
+                      : "min-w-[3rem] rounded-lg bg-card px-3 py-2 text-sm font-medium text-muted-foreground ring-1 ring-white/10 hover:bg-white/5 hover:text-foreground transition-colors"
+                  }
+                >
+                  {d.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Linked items */}
+          <div className="mt-6">
+            <HabitEditLinksList
+              items={form.habitlinkitem}
+              onEdit={form.editHabitLink}
+              onDelete={form.deleteHabitLink}
+              onAddItem={onOpenLinkItem}
+              canInteract={form.enable}
+            />
+          </div>
+
+          {/* Footer actions */}
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5">
+            <button
+              onClick={() => navigation.goBack()}
+              className="rounded-full px-5 py-2 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground transition-colors"
+            >
+              Cancel
+            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={handleAddHabitLinkPress}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
+              >
+                <MaterialCommunityIcons name="plus" size={16} color={Colors.white} />
+                Add Habit Link
+              </button>
+              <button
+                onClick={() => form.save("link")}
+                className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
+              >
+                Create Habit Link
+              </button>
+              <button
+                onClick={() => form.save("save")}
+                className="rounded-full bg-[#2D9CDB] px-6 py-2 text-sm font-semibold text-white hover:bg-[#2D9CDB]/85 transition-colors"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
       </ScrollView>
 
       <DateTimePickerModal
@@ -323,12 +453,15 @@ const MyHabitAddEditScreen = ({
       <RBSheet
         ref={addHabitSheetRef}
         useNativeDriver={false}
-        height={isTablet ? hp(100) : hp(80)}
+        height={isWeb ? 470 : isTablet ? hp(100) : hp(80)}
         customStyles={{
           container: {
             backgroundColor: "#2C2C2E",
-            borderTopLeftRadius: wp(5),
-            borderTopRightRadius: wp(5),
+            borderTopLeftRadius: isWeb ? 20 : wp(5),
+            borderTopRightRadius: isWeb ? 20 : wp(5),
+            ...(isWeb
+              ? { maxWidth: 480, width: "100%", alignSelf: "center" }
+              : {}),
           },
           wrapper: {
             backgroundColor: "#000000ab",
@@ -530,11 +663,11 @@ const styles = StyleSheet.create({
   optionItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(3),
+    paddingVertical: isWeb ? 14 : hp(2),
+    paddingHorizontal: isWeb ? 14 : wp(3),
     backgroundColor: Colors.content_back,
-    borderRadius: wp(3),
-    marginBottom: hp(1.5),
+    borderRadius: isWeb ? 12 : wp(3),
+    marginBottom: isWeb ? 10 : hp(1.5),
   },
   optionText: {
     color: Colors.white,
@@ -545,33 +678,33 @@ const styles = StyleSheet.create({
   // Bottom Sheet Styles
   bottomSheetContent: {
     flex: 1,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
+    paddingHorizontal: isWeb ? 20 : wp(4),
+    paddingVertical: isWeb ? 20 : hp(2),
   },
   bottomSheetTitle: {
     color: Colors.white,
-    fontSize: wp(5),
+    fontSize: isWeb ? 18 : wp(5),
     fontFamily: "poppins_semibold",
-    marginBottom: hp(2),
+    marginBottom: isWeb ? 16 : hp(2),
   },
   optionsContainer: {
     marginTop: hp(1),
   },
   optionTextContainer: {
-    marginLeft: wp(3),
+    marginLeft: isWeb ? 12 : wp(3),
     flex: 1,
   },
   optionTitle: {
     color: Colors.white,
-    fontSize: wp(4),
+    fontSize: isWeb ? 15 : wp(4),
     fontFamily: "poppins_semibold",
-    marginBottom: hp(0.5),
+    marginBottom: isWeb ? 2 : hp(0.5),
   },
   optionSubtitle: {
     color: Colors.gray,
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 13 : wp(3.5),
     fontFamily: "poppins_regular",
-    lineHeight: wp(4.5),
+    lineHeight: isWeb ? 18 : wp(4.5),
   },
   // AI Confirm Modal
   aiConfirmOverlay: {
