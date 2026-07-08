@@ -1,13 +1,21 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "@/core/redux/store";
 
-const ScreenPage = dynamic(() => import("@/shims/react-navigation/ScreenPage"), { ssr: false });
-const Screen = dynamic(
-  () => import("@/app/src/screens/section-a").then((m) => m.RecoverPassword),
+const RecoverPasswordContent = dynamic(
+  () => import("./RecoverPasswordContent"),
   { ssr: false }
 );
 
-export default function Page() {
-  return <ScreenPage name="recoverpassword" component={Screen} section="auth" />;
+export default function RecoverPasswordPage() {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RecoverPasswordContent />
+      </PersistGate>
+    </Provider>
+  );
 }
