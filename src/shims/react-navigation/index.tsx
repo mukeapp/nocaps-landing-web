@@ -171,13 +171,14 @@ export function useIsFocused(): boolean {
   return true;
 }
 
+// React Navigation re-runs the effect whenever the (useCallback-wrapped)
+// callback identity changes while the screen is focused — screens rely on this
+// to refetch when their form.load deps change (e.g. market-manager tab clicks).
 export function useFocusEffect(effect: () => void | (() => void)) {
-  const effectRef = useRef(effect);
-  effectRef.current = effect;
   useEffect(() => {
-    const cleanup = effectRef.current();
+    const cleanup = effect();
     return typeof cleanup === "function" ? cleanup : undefined;
-  }, []);
+  }, [effect]);
 }
 
 export function useDrawerOpen(): boolean {
