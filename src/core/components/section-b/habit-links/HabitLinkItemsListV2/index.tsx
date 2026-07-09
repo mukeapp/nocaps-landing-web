@@ -58,6 +58,18 @@ const wp = (p: number): number =>
 const hp = (p: number): number =>
   isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
+// On web, RNW's Keyboard.dismiss() blurs the focused input and the wrapper's
+// press fires even for clicks inside the TextInput, so the note textarea blurs
+// the instant it's clicked. There's no soft keyboard on web — skip the wrapper.
+const KeyboardDismissWrap = ({ children }: { children: React.ReactElement }) =>
+  isWeb ? (
+    children
+  ) : (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
+
 type Props = {
   startDate: Date | null;
   costSymbol?: string;
@@ -1013,7 +1025,7 @@ const HabitLinkItemsListV2: React.FC<Props> = ({
               if (!isSavingNote) handleCancelNote();
             }}
           />
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <KeyboardDismissWrap>
           <View style={[styles.scoreModal, styles.noteModal]}>
             {/* Header */}
             <View style={styles.scoreModalHeader}>
@@ -1085,7 +1097,7 @@ const HabitLinkItemsListV2: React.FC<Props> = ({
               </TouchableOpacity>
             </View>
           </View>
-          </TouchableWithoutFeedback>
+          </KeyboardDismissWrap>
         </KeyboardAvoidingView>
       </Modal>
     </View>
