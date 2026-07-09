@@ -5,8 +5,10 @@ import { HabitStyles } from "@/core/styles/HabitStyles";
 import { Colors } from "@/core/constants/Colors";
 import { Images } from "@/core/constants/Images";
 import Entypo from "@expo/vector-icons/Entypo";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, isTablet } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 
 type Props = {
@@ -47,8 +49,8 @@ export default function BannerSectionV2({ image, remoteImage, preview, onPick }:
 
 export const styles = StyleSheet.create({
   imgbanner: {
-    width: isTablet ? '100%' : wp(90),
-    height: isTablet ? hp(40) : hp(20),
+    width: isWeb ? "100%" : isTablet ? "100%" : wp(90),
+    height: isWeb ? 180 : isTablet ? hp(40) : hp(20),
     marginTop: hp(1),
     borderRadius: wp(3)
   },

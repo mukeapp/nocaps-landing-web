@@ -1184,6 +1184,8 @@ const styles = StyleSheet.create({
   },
   scoreModal: {
     width: "100%",
+    maxWidth: 460,
+    alignSelf: "center",
     backgroundColor: "#1C1C1E",
     borderRadius: 20,
     padding: wp(6),
@@ -1379,7 +1381,7 @@ const styles = StyleSheet.create({
     padding: wp(3),
     color: "#FFFFFF",
     fontSize: 14,
-    minHeight: hp(12),
+    minHeight: isWeb ? 120 : hp(12),
     lineHeight: 20,
   },
   noteSaveBtn: {
@@ -1387,7 +1389,7 @@ const styles = StyleSheet.create({
   },
   noteViewImage: {
     width: "100%",
-    height: hp(20),
+    height: isWeb ? 200 : hp(20),
     borderRadius: 8,
   },
   noteViewText: {
