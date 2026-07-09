@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { MainStyles } from "@/core/constants/styles";
 import { HabitStyles } from "@/core/styles/HabitStyles";
 import { Colors } from "@/core/constants/Colors";
 import { Images } from "@/core/constants/Images";
@@ -33,17 +32,12 @@ export default function BannerSectionV2({ image, remoteImage, preview, onPick }:
   }
 
   return (
-    <>
-      <Text style={[MainStyles.text14, { marginTop: 8 }]}>Habit Link Image Banner</Text>
-      <TouchableOpacity style={HabitStyles.uploadview} onPress={onPick}>
-        <View style={HabitStyles.uploadimg}>
-          <Image source={Images.upload} resizeMode="contain" style={{ width: 32, height: 32 }} />
-        </View>
-        <Text style={[MainStyles.text14, { color: Colors.music, textAlign: "center" }]}>
-          Please <Text style={[MainStyles.text14, { textDecorationLine: "underline" }]}>Upload</Text> the{"\n"}Photos here
-        </Text>
-      </TouchableOpacity>
-    </>
+    <TouchableOpacity style={styles.uploadArea} onPress={onPick} activeOpacity={0.7}>
+      <View style={styles.uploadIconWrap}>
+        <Image source={Images.upload} resizeMode="contain" style={{ width: 28, height: 28 }} />
+      </View>
+      <Text style={styles.uploadHint}>Click to upload a photo</Text>
+    </TouchableOpacity>
   );
 }
 
@@ -53,5 +47,25 @@ export const styles = StyleSheet.create({
     height: isWeb ? 180 : isTablet ? hp(40) : hp(20),
     marginTop: hp(1),
     borderRadius: wp(3)
+  },
+  uploadArea: {
+    width: "100%",
+    height: 180,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.03)",
+    gap: 10,
+  },
+  uploadIconWrap: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: "rgba(242,242,242,0.08)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  uploadHint: {
+    color: "#9CA3AF",
+    fontSize: 13,
   },
 });
