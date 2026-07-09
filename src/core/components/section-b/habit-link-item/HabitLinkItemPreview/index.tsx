@@ -12,6 +12,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import React, {useEffect, useRef, useState} from "react";
 import {
+  Platform,
   Image,
   Modal,
   ScrollView,
@@ -25,10 +26,16 @@ import {BlurView} from "expo-blur";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {
   fs,
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
   isTablet,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 const HabitLinkItemPreview = ({
   rnsheet = false,
@@ -159,18 +166,22 @@ const HabitLinkItemPreview = ({
       <RBSheet
         ref={refRBSheet}
         useNativeDriver={false}
-        height={isTablet ? hp(150) : hp(90)}
+        height={hp(170)}
         customStyles={{
           container: {
             backgroundColor: Colors.content_back,
-            borderRadius: wp(5),
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            width: "50%",
+            maxWidth: 600,
+            alignSelf: "center",
           },
           wrapper: {
             backgroundColor: "#000000ab",
           },
           draggableIcon: {
             backgroundColor: "#000",
-            width: wp(30),
+            width: 60,
           },
         }}
         customModalProps={{
@@ -195,7 +206,7 @@ const HabitLinkItemPreview = ({
               <AntDesign name="close" size={fs(18)} color={Colors.white} />
             </TouchableOpacity>
             <Text style={MainStyles.text20semibold}>Preview</Text>
-            <View style={{width: wp(9)}} />
+            <View style={{width: 36}} />
           </View>
 
           {/* Scrollable body */}
@@ -248,7 +259,7 @@ const HabitLinkItemPreview = ({
             </View>
 
             {/* Company + Score badge */}
-            <View style={[MainStyles.viewtwo, {marginTop: hp(2)}]}>
+            <View style={[MainStyles.viewtwo, {marginTop: 16}]}>
               {!!dataitem?.companyName && (
                 <Text style={styles.companyText}>{dataitem?.companyName}</Text>
               )}
@@ -548,191 +559,190 @@ const styles = StyleSheet.create({
   bord: {
     borderTopWidth: 1,
     borderTopColor: Colors.borderline,
-    marginTop: hp(1),
-    marginBottom: hp(1),
+    marginTop: 8,
+    marginBottom: 8,
   },
   handle: {
-    width: wp(32),
-    height: hp(1),
-    borderRadius: wp(10),
+    width: 60,
+    height: 4,
+    borderRadius: 2,
     backgroundColor: "#000000ab",
     alignSelf: "center",
-    marginVertical: hp(1),
+    marginVertical: 8,
   },
   imo: {
-    width: isTablet ? "100%" : wp(90),
-    height: isTablet ? hp(40) : hp(20),
-    marginTop: hp(2),
-    borderRadius: wp(2),
+    width: "100%",
+    height: 200,
+    borderRadius: 12,
   },
   close: {
-    width: wp(9),
-    height: wp(9),
-    borderRadius: wp(4.5),
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: Colors.borderline,
     alignItems: "center",
     justifyContent: "center",
   },
   mainbottom: {
     flex: 1,
-    paddingHorizontal: wp(5),
+    paddingHorizontal: 20,
   },
   scrollContent: {
-    paddingBottom: hp(3),
+    paddingBottom: 24,
   },
   iconRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp(3),
-    paddingVertical: hp(1.5),
+    gap: 12,
+    paddingVertical: 12,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: Colors.borderline,
-    marginTop: hp(1),
+    marginTop: 8,
   },
   iconBtn: {
-    width: wp(10),
-    height: wp(10),
-    borderRadius: wp(5),
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     backgroundColor: Colors.borderline,
     alignItems: "center",
     justifyContent: "center",
   },
   companyText: {
     color: "#9ca3af",
-    fontSize: fs(12),
+    fontSize: 12,
     fontWeight: "600",
   },
   scoreBadge: {
-    borderRadius: wp(3),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.3),
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 3,
   },
   scoreBadgeText: {
     color: "#fff",
-    fontSize: fs(11),
+    fontSize: 11,
     fontWeight: "700",
   },
   titleText: {
     color: Colors.white,
-    fontSize: fs(18),
+    fontSize: 18,
     fontWeight: "800",
-    marginTop: hp(0.5),
-    marginBottom: hp(1),
+    marginTop: 4,
+    marginBottom: 8,
   },
   chipRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: wp(2),
-    marginBottom: hp(1.5),
+    gap: 8,
+    marginBottom: 12,
   },
   chip: {
-    borderRadius: wp(5),
+    borderRadius: 20,
     borderWidth: 1,
     borderColor: Colors.borderline,
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.5),
+    paddingHorizontal: 12,
+    paddingVertical: 4,
     backgroundColor: "rgba(255,255,255,0.05)",
   },
   chipText: {
     color: Colors.white,
-    fontSize: fs(12),
+    fontSize: 12,
   },
   progressRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp(2),
-    marginBottom: hp(1.5),
+    gap: 8,
+    marginBottom: 12,
   },
   progressBar: {
     flex: 1,
-    height: hp(0.7),
-    borderRadius: wp(0.8),
+    height: 6,
+    borderRadius: 3,
     backgroundColor: "rgba(255,255,255,0.1)",
     overflow: "hidden",
   },
   progressFill: {
     height: "100%",
-    borderRadius: wp(0.8),
+    borderRadius: 3,
   },
   progressLabel: {
     color: "#9ca3af",
-    fontSize: fs(12),
+    fontSize: 12,
     fontWeight: "600",
-    minWidth: wp(8),
+    minWidth: 40,
     textAlign: "right",
   },
   costCallout: {
     color: Colors.white,
-    fontSize: fs(22),
+    fontSize: 22,
     fontWeight: "800",
-    marginBottom: hp(1),
+    marginBottom: 8,
   },
   costLabel: {
     color: "#9ca3af",
-    fontSize: fs(13),
+    fontSize: 13,
     fontWeight: "400",
   },
   infoRow: {
-    marginTop: hp(1),
+    marginTop: 8,
   },
   descSection: {
-    marginTop: hp(1),
-    marginBottom: hp(1.5),
+    marginTop: 8,
+    marginBottom: 12,
   },
   descHeaderRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: hp(0.8),
+    marginBottom: 6,
     backgroundColor: "rgba(255,255,255,0.06)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.1)",
-    borderRadius: wp(3),
-    paddingVertical: hp(1.2),
-    paddingLeft: wp(3),
-    paddingRight: wp(2),
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingLeft: 12,
+    paddingRight: 8,
   },
   descHeaderLeft: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp(2.5),
+    gap: 10,
     flex: 1,
   },
   descAccent: {
-    width: wp(0.8),
-    height: hp(2.5),
-    borderRadius: wp(0.4),
+    width: 4,
+    height: 20,
+    borderRadius: 2,
   },
   descSectionLabel: {
     color: "#e2e8f0",
-    fontSize: fs(12),
+    fontSize: 12,
     fontWeight: "700",
     letterSpacing: 1.5,
   },
   descToggle: {
-    width: wp(7),
-    height: wp(7),
-    borderRadius: wp(3.5),
+    width: 28,
+    height: 28,
+    borderRadius: 14,
     backgroundColor: "#ffffff",
     alignItems: "center",
     justifyContent: "center",
   },
   descCard: {
     backgroundColor: "rgba(255,255,255,0.04)",
-    borderLeftWidth: wp(1),
-    borderRadius: wp(1.5),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1),
+    borderLeftWidth: 4,
+    borderRadius: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   description: {
     color: "#9ca3af",
-    fontSize: fs(13),
-    lineHeight: fs(20),
+    fontSize: 13,
+    lineHeight: 20,
   },
   idsRow: {
-    gap: hp(1),
-    marginTop: hp(0.5),
+    gap: 8,
+    marginTop: 4,
   },
   idBtn: {
     flexDirection: "row",
@@ -741,42 +751,42 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.04)",
     borderWidth: 1,
     borderColor: Colors.borderline,
-    borderRadius: wp(2.5),
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(3),
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
   idBtnInner: {
     flex: 1,
-    marginRight: wp(2),
+    marginRight: 8,
   },
   idLabel: {
     color: Colors.text_color,
-    fontSize: fs(9),
+    fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1.2,
-    marginBottom: hp(0.3),
+    marginBottom: 2,
   },
   idValue: {
     color: Colors.white,
-    fontSize: fs(12),
+    fontSize: 12,
     fontWeight: "600",
   },
   detailsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: wp(2.5),
-    marginTop: hp(0.5),
-    marginBottom: hp(0.5),
+    gap: 8,
+    marginTop: 4,
+    marginBottom: 4,
   },
   detailCard: {
     width: "48%",
     backgroundColor: "rgba(255,255,255,0.04)",
     borderWidth: 1,
     borderColor: Colors.borderline,
-    borderRadius: wp(3),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.5),
-    gap: hp(0.8),
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
+    gap: 6,
   },
   detailCardFull: {
     width: "100%",
@@ -786,50 +796,50 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.04)",
     borderWidth: 1,
     borderColor: Colors.borderline,
-    borderRadius: wp(3),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.5),
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 12,
   },
   detailCardHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp(2),
+    gap: 8,
   },
   detailCardIconWrap: {
-    width: wp(6),
-    height: wp(6),
-    borderRadius: wp(3),
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     backgroundColor: "rgba(255,255,255,0.08)",
     alignItems: "center",
     justifyContent: "center",
   },
   detailLabel: {
     color: "#6b7280",
-    fontSize: fs(9),
+    fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1.2,
   },
   detailValue: {
     color: Colors.white,
-    fontSize: fs(15),
+    fontSize: 15,
     fontWeight: "600",
-    marginTop: hp(0.5),
+    marginTop: 4,
   },
   aiScoredBadge: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp(1.5),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.5),
-    borderRadius: wp(4),
+    gap: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 16,
   },
   aiScoredDot: {
-    width: wp(2),
-    height: wp(2),
-    borderRadius: wp(1),
+    width: 8,
+    height: 8,
+    borderRadius: 4,
   },
   aiScoredText: {
-    fontSize: fs(13),
+    fontSize: 13,
     fontWeight: "700",
   },
   deleteview: {

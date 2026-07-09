@@ -290,6 +290,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(4),
     paddingBottom: hp(4),
     maxHeight: isTablet ? hp(160) : hp(90),
+    width: "100%",
+    maxWidth: 700,
+    alignSelf: "center",
   },
   handle: {
     alignSelf: "center",

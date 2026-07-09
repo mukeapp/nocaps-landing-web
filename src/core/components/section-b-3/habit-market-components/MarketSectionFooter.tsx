@@ -1,5 +1,4 @@
 import { Colors } from "@/core/constants/Colors";
-import { MainStyles } from "@/core/constants/styles";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import {
@@ -27,8 +26,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
   },
   addButtonText: {
-      ...MainStyles.text12,
-      color: Colors.white,
+    fontSize: 13,
+    color: Colors.white,
+    fontFamily: "poppins_semibold",
   }
 });
 

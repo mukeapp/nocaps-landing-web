@@ -15,6 +15,8 @@ import {
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
 
+const isWeb = Platform.OS === "web";
+
 interface Props {
   visible: boolean;
   onClose: () => void;
@@ -33,7 +35,7 @@ const DowngradeSheet = ({ visible, onClose, onConfirm }: Props) => (
         <View style={s.handle} />
 
         <View style={s.iconRow}>
-          <MaterialIcons name="warning-amber" size={wp(10)} color="#f59e0b" />
+          <MaterialIcons name="warning-amber" size={isWeb ? 40 : wp(10)} color="#f59e0b" />
         </View>
 
         <Text style={s.title}>Switching to Free Plan</Text>
@@ -57,7 +59,7 @@ const DowngradeSheet = ({ visible, onClose, onConfirm }: Props) => (
           }}
           activeOpacity={0.85}
         >
-          <MaterialIcons name="open-in-new" size={wp(4.5)} color="#111" />
+          <MaterialIcons name="open-in-new" size={isWeb ? 18 : wp(4.5)} color="#111" />
           <Text style={s.manageBtnText}>Manage Subscriptions</Text>
         </TouchableOpacity>
 
@@ -87,60 +89,60 @@ const s = StyleSheet.create({
   },
   sheet: {
     backgroundColor: "#1C1C2E",
-    borderTopLeftRadius: wp(6),
-    borderTopRightRadius: wp(6),
-    padding: wp(6),
-    paddingBottom: hp(5),
+    borderTopLeftRadius: isWeb ? 20 : wp(6),
+    borderTopRightRadius: isWeb ? 20 : wp(6),
+    padding: isWeb ? 24 : wp(6),
+    paddingBottom: isWeb ? 32 : hp(5),
     borderTopWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
   },
   handle: {
-    width: wp(9),
-    height: hp(0.5),
+    width: isWeb ? 40 : wp(9),
+    height: isWeb ? 4 : hp(0.5),
     borderRadius: 2,
     backgroundColor: "#374151",
     alignSelf: "center",
-    marginBottom: hp(2.5),
+    marginBottom: isWeb ? 20 : hp(2.5),
   },
   iconRow: {
     alignItems: "center",
-    marginBottom: hp(1.5),
+    marginBottom: isWeb ? 12 : hp(1.5),
   },
   title: {
-    fontSize: wp(5),
+    fontSize: isWeb ? 20 : wp(5),
     fontFamily: "bold",
     color: "#f1f5f9",
     textAlign: "center",
-    marginBottom: hp(1.5),
+    marginBottom: isWeb ? 12 : hp(1.5),
   },
   body: {
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 14 : wp(3.5),
     fontFamily: "regular",
     color: "#9ca3af",
     textAlign: "center",
-    lineHeight: wp(5.5),
-    marginBottom: hp(1),
+    lineHeight: isWeb ? 20 : wp(5.5),
+    marginBottom: isWeb ? 8 : hp(1),
   },
   bodyEmphasis: {
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 14 : wp(3.5),
     fontFamily: "medium",
     color: "#f59e0b",
     textAlign: "center",
-    lineHeight: wp(5.5),
-    marginBottom: hp(3),
+    lineHeight: isWeb ? 20 : wp(5.5),
+    marginBottom: isWeb ? 24 : hp(3),
   },
   manageBtn: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: wp(2),
+    gap: isWeb ? 8 : wp(2),
     backgroundColor: "#f1f5f9",
-    borderRadius: wp(3.5),
-    paddingVertical: hp(2),
-    marginBottom: hp(1.5),
+    borderRadius: isWeb ? 12 : wp(3.5),
+    paddingVertical: isWeb ? 14 : hp(2),
+    marginBottom: isWeb ? 12 : hp(1.5),
   },
   manageBtnText: {
-    fontSize: wp(4.2),
+    fontSize: isWeb ? 16 : wp(4.2),
     fontFamily: "bold",
     color: "#111",
   },
@@ -148,22 +150,22 @@ const s = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.08)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.15)",
-    borderRadius: wp(3.5),
-    paddingVertical: hp(1.8),
+    borderRadius: isWeb ? 12 : wp(3.5),
+    paddingVertical: isWeb ? 14 : hp(1.8),
     alignItems: "center",
-    marginBottom: hp(1.2),
+    marginBottom: isWeb ? 10 : hp(1.2),
   },
   confirmBtnText: {
-    fontSize: wp(3.8),
+    fontSize: isWeb ? 15 : wp(3.8),
     fontFamily: "medium",
     color: "#d1d5db",
   },
   cancelBtn: {
-    paddingVertical: hp(1),
+    paddingVertical: isWeb ? 8 : hp(1),
     alignItems: "center",
   },
   cancelBtnText: {
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 14 : wp(3.5),
     fontFamily: "regular",
     color: "#6b7280",
   },

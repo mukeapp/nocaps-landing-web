@@ -7,7 +7,6 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -43,14 +42,18 @@ const HabitStackSearchShowScreen: React.FC<{ navigation: any; route: any }> = ({
 
   const renderItem = useCallback(
     ({ item }: { item: HabitStackComponent }) => (
-      <HabitStackCard
-        stack={item}
-        canEdit={false}
-        hideCalendar={true}
-        mustReloadUser={true}
-        showExpandedButton={true}
-        showHabitLinkNav={false}
-      />
+      <View style={styles.cardWrapper}>
+        <View style={styles.cardInner}>
+          <HabitStackCard
+            stack={item}
+            canEdit={false}
+            hideCalendar={true}
+            mustReloadUser={true}
+            showExpandedButton={true}
+            showHabitLinkNav={false}
+          />
+        </View>
+      </View>
     ),
     []
   );
@@ -154,19 +157,28 @@ const HabitStackSearchShowScreen: React.FC<{ navigation: any; route: any }> = ({
 export default HabitStackSearchShowScreen;
 
 const styles = StyleSheet.create({
+  cardWrapper: {
+    alignItems: "center",
+    backgroundColor: "#000",
+  },
+  cardInner: {
+    width: "100%",
+    maxWidth: 600,
+    marginBottom: hp(5),
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: wp(4),
-    paddingTop: Platform.OS === "android" ? hp(1.5) : hp(1),
-    paddingBottom: hp(2),
-    gap: wp(3),
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 16,
+    gap: 12,
   },
   backBtn: { flexShrink: 0 },
   backCircle: {
-    width: wp(9),
-    height: wp(9),
-    borderRadius: wp(4.5),
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: "rgba(255,255,255,0.08)",
     alignItems: "center",
     justifyContent: "center",
@@ -176,23 +188,23 @@ const styles = StyleSheet.create({
   headerTitleContainer: {
     flexShrink: 1,
     flexDirection: "column",
-    gap: hp(0.5),
+    gap: 6,
   },
   headerTitle: {
     color: "#f1f5f9",
-    fontSize: wp(4.3),
+    fontSize: 18,
     fontFamily: "poppins_semibold",
   },
   sectorPill: {
     alignSelf: "flex-start",
     backgroundColor: "#ffffff",
-    borderRadius: wp(4),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.4),
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
   },
   sectorPillText: {
     color: "#000000",
-    fontSize: wp(3),
+    fontSize: 12,
     fontFamily: "poppins_medium",
   },
   empty: {
@@ -202,7 +214,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.6),
+    fontSize: 14,
     fontFamily: "poppins_regular",
   },
   footer: {
@@ -211,6 +223,6 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: "rgba(255,255,255,0.05)",
-    marginHorizontal: wp(3.5),
+    marginHorizontal: 14,
   },
 });

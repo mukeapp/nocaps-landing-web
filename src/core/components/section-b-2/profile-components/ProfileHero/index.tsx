@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Platform, View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import { Images } from "@/core/constants/Images";
 import {
   widthPercentageToDP as wp,
@@ -10,6 +10,12 @@ import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { getDefaultImageUrl, getDefaultImageUrl2 } from "@/core/utils";
+
+const isWeb = Platform.OS === "web";
+// On web, render at a fixed iPad Pro-equivalent size (1024×1366 × 0.55 cap) so
+// elements don't inflate with the browser width; native keeps responsive wp/hp.
+const wwp = (p: number) => (isWeb ? +(p * 5.632).toFixed(1) : wp(`${p}%`));
+const whp = (p: number) => (isWeb ? +(p * 7.513).toFixed(1) : hp(`${p}%`));
 
 interface ProfileHeroProps {
   user: any;
@@ -127,38 +133,39 @@ export default ProfileHero;
 
 const styles = StyleSheet.create({
   heroContainer: {
-    marginTop: hp("0%"),
-    marginBottom: hp("0%"),
+    marginTop: whp(0),
+    marginBottom: whp(0),
   },
 
   /* Cover wrapper */
   coverWrapper: {
-    borderTopLeftRadius: wp("4%"),
-    borderTopRightRadius: wp("4%"),
+    borderTopLeftRadius: wwp(4),
+    borderTopRightRadius: wwp(4),
     overflow: "visible",
     backgroundColor: Colors.title_background,
     position: "relative",
+    zIndex: 1,
   },
   coverImage: {
     width: "100%",
-    height: hp("28%"),
-    borderTopLeftRadius: wp("4%"),
-    borderTopRightRadius: wp("4%"),
+    height: whp(28),
+    borderTopLeftRadius: wwp(4),
+    borderTopRightRadius: wwp(4),
   },
 
   /* Top right icons */
   topRightIcons: {
     position: "absolute",
-    bottom: hp("1%"),
-    right: wp("4%"),
+    bottom: whp(1),
+    right: wwp(4),
     flexDirection: "row",
     alignItems: "center",
-    gap: wp("2.5%"),
+    gap: wwp(2.5),
   },
   iconButton: {
-    width: wp("9%"),
-    height: wp("9%"),
-    borderRadius: wp("4.5%"),
+    width: wwp(9),
+    height: wwp(9),
+    borderRadius: wwp(4.5),
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
@@ -168,11 +175,11 @@ const styles = StyleSheet.create({
   },
   notificationBadge: {
     position: "absolute",
-    top: -hp("0.4%"),
-    right: -wp("0.6%"),
-    width: wp("2.5%"),
-    height: wp("2.5%"),
-    borderRadius: wp("1.25%"),
+    top: -whp(0.4),
+    right: -wwp(0.6),
+    width: wwp(2.5),
+    height: wwp(2.5),
+    borderRadius: wwp(1.25),
     backgroundColor: "#FF4444",
     borderWidth: 2,
     borderColor: "rgba(0, 0, 0, 0.5)",
@@ -181,16 +188,16 @@ const styles = StyleSheet.create({
   /* Profile section - below banner */
   profileSection: {
     backgroundColor: Colors.title_background,
-    paddingLeft: wp("4%"),
-    paddingRight: wp("4%"),
-    paddingTop: hp("5%"),
-    paddingBottom: hp("2%"),
+    paddingLeft: wwp(4),
+    paddingRight: wwp(4),
+    paddingTop: whp(5),
+    paddingBottom: whp(2),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    // borderBottomLeftRadius: wp("4%"),
-    // borderBottomRightRadius: wp("4%"),
-    marginTop: -wp("1%"),
+    // borderBottomLeftRadius: wwp(4),
+    // borderBottomRightRadius: wwp(4),
+    marginTop: -wwp(1),
   },
 
   /* Left section with avatar and info */
@@ -198,35 +205,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    paddingRight: wp("28%"),
+    paddingRight: wwp(28),
   },
 
   /* Avatar */
   avatarWrapper: {
     position: "absolute",
-    bottom: -hp("4%"),
-    left: wp("4%"),
-    width: wp("18%"),
-    height: wp("18%"),
-    borderRadius: wp("9%"),
-    borderWidth: 3,
+    bottom: -whp(4),
+    left: wwp(4),
+    width: wwp(18),
+    height: wwp(18),
+    borderRadius: wwp(9),
+    borderWidth: 4,
     borderColor: Colors.white,
     overflow: "visible",
     backgroundColor: Colors.black,
     zIndex: 10,
+    // Shadow for iOS
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    // Elevation for Android
+    elevation: 6,
   },
   avatar: {
     width: "100%",
     height: "100%",
-    borderRadius: wp("9%"),
+    borderRadius: wwp(9),
   },
   cameraButton: {
     position: "absolute",
-    bottom: -wp("0.5%"),
-    right: -wp("0.5%"),
-    width: wp("6%"),
-    height: wp("6%"),
-    borderRadius: wp("3%"),
+    bottom: -wwp(0.5),
+    right: -wwp(0.5),
+    width: wwp(6),
+    height: wwp(6),
+    borderRadius: wwp(3),
     backgroundColor: Colors.white,
     justifyContent: "center",
     alignItems: "center",
@@ -245,7 +259,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "600",
     fontFamily: "semibold",
-    marginBottom: hp("0.4%"),
+    marginBottom: whp(0.4),
   },
   statusRow: {
     flexDirection: "row",
@@ -267,26 +281,26 @@ const styles = StyleSheet.create({
     fontFamily: "regular",
   },
   statusDot: {
-    width: wp("2%"),
-    height: wp("2%"),
-    borderRadius: wp("1%"),
+    width: wwp(2),
+    height: wwp(2),
+    borderRadius: wwp(1),
     backgroundColor: Colors.green || "#32D74B",
-    marginLeft: wp("1.5%"),
+    marginLeft: wwp(1.5),
   },
 
   /* Action buttons */
   actionButtons: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp("2%"),
+    gap: wwp(2),
     position: "absolute",
-    right: wp("4%"),
-    bottom: hp("2%"),
+    right: wwp(4),
+    bottom: whp(2),
   },
   actionButton: {
-    width: wp("10%"),
-    height: wp("10%"),
-    borderRadius: wp("5%"),
+    width: wwp(10),
+    height: wwp(10),
+    borderRadius: wwp(5),
     backgroundColor: Colors.content_back,
     justifyContent: "center",
     alignItems: "center",

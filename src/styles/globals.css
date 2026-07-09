@@ -120,6 +120,32 @@ body {
   animation: automation-zoom-in 0.5s;
 }
 
+/* Habit stack card hover effect for web */
+.habit-stack-card-wrapper {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.habit-stack-card-wrapper:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Market filter chip hover effect for web */
+.market-chip {
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.market-chip:hover {
+  transform: scale(1.03);
+}
+
+/* Carousel arrow hover effect for web */
+.carousel-arrow {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.carousel-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  transform: scale(1.1);
+}
+
 .card-mask {
   background: radial-gradient(ellipse at center, rgba(0, 75, 224, 0.15), transparent);
 }

@@ -2,8 +2,8 @@ import * as Clipboard from "expo-clipboard";
 import { Colors } from "@/core/constants/Colors";
 import { MainStyles } from "@/core/constants/styles";
 import { NocapPost } from "@/core/models/section-c";
+import { getDefaultImageUrl2 } from "@/core/utils/utilities/images";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -15,18 +15,15 @@ import {
   View,
 } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import {
-  fs,
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-  isTablet,
-} from "@/core/utils/responsive";
+import { heightPercentageToDP as hp } from "@/core/utils/responsive";
 
 interface NocapPostPreviewProps {
   rnsheet?: boolean;
   closefun?: (obj: string) => void;
   dataitem?: NocapPost;
 }
+
+const AVATAR = 40;
 
 const NocapPostPreview: React.FC<NocapPostPreviewProps> = ({
   rnsheet = false,
@@ -38,6 +35,8 @@ const NocapPostPreview: React.FC<NocapPostPreviewProps> = ({
     close: () => void;
   }
   const refRBSheet = useRef<RBSheetRef>(null);
+
+  const [contentExpanded, setContentExpanded] = useState(false);
 
   useEffect(() => {
     if (rnsheet) {
@@ -60,25 +59,30 @@ const NocapPostPreview: React.FC<NocapPostPreviewProps> = ({
   };
 
   const likesCount = dataitem?.nocapPostLikes?.filter((l) => l.isLiked).length ?? 0;
-  const AVATAR = isTablet ? wp(12) : wp(10);
+  const accentColor = "#6b7280";
 
   return (
     <View style={{ position: "absolute" }}>
       <RBSheet
         ref={refRBSheet}
         useNativeDriver={false}
-        height={isTablet ? hp(150) : hp(90)}
+        height={hp(150)}
         customStyles={{
           container: {
             backgroundColor: Colors.content_back,
-            borderRadius: wp(5),
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            width: "50%",
+            maxWidth: 600,
+            minWidth: 500,
+            alignSelf: "center",
           },
           wrapper: {
             backgroundColor: "#000000ab",
           },
           draggableIcon: {
             backgroundColor: "#000",
-            width: wp(30),
+            width: 60,
           },
         }}
         customModalProps={{
@@ -91,6 +95,7 @@ const NocapPostPreview: React.FC<NocapPostPreviewProps> = ({
         onClose={() => closefun("shet")}
       >
         <View style={styles.mainbottom}>
+          {/* Draggable indicator */}
           <View style={styles.handle} />
 
           {/* Header */}
@@ -104,124 +109,126 @@ const NocapPostPreview: React.FC<NocapPostPreviewProps> = ({
             <Text style={MainStyles.text20semibold}>Post Preview</Text>
           </View>
 
+          {/* Scrollable body */}
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContent}
           >
-            {/* Post Image */}
-            {!!dataitem?.imageUrl && (
-              <Image
-                source={{ uri: dataitem.imageUrl }}
-                style={styles.bannerImage}
-                resizeMode="cover"
-              />
-            )}
+            {/* Banner Image */}
+            <Image
+              source={
+                dataitem?.imageUrl
+                  ? { uri: dataitem.imageUrl }
+                  : { uri: getDefaultImageUrl2() }
+              }
+              style={styles.bannerImage}
+              resizeMode="cover"
+            />
 
-            {/* User row */}
-            <View style={[MainStyles.viewtwo, { marginTop: hp(2) }]}>
+            {/* User row + likes badge */}
+            <View style={[MainStyles.viewtwo, { marginTop: 12 }]}>
               <View style={styles.userRow}>
                 {dataitem?.user?.photo ? (
                   <Image
                     source={{ uri: dataitem.user.photo }}
-                    style={[styles.avatar, { borderRadius: AVATAR / 2, width: AVATAR, height: AVATAR }]}
+                    style={styles.avatar}
                   />
                 ) : (
-                  <View style={[styles.avatarFallback, { width: AVATAR, height: AVATAR, borderRadius: AVATAR / 2 }]}>
-                    <MaterialIcons name="person" size={fs(20)} color={Colors.white} />
+                  <View style={styles.avatarFallback}>
+                    <MaterialIcons name="person" size={20} color={Colors.white} />
                   </View>
                 )}
-                <View style={{ marginLeft: wp(2) }}>
-                  <Text style={[MainStyles.text16white, { fontWeight: "700" }]}>
+                <View style={{ marginLeft: 10, flex: 1 }}>
+                  <Text
+                    style={[MainStyles.text16white, { fontWeight: "700" }]}
+                    numberOfLines={1}
+                  >
                     {dataitem?.user?.username ?? "Unknown"}
                   </Text>
                   {!!dataitem?.location && (
-                    <Text style={styles.locationText}>
+                    <Text style={styles.locationText} numberOfLines={1}>
                       {dataitem.location}
                     </Text>
                   )}
                 </View>
               </View>
 
-              {/* Likes badge */}
               <View style={styles.likesBadge}>
                 <View style={styles.likesDot} />
                 <Text style={styles.likesText}>{likesCount} likes</Text>
               </View>
             </View>
 
-            <View style={styles.bord} />
-
-            {/* Info rows */}
-            <View style={styles.infoRow}>
-              <Text style={MainStyles.text16}>
-                Title:{" "}
-                <Text style={MainStyles.text16white}>{dataitem?.title || "N/A"}</Text>
-              </Text>
-            </View>
-            {!!dataitem?.content && (
-              <View style={styles.infoRow}>
-                <Text style={MainStyles.text16}>
-                  Content:{" "}
-                  <Text style={MainStyles.text16white}>{dataitem.content}</Text>
-                </Text>
+            {/* 2-Column Grid */}
+            <View style={styles.grid2Col}>
+              {/* Left Column */}
+              <View style={styles.gridCol}>
+                <View style={styles.infoCard}>
+                  <Text style={styles.infoLabel}>TITLE</Text>
+                  <Text style={styles.infoValue}>{dataitem?.title || "N/A"}</Text>
+                </View>
+                <View style={styles.infoCard}>
+                  <Text style={styles.infoLabel}>SECTOR</Text>
+                  <Text style={styles.infoValue}>{dataitem?.sector || "N/A"}</Text>
+                </View>
+                <View style={styles.infoCard}>
+                  <Text style={styles.infoLabel}>HABIT TYPE</Text>
+                  <Text style={styles.infoValue}>{dataitem?.habitType || "N/A"}</Text>
+                </View>
               </View>
-            )}
-            {!!dataitem?.sector && (
-              <View style={styles.infoRow}>
-                <Text style={MainStyles.text16}>
-                  Sector:{" "}
-                  <Text style={MainStyles.text16white}>{dataitem.sector}</Text>
-                </Text>
-              </View>
-            )}
-            {!!dataitem?.habitType && (
-              <View style={styles.infoRow}>
-                <Text style={MainStyles.text16}>
-                  Habit Type:{" "}
-                  <Text style={MainStyles.text16white}>{dataitem.habitType}</Text>
-                </Text>
-              </View>
-            )}
 
-            <View style={styles.bord} />
+              {/* Right Column */}
+              <View style={styles.gridCol}>
+                <TouchableOpacity
+                  style={styles.descCard}
+                  onPress={() => setContentExpanded((v) => !v)}
+                  activeOpacity={0.7}
+                >
+                  <View style={styles.descHeaderRow}>
+                    <View style={[styles.descAccent, { backgroundColor: accentColor }]} />
+                    <Text style={styles.descSectionLabel}>Content</Text>
+                    <MaterialIcons
+                      name={contentExpanded ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+                      size={16}
+                      color="#111"
+                    />
+                  </View>
+                  {contentExpanded && (
+                    <Text style={styles.description}>
+                      {dataitem?.content || "No content available."}
+                    </Text>
+                  )}
+                </TouchableOpacity>
 
-            {/* Post ID */}
-            <View style={styles.idsRow}>
-              <TouchableOpacity
-                style={styles.idBtn}
-                onPress={() =>
-                  Clipboard.setStringAsync(dataitem?.documentId ?? dataitem?.id ?? "")
-                }
-                activeOpacity={0.7}
-              >
-                <View style={styles.idBtnInner}>
+                <TouchableOpacity
+                  style={styles.idCard}
+                  onPress={() =>
+                    Clipboard.setStringAsync(dataitem?.documentId ?? dataitem?.id ?? "")
+                  }
+                  activeOpacity={0.7}
+                >
                   <Text style={styles.idLabel}>POST ID</Text>
-                  <Text style={styles.idValue} numberOfLines={1}>
-                    {dataitem?.documentId ?? dataitem?.id ?? "N/A"}
+                  <View style={styles.idRow}>
+                    <Text style={styles.idValue} numberOfLines={1}>
+                      {dataitem?.documentId ?? dataitem?.id ?? "N/A"}
+                    </Text>
+                    <MaterialIcons name="content-copy" size={14} color={Colors.text_color} />
+                  </View>
+                </TouchableOpacity>
+
+                <View style={styles.infoCard}>
+                  <Text style={styles.infoLabel}>CREATED</Text>
+                  <Text style={styles.infoValueSmall}>
+                    {formatTimestamp(dataitem?.createdAt as any)}
                   </Text>
                 </View>
-                <MaterialIcons name="content-copy" size={16} color={Colors.text_color} />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.bord} />
-
-            {/* Timestamps */}
-            <View style={styles.infoRow}>
-              <Text style={MainStyles.text16}>
-                Created:{" "}
-                <Text style={[MainStyles.text12semibold, { color: Colors.text_color }]}>
-                  {formatTimestamp(dataitem?.createdAt as any)}
-                </Text>
-              </Text>
-            </View>
-            <View style={styles.infoRow}>
-              <Text style={MainStyles.text16}>
-                Updated:{" "}
-                <Text style={[MainStyles.text12semibold, { color: Colors.text_color }]}>
-                  {formatTimestamp(dataitem?.updatedAt as any)}
-                </Text>
-              </Text>
+                <View style={styles.infoCard}>
+                  <Text style={styles.infoLabel}>UPDATED</Text>
+                  <Text style={styles.infoValueSmall}>
+                    {formatTimestamp(dataitem?.updatedAt as any)}
+                  </Text>
+                </View>
+              </View>
             </View>
           </ScrollView>
         </View>
@@ -233,109 +240,168 @@ const NocapPostPreview: React.FC<NocapPostPreviewProps> = ({
 export default NocapPostPreview;
 
 const styles = StyleSheet.create({
-  bord: {
-    borderTopWidth: 1,
-    borderTopColor: Colors.borderline,
-    marginTop: hp(1),
-    marginBottom: hp(1),
-  },
   bannerImage: {
     width: "100%",
-    height: isTablet ? hp(40) : hp(25),
-    marginTop: hp(2),
-    borderRadius: wp(2),
+    height: 160,
+    borderRadius: 12,
   },
   close: {
-    width: wp(9),
-    height: wp(9),
-    borderRadius: wp(4.5),
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: Colors.borderline,
     alignItems: "center",
     justifyContent: "center",
   },
   handle: {
-    width: wp(32),
-    height: hp(1),
-    borderRadius: wp(10),
+    width: 60,
+    height: 4,
+    borderRadius: 2,
     backgroundColor: "#000000ab",
     alignSelf: "center",
-    marginVertical: hp(1),
+    marginVertical: 8,
   },
   mainbottom: {
     flex: 1,
-    paddingHorizontal: wp(5),
+    paddingHorizontal: 20,
   },
   scrollContent: {
-    paddingBottom: hp(3),
+    paddingBottom: 16,
   },
   userRow: {
     flexDirection: "row",
     alignItems: "center",
+    flex: 1,
+    marginRight: 10,
   },
   avatar: {
+    width: AVATAR,
+    height: AVATAR,
+    borderRadius: AVATAR / 2,
     resizeMode: "cover",
   },
   avatarFallback: {
+    width: AVATAR,
+    height: AVATAR,
+    borderRadius: AVATAR / 2,
     backgroundColor: Colors.borderline,
     alignItems: "center",
     justifyContent: "center",
   },
   locationText: {
     color: Colors.text_color,
-    fontSize: fs(12),
-    marginTop: hp(0.2),
+    fontSize: 12,
+    marginTop: 2,
   },
   likesBadge: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: "rgba(75,181,67,0.12)",
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.6),
-    borderRadius: wp(4),
-    gap: wp(1.5),
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 16,
+    gap: 6,
   },
   likesDot: {
-    width: wp(2),
-    height: wp(2),
-    borderRadius: wp(1),
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     backgroundColor: Colors.success,
   },
   likesText: {
     color: Colors.success,
-    fontSize: fs(13),
+    fontSize: 13,
     fontWeight: "700",
   },
-  infoRow: {
-    marginTop: hp(1),
-  },
-  idsRow: {
-    marginTop: hp(0.5),
-  },
-  idBtn: {
+  grid2Col: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    gap: 8,
+    marginTop: 12,
+  },
+  gridCol: {
+    flex: 1,
+    gap: 6,
+  },
+  infoCard: {
     backgroundColor: "rgba(255,255,255,0.04)",
     borderWidth: 1,
     borderColor: Colors.borderline,
-    borderRadius: wp(2.5),
-    paddingVertical: hp(1),
-    paddingHorizontal: wp(3),
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
-  idBtnInner: {
+  infoLabel: {
+    color: Colors.text_color,
+    fontSize: 9,
+    fontWeight: "700",
+    letterSpacing: 1.2,
+    marginBottom: 2,
+  },
+  infoValue: {
+    color: Colors.white,
+    fontSize: 13,
+    fontWeight: "600",
+  },
+  infoValueSmall: {
+    color: Colors.white,
+    fontSize: 11,
+    fontWeight: "500",
+  },
+  descCard: {
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: Colors.borderline,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  descHeaderRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  descAccent: {
+    width: 3,
+    height: 16,
+    borderRadius: 1.5,
+  },
+  descSectionLabel: {
+    color: "#e2e8f0",
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 1.2,
     flex: 1,
-    marginRight: wp(2),
+  },
+  description: {
+    color: "#9ca3af",
+    fontSize: 12,
+    lineHeight: 18,
+    marginTop: 6,
+  },
+  idCard: {
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: Colors.borderline,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
   idLabel: {
     color: Colors.text_color,
-    fontSize: fs(9),
+    fontSize: 9,
     fontWeight: "700",
     letterSpacing: 1.2,
-    marginBottom: hp(0.3),
+    marginBottom: 2,
+  },
+  idRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
   },
   idValue: {
     color: Colors.white,
-    fontSize: fs(12),
-    fontWeight: "600",
+    fontSize: 11,
+    fontWeight: "500",
+    flex: 1,
   },
 });

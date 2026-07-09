@@ -47,10 +47,28 @@ import {
   View,
 } from "react-native";
 import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
 } from "@/core/utils/responsive";
 import {useDispatch, useSelector} from "react-redux";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
+
+// On web, RNW's Keyboard.dismiss() blurs the focused input and the wrapper's
+// press fires even for clicks inside the TextInput, so the note textarea blurs
+// the instant it's clicked. There's no soft keyboard on web — skip the wrapper.
+const KeyboardDismissWrap = ({ children }: { children: React.ReactElement }) =>
+  isWeb ? (
+    children
+  ) : (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      {children}
+    </TouchableWithoutFeedback>
+  );
 
 type Props = {
   startDate: Date | null;
@@ -1007,7 +1025,7 @@ const HabitLinkItemsListV2: React.FC<Props> = ({
               if (!isSavingNote) handleCancelNote();
             }}
           />
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <KeyboardDismissWrap>
           <View style={[styles.scoreModal, styles.noteModal]}>
             {/* Header */}
             <View style={styles.scoreModalHeader}>
@@ -1079,7 +1097,7 @@ const HabitLinkItemsListV2: React.FC<Props> = ({
               </TouchableOpacity>
             </View>
           </View>
-          </TouchableWithoutFeedback>
+          </KeyboardDismissWrap>
         </KeyboardAvoidingView>
       </Modal>
     </View>
@@ -1178,6 +1196,8 @@ const styles = StyleSheet.create({
   },
   scoreModal: {
     width: "100%",
+    maxWidth: 460,
+    alignSelf: "center",
     backgroundColor: "#1C1C1E",
     borderRadius: 20,
     padding: wp(6),
@@ -1373,7 +1393,7 @@ const styles = StyleSheet.create({
     padding: wp(3),
     color: "#FFFFFF",
     fontSize: 14,
-    minHeight: hp(12),
+    minHeight: isWeb ? 120 : hp(12),
     lineHeight: 20,
   },
   noteSaveBtn: {
@@ -1381,7 +1401,7 @@ const styles = StyleSheet.create({
   },
   noteViewImage: {
     width: "100%",
-    height: hp(20),
+    height: isWeb ? 200 : hp(20),
     borderRadius: 8,
   },
   noteViewText: {

@@ -140,6 +140,7 @@ const HabitStackCard: React.FC<Props> = ({
         { borderColor: stackBorderColor, borderWidth: 1 },
         Platform.OS === "web" && { marginBottom: 0, height: "100%" },
       ]}
+      {...(Platform.OS === "web" ? { className: "habit-stack-card-wrapper" } : {})}
     >
       <Banner
         dataType="habit-stack"

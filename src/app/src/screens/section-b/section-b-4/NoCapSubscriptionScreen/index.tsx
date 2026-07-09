@@ -9,9 +9,12 @@ import {
 import Toast from "react-native-root-toast";
 import {useDispatch, useSelector} from "react-redux";
 
+const isWeb = Platform.OS === "web";
+
 import {GetAllSubscriptions} from "@/core/api/section-b";
 import {DefaultLoader as Loader} from "@/core/components/section-a";
 import {Header2} from "@/core/components/section-b";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import {DowngradeSheet} from "@/core/components/section-b-5";
 import {MainStyles} from "@/core/constants/styles";
 import {useNoCapSubscriptionForm} from "@/core/hooks";
@@ -345,20 +348,28 @@ const NoCapSubscriptionScreen: React.FC<{ navigation: any; route: any }> = ({
   };
 
   return (
-    <View style={MainStyles.root2}>
-      <Header2
-        title="SUBSCRIPTION"
-        titleTextFormat={1}
-        titleVisibilityIcon={false}
-        showSettingsIcon={false}
-        navigation={navigation}
-        cameFromDrawerTab={form.cameFromDrawerTab}
-      />
+    <View
+      style={[
+        MainStyles.root2,
+        isWeb && { paddingHorizontal: 0, paddingTop: 0 },
+      ]}
+    >
+      <WebDashboardHeader title="SUBSCRIPTION" onOpenDrawer={() => navigation.openDrawer()} />
+      {!isWeb && (
+        <Header2
+          title="SUBSCRIPTION"
+          titleTextFormat={1}
+          titleVisibilityIcon={false}
+          showSettingsIcon={false}
+          navigation={navigation}
+          cameFromDrawerTab={form.cameFromDrawerTab}
+        />
+      )}
       <Loader status={form.loading} />
 
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, isWeb && { maxWidth: 640, alignSelf: "center", width: "100%" }]}
         showsVerticalScrollIndicator={false}
       >
         <SubscriptionHeader
@@ -443,9 +454,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingHorizontal: wp(4),
-    paddingTop: hp(2.5),
-    paddingBottom: hp(4),
+    paddingHorizontal: isWeb ? 24 : wp(4),
+    paddingTop: isWeb ? 20 : hp(2.5),
+    paddingBottom: isWeb ? 32 : hp(4),
   },
   loaderOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -456,11 +467,11 @@ const styles = StyleSheet.create({
   },
   manageSubLink: {
     alignSelf: "center",
-    paddingVertical: hp(1.5),
-    marginTop: hp(1),
+    paddingVertical: isWeb ? 12 : hp(1.5),
+    marginTop: isWeb ? 8 : hp(1),
   },
   manageSubLinkText: {
-    fontSize: wp(3.3),
+    fontSize: isWeb ? 14 : wp(3.3),
     fontFamily: "regular",
     color: "#6b7280",
   },

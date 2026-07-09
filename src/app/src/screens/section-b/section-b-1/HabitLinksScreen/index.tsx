@@ -8,6 +8,7 @@ import {
   TopBar,
 } from "@/core/components/section-b";
 import BannerSectionV3 from "@/core/components/section-b/banner/BannerSectionV3";
+import WebHabitLinkHeader from "@/core/components/section-b/habit-links/WebHabitLinkHeader";
 import {Colors} from "@/core/constants/Colors";
 import {MainStyles} from "@/core/constants/styles";
 import {useHabitLinks, useTimeDefaultPickers} from "@/core/hooks";
@@ -41,10 +42,16 @@ import {AIModelSelector} from "@/core/components/section-b";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
   isTablet,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number | string): number =>
+  isWeb ? +(Number(p) * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number | string): number =>
+  isWeb ? +(Number(p) * 3.8).toFixed(1) : _hp(p);
 
 type Props = { navigation: any; route: any };
 
@@ -165,18 +172,32 @@ const HabitLinksScreen: React.FC<Props> = ({ navigation, route }) => {
       />
 
       <View style={{ flex: 1 }}>
-        <TopBar
-          title={form.destinationScreenTitle}
-          canEdit={form.canEdit}
-          canAdd={!!form.activeGroupId && form.activeGroupId !== "all"}
-          onBack={form.onBack}
-          onAdd={() =>
-            form.onAddItem(form.activeGroupId, form.activeGroup?.name)
-          }
-          gotoUpload={form.navigateToHabitLinkItemImporter}
-          handleAddHabitLinkItemPress={handleAddHabitLinkItemPress}
-          onScorePress={() => console.log("Score pressed")}
-        />
+        {isWeb ? (
+          <WebHabitLinkHeader
+            title={form.destinationScreenTitle}
+            onBack={form.onBack}
+            canEdit={form.canEdit}
+            canAdd={!!form.activeGroupId && form.activeGroupId !== "all"}
+            onAdd={() =>
+              form.onAddItem(form.activeGroupId, form.activeGroup?.name)
+            }
+            gotoUpload={form.navigateToHabitLinkItemImporter}
+            handleAddHabitLinkItemPress={handleAddHabitLinkItemPress}
+          />
+        ) : (
+          <TopBar
+            title={form.destinationScreenTitle}
+            canEdit={form.canEdit}
+            canAdd={!!form.activeGroupId && form.activeGroupId !== "all"}
+            onBack={form.onBack}
+            onAdd={() =>
+              form.onAddItem(form.activeGroupId, form.activeGroup?.name)
+            }
+            gotoUpload={form.navigateToHabitLinkItemImporter}
+            handleAddHabitLinkItemPress={handleAddHabitLinkItemPress}
+            onScorePress={() => console.log("Score pressed")}
+          />
+        )}
 
         {!form.canEdit && form.canShowCheckbox && (
           <View style={styles.calendarToggleRow}>

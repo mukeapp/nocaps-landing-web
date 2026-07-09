@@ -1,4 +1,6 @@
 import {
+  Platform,
+  ScrollView,
   StyleSheet,
   TextInput,
   Modal,
@@ -8,6 +10,8 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+
+const isWeb = Platform.OS === "web";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -204,7 +208,7 @@ const IconModalShow = ({ popup = false, icn = (obj: string, icn: string) => {}, 
       >
         <View style={styles.container}>
           <View style={MainStyles.viewtwo}>
-            <Text style={MainStyles.text20}>Select Icon</Text>
+            <Text style={[MainStyles.text20, isWeb && { fontSize: 18 }]}>Select Icon</Text>
             <TouchableOpacity
               style={styles.close}
               onPress={() => {
@@ -233,7 +237,13 @@ const IconModalShow = ({ popup = false, icn = (obj: string, icn: string) => {}, 
               <Entypo name="cross" size={20} color={Colors.white} />
             </View>
           </View>
-          <View style={[MainStyles.viewone, { flexWrap: "wrap" }]}>
+          <ScrollView
+            contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center" }}
+            style={[
+              { marginBottom: hp(3) },
+              isWeb && { marginBottom: 16, maxHeight: "50vh" as any },
+            ]}
+          >
             {data?.map((obj) => {
               const imageKey = obj?.imageLocation
                 ?.split("/")
@@ -262,19 +272,31 @@ const IconModalShow = ({ popup = false, icn = (obj: string, icn: string) => {}, 
                 </TouchableOpacity>
               );
             })}
-          </View>
-          <ButtonSignIn
-            text="Apply"
-            wid="84"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.black}
-            ftn={16}
-            mov={() =>{
-               icn("false", selected?.imageLocation)
-               onClose();
+          </ScrollView>
+          {isWeb ? (
+            <TouchableOpacity
+              style={styles.webApply}
+              onPress={() => {
+                icn("false", selected?.imageLocation);
+                onClose();
               }}
-          />
+            >
+              <Text style={styles.webApplyText}>Apply</Text>
+            </TouchableOpacity>
+          ) : (
+            <ButtonSignIn
+              text="Apply"
+              wid="84"
+              bg={Colors.white}
+              bd={Colors.white}
+              txcl={Colors.black}
+              ftn={16}
+              mov={() =>{
+                 icn("false", selected?.imageLocation)
+                 onClose();
+                }}
+            />
+          )}
         </View>
       </BlurView>
     </Modal>
@@ -286,65 +308,82 @@ export default IconModalShow;
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    height: hp(100),
-    width: wp(100),
+    height: isWeb ? ("100%" as any) : hp(100),
+    width: isWeb ? ("100%" as any) : wp(100),
     bottom: 0,
     elevation: 8,
     shadowColor: "#000",
     shadowRadius: 8,
     shadowOpacity: 0.15,
-    paddingTop: hp(15),
+    paddingTop: isWeb ? 0 : hp(15),
+    justifyContent: isWeb ? "center" : "flex-start",
     alignItems: "center",
   },
   container: {
-    width: wp(90),
-    borderRadius: wp(3),
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.5),
+    width: isWeb ? ("100%" as any) : wp(90),
+    maxWidth: isWeb ? 480 : undefined,
+    borderRadius: isWeb ? 16 : wp(3),
+    paddingHorizontal: isWeb ? 16 : wp(3),
+    paddingVertical: isWeb ? 16 : hp(1.5),
     backgroundColor: Colors.content_back,
   },
   inputview: {
-    width: wp(84),
-    height: hp(6),
-    borderRadius: wp(3),
+    width: isWeb ? ("100%" as any) : wp(84),
+    height: isWeb ? 40 : hp(6),
+    borderRadius: isWeb ? 10 : wp(3),
     backgroundColor: Colors.inputback,
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: hp(1.5),
+    marginVertical: isWeb ? 12 : hp(1.5),
   },
   input: {
-    width: wp(64),
-    height: hp(6),
-    paddingLeft: wp(2),
+    flex: isWeb ? 1 : undefined,
+    width: isWeb ? undefined : wp(64),
+    height: isWeb ? 40 : hp(6),
+    paddingLeft: isWeb ? 8 : wp(2),
+    color: Colors.white,
   },
   close: {
     backgroundColor: Colors.filtertext,
-    width: wp(9),
-    height: wp(9),
-    borderRadius: wp(5),
+    width: isWeb ? 32 : wp(9),
+    height: isWeb ? 32 : wp(9),
+    borderRadius: isWeb ? 16 : wp(5),
     alignItems: "center",
     justifyContent: "center",
   },
   box: {
-    borderRadius: wp(10),
-    marginRight: wp(3.5),
-    marginBottom: hp(1),
-    paddingHorizontal: wp(2.3),
-    paddingVertical: wp(1.7),
+    borderRadius: isWeb ? 999 : wp(10),
+    marginRight: isWeb ? 10 : wp(3.5),
+    marginBottom: isWeb ? 8 : hp(1),
+    paddingHorizontal: isWeb ? 12 : wp(2.3),
+    paddingVertical: isWeb ? 7 : wp(1.7),
     borderWidth: 1,
     borderColor: "rgba(59, 59, 59, 1)",
     flexDirection: "row",
     alignItems: "center",
   },
   icnzise: {
-    width: wp(10),
-    height: hp(6),
+    width: isWeb ? 40 : wp(10),
+    height: isWeb ? 40 : hp(6),
     alignItems: "center",
     justifyContent: "center",
   },
   logo: {
-    width: wp(5),
-    height: wp(5),
-    marginRight: wp(1),
+    width: isWeb ? 20 : wp(5),
+    height: isWeb ? 20 : wp(5),
+    marginRight: isWeb ? 6 : wp(1),
+  },
+  webApply: {
+    width: "100%",
+    height: 44,
+    borderRadius: 12,
+    backgroundColor: Colors.white,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  webApplyText: {
+    color: Colors.black,
+    fontSize: 15,
+    fontFamily: "semibold",
   },
 });

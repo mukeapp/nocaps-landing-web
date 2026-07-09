@@ -10,7 +10,6 @@ import {uuidUtils} from "@/core/utils";
 import {
   fs,
   heightPercentageToDP as hp,
-  isTablet,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -18,7 +17,7 @@ import Feather from "@expo/vector-icons/Feather";
 import Ionic from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {useNavigation} from "@react-navigation/native";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {
   Alert,
   Image,
@@ -29,7 +28,7 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import CommentsBottomSheet from "../CommentsBottomSheet";
+import CommentsBottomSheetWeb from "../CommentsBottomSheetWeb";
 import PostLikesBottomSheet from "../PostLikesBottomSheet";
 
 interface RBSheetRef {
@@ -45,7 +44,7 @@ interface PostItemProps {
   onDeletePost?: (postId?: string) => void;
 }
 
-const AVATAR = isTablet ? wp(12) : wp(10);
+const AVATAR = 40;
 
 const PostItem = ({
   post,
@@ -75,10 +74,25 @@ const PostItem = ({
   const [menuOpen, setMenuOpen] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showPostPreview, setShowPostPreview] = useState(false);
-  const commentsSheetRef = useRef<RBSheetRef>(null);
+  const [showComments, setShowComments] = useState(false);
   const likesSheetRef = useRef<RBSheetRef>(null);
 
   const navigation = useNavigation<any>();
+
+  // Lock the page scroll while a popup is open — the page scroller is the
+  // html element (globals.css sets overflow-y there), so lock both.
+  const popupOpen = menuOpen || showDeleteConfirm;
+  useEffect(() => {
+    if (!popupOpen || typeof document === "undefined") return;
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
+    };
+  }, [popupOpen]);
 
   const goToProfileScreen = () => {
     const routerData: RouterData = {
@@ -92,7 +106,7 @@ const PostItem = ({
   };
 
   const openComments = () => {
-    commentsSheetRef.current?.open();
+    setShowComments(true);
   };
 
   const handleDeleteClick = () => {
@@ -225,7 +239,7 @@ const PostItem = ({
       >
         <Image
           source={{ uri: post.imageUrl }}
-          style={{ width: "100%", height: isTablet ? hp(100) : hp(50) }}
+          style={{ width: "100%", height: 400 }}
           resizeMode="cover"
         />
       </View>
@@ -353,95 +367,99 @@ const PostItem = ({
         </TouchableOpacity>
       </View>
 
-      {/* Menu Modal */}
+      {/* Menu Modal — RNW Modal portals to document.body; rendered inline, the
+          feed FlatList's translateZ(0) would rescope position:fixed to the feed
+          and the popup would center on the whole feed, not the viewport. */}
       <Modal
         visible={menuOpen}
         transparent
-        animationType="fade"
+        animationType="none"
         onRequestClose={() => setMenuOpen(false)}
       >
+      <View style={s.modalOverlay}>
         <TouchableOpacity
-          style={s.modalOverlay}
+          style={StyleSheet.absoluteFillObject}
           activeOpacity={1}
           onPress={() => setMenuOpen(false)}
-        >
-          <View style={s.menuModal}>
-            <TouchableOpacity style={s.menuItem} onPress={handleShare}>
-              <Feather name="share" size={fs(20)} color={Colors.white} />
-              <Text style={s.menuItemText}>Share</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={s.menuItem} onPress={handleReport}>
-              <MaterialIcons name="report" size={fs(20)} color={Colors.white} />
-              <Text style={s.menuItemText}>Report</Text>
-            </TouchableOpacity>
-            {canEdit && (
-              <>
-                <View style={s.menuDivider} />
-                <TouchableOpacity
-                  style={s.menuItem}
-                  onPress={handleDeleteClick}
-                >
-                  <MaterialIcons
-                    name="delete"
-                    size={fs(20)}
-                    color={Colors.red}
-                  />
-                  <Text style={[s.menuItemText, { color: Colors.red }]}>
-                    Delete
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
-          </View>
-        </TouchableOpacity>
+        />
+        <View style={s.menuModal}>
+          <TouchableOpacity style={s.menuItem} onPress={handleShare}>
+            <Feather name="share" size={fs(20)} color={Colors.white} />
+            <Text style={s.menuItemText}>Share</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={s.menuItem} onPress={handleReport}>
+            <MaterialIcons name="report" size={fs(20)} color={Colors.white} />
+            <Text style={s.menuItemText}>Report</Text>
+          </TouchableOpacity>
+          {canEdit && (
+            <>
+              <View style={s.menuDivider} />
+              <TouchableOpacity
+                style={s.menuItem}
+                onPress={handleDeleteClick}
+              >
+                <MaterialIcons
+                  name="delete"
+                  size={fs(20)}
+                  color={Colors.red}
+                />
+                <Text style={[s.menuItemText, { color: Colors.red }]}>
+                  Delete
+                </Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      </View>
       </Modal>
 
       {/* Delete Confirmation Modal */}
       <Modal
         visible={showDeleteConfirm}
         transparent
-        animationType="fade"
+        animationType="none"
         onRequestClose={handleCancelDelete}
       >
-        <View style={s.deleteModalOverlay}>
-          <View style={s.deleteModal}>
-            <View style={s.deleteIconContainer}>
-              <AntDesign
-                name="exclamation-circle"
-                size={fs(46)}
-                color={Colors.red}
-              />
-            </View>
+      <View style={s.deleteModalOverlay}>
+        <View style={s.deleteModal}>
+          <View style={s.deleteIconContainer}>
+            <AntDesign
+              name="exclamation-circle"
+              size={fs(46)}
+              color={Colors.red}
+            />
+          </View>
 
-            <Text style={s.deleteTitle}>Delete Post</Text>
-            <Text style={s.deleteMessage}>
-              Are you sure you want to delete{" "}
-              <Text style={s.deleteItemName}>{post.title}</Text>?
-            </Text>
-            <Text style={s.deleteWarning}>This action cannot be undone.</Text>
+          <Text style={s.deleteTitle}>Delete Post</Text>
+          <Text style={s.deleteMessage}>
+            Are you sure you want to delete{" "}
+            <Text style={s.deleteItemName}>{post.title}</Text>?
+          </Text>
+          <Text style={s.deleteWarning}>This action cannot be undone.</Text>
 
-            <View style={s.deleteButtons}>
-              <TouchableOpacity
-                style={[s.deleteButton, s.cancelButton]}
-                onPress={handleCancelDelete}
-              >
-                <Text style={s.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
+          <View style={s.deleteButtons}>
+            <TouchableOpacity
+              style={[s.deleteButton, s.cancelButton]}
+              onPress={handleCancelDelete}
+            >
+              <Text style={s.cancelButtonText}>Cancel</Text>
+            </TouchableOpacity>
 
-              <TouchableOpacity
-                style={[s.deleteButton, s.confirmButton]}
-                onPress={handleConfirmDelete}
-              >
-                <Text style={s.confirmButtonText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={[s.deleteButton, s.confirmButton]}
+              onPress={handleConfirmDelete}
+            >
+              <Text style={s.confirmButtonText}>Delete</Text>
+            </TouchableOpacity>
           </View>
         </View>
+      </View>
       </Modal>
 
       {/* Comments Bottom Sheet */}
-      <CommentsBottomSheet
-        ref={commentsSheetRef}
+      <CommentsBottomSheetWeb
+        visible={showComments}
+        onClose={() => setShowComments(false)}
         nocapPostId={post.id ?? post.documentId ?? ""}
         currentUserId={currentUserId}
         postTitle={post.title}
@@ -465,7 +483,7 @@ export default PostItem;
 
 const s = StyleSheet.create({
   postContainer: {
-    paddingBottom: hp(1.2),
+    paddingBottom: 8,
     borderBottomColor: "#222",
     borderBottomWidth: 0.5,
     backgroundColor: "#000",
@@ -474,123 +492,131 @@ const s = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: wp(4),
+    padding: 16,
   },
   actions: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(1.8),
+    paddingHorizontal: 16,
+    paddingVertical: 12,
   },
   actionBtn: {
     flexDirection: "row",
     alignItems: "center",
-    gap: wp(1.5),
+    gap: 6,
   },
   actionLabel: {
     color: "#fff",
-    fontSize: fs(13),
+    fontSize: 13,
     fontWeight: "500",
   },
   likeBadge: {
     position: "absolute",
-    bottom: -hp(0.8),
-    right: -wp(2),
-    minWidth: wp(4.5),
-    height: wp(4.5),
-    borderRadius: wp(2.25),
+    bottom: -6,
+    right: -12,
+    minWidth: 20,
+    height: 20,
+    borderRadius: 10,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: wp(1),
+    paddingHorizontal: 4,
   },
   likeBadgeText: {
     color: "#000",
-    fontSize: fs(9),
+    fontSize: 10,
     fontWeight: "700",
   },
   modalOverlay: {
-    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
     justifyContent: "center",
     alignItems: "center",
   },
   menuModal: {
     backgroundColor: Colors.content_back,
-    borderRadius: wp(3),
-    width: wp(50),
-    paddingVertical: hp(1),
+    borderRadius: 12,
+    width: 200,
+    paddingVertical: 8,
     borderWidth: 1,
     borderColor: Colors.borderline,
   },
   menuItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: hp(1.5),
-    paddingHorizontal: wp(4),
-    gap: wp(3),
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    gap: 12,
   },
   menuItemText: {
     color: Colors.white,
-    fontSize: fs(16),
+    fontSize: 15,
     fontFamily: "regular",
   },
   menuDivider: {
     height: 1,
     backgroundColor: Colors.borderline,
-    marginHorizontal: wp(4),
+    marginHorizontal: 16,
   },
   deleteModalOverlay: {
-    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: "rgba(0, 0, 0, 0.7)",
     justifyContent: "center",
     alignItems: "center",
   },
   deleteModal: {
     backgroundColor: Colors.content_back,
-    borderRadius: wp(4),
-    width: wp(85),
-    padding: wp(6),
+    borderRadius: 16,
+    width: 360,
+    padding: 24,
     alignItems: "center",
     borderWidth: 2,
     borderColor: Colors.red,
   },
   deleteIconContainer: {
-    marginBottom: hp(2),
+    marginBottom: 16,
   },
   deleteTitle: {
-    fontSize: fs(20),
+    fontSize: 20,
     fontWeight: "600",
     color: Colors.white,
-    marginBottom: hp(1),
+    marginBottom: 8,
     textAlign: "center",
   },
   deleteMessage: {
-    fontSize: fs(16),
+    fontSize: 15,
     color: Colors.text_color,
     textAlign: "center",
-    marginBottom: hp(0.5),
+    marginBottom: 4,
   },
   deleteItemName: {
     color: Colors.white,
     fontWeight: "600",
   },
   deleteWarning: {
-    fontSize: fs(14),
+    fontSize: 13,
     color: Colors.red,
     textAlign: "center",
-    marginBottom: hp(3),
+    marginBottom: 24,
   },
   deleteButtons: {
     flexDirection: "row",
-    gap: wp(3),
+    gap: 12,
     width: "100%",
   },
   deleteButton: {
     flex: 1,
-    paddingVertical: hp(1.5),
-    borderRadius: wp(2),
+    paddingVertical: 12,
+    borderRadius: 8,
     alignItems: "center",
   },
   cancelButton: {
@@ -600,15 +626,15 @@ const s = StyleSheet.create({
   },
   cancelButtonText: {
     color: Colors.white,
-    fontSize: fs(16),
-    fontWeight: "600",
+    fontSize: 15,
+    fontFamily: "poppins_semibold",
   },
   confirmButton: {
-    backgroundColor: Colors.red,
+    backgroundColor: "#FF4444",
   },
   confirmButtonText: {
     color: Colors.white,
-    fontSize: fs(16),
-    fontWeight: "600",
+    fontSize: 15,
+    fontFamily: "poppins_semibold",
   },
 });

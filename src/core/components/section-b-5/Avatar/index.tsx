@@ -1,7 +1,10 @@
 import {Colors} from "@/core/constants/Colors";
 import React from "react";
-import {Image, StyleSheet, Text, View} from "react-native";
-import {widthPercentageToDP as wp} from "@/core/utils/responsive";
+import {Image, Platform, StyleSheet, Text, View} from "react-native";
+import {widthPercentageToDP as _wp} from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number => (isWeb ? +(p * 3.8).toFixed(1) : _wp(p));
 
 interface Props {
   initials: string;

@@ -1,10 +1,12 @@
 // src/screens/ProfileScreen/components/TabContent.tsx
 import React from "react";
-import { FlatList, TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { FlatList, Platform, TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 import { HabitStackComponent } from "@/core/models/section-b";
 import { Colors } from "@/core/constants/Colors";
 import { HabitStackCard } from "@/core/components/section-b";
@@ -88,39 +90,46 @@ const TabContent: React.FC<TabContentProps> = ({ navigation, form, friendshipSta
     );
   }
 
-  // Render habit stacks list
+  const renderCard = (item: any) => (
+    <TouchableOpacity
+      key={`${item?.id ?? item?.documentId ?? Math.random()}`}
+      style={styles.stackCard}
+      onPress={() => console.log("stack tap:", item?.id)}
+      activeOpacity={0.9}
+    >
+      <HabitStackCard
+        showCopyButton={false}
+        stack={item}
+        canEdit={false}
+        username={form.user?.username || ""}
+        onOpenLinkItem={form.navigateToHabitLink}
+        mustReloadUser={true}
+        hideLikeIcon={form.activeTab === "Friends"}
+        hideScore={form.activeTab === "Friends"}
+        hideChevron={form.activeTab === "Friends" ? true : !friendshipStatus}
+        bannerImageShowIconGoToHabitAndFriends={form.activeTab === "Friends"}
+        showExpandedButton={false}
+        showHabitLinkNav={false}
+        showBottomUpSheetItemList={true}
+        hideHabitStackCost={form.activeTab === "Friends" ? true : false}
+        friendshipStatus={friendshipStatus}
+      />
+    </TouchableOpacity>
+  );
+
+  // On web, tile the cards into a wrapping grid that fills the full width;
+  // on native keep the original horizontal carousel.
+  if (isWeb) {
+    return <View style={styles.webGrid}>{filteredData.map(renderCard)}</View>;
+  }
+
   return (
     <FlatList
       data={filteredData}
       keyExtractor={(item) => `${item?.id ?? item?.documentId ?? Math.random()}`}
       horizontal
       showsHorizontalScrollIndicator={false}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          style={styles.stackCard}
-          onPress={() => console.log("stack tap:", item?.id)}
-          activeOpacity={0.9}
-        >
-          <HabitStackCard
-            showCopyButton={false}
-            stack={item}
-            canEdit={false}
-            username={form.user?.username || ""}
-            onOpenLinkItem={form.navigateToHabitLink}
-            mustReloadUser={true}
-            hideLikeIcon={form.activeTab === "Friends"}
-            hideScore={form.activeTab === "Friends"}
-            hideChevron={form.activeTab === "Friends" ? true : !friendshipStatus}
-            bannerImageShowIconGoToHabitAndFriends={form.activeTab === "Friends"}
-            showExpandedButton={false}
-            showHabitLinkNav={false}
-            showBottomUpSheetItemList={true}
-            hideHabitStackCost={form.activeTab === "Friends" ? true : false}
-            friendshipStatus={friendshipStatus}
-
-          />
-        </TouchableOpacity>
-      )}
+      renderItem={({ item }) => renderCard(item)}
     />
   );
 };
@@ -128,22 +137,30 @@ const TabContent: React.FC<TabContentProps> = ({ navigation, form, friendshipSta
 export default TabContent;
 
 const styles = StyleSheet.create({
+  webGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+  },
   stackCard: {
-    width: wp(90),
+    width: isWeb ? wp(140): wp(65),
     minHeight: hp(10),
-    marginRight: wp(3),
-    borderRadius: wp(3),
+    marginRight: isWeb ? 0 : wp(3),
+    borderRadius: isWeb ? 12 : wp(3),
     backgroundColor: Colors.text_background,
     paddingVertical: hp(1.2),
-    paddingHorizontal: wp(3),
+    paddingHorizontal: isWeb ? 10 : wp(3),
   },
   emptyRow: {
-    marginHorizontal: wp(10),
-    paddingBottom: hp(2),
+    marginHorizontal: isWeb ? 24 : wp(10),
+    paddingVertical: hp(3),
+    alignItems: "center",
   },
   emptyRowText: {
     color: Colors.gray || "#A9A9A9",
-    fontSize: wp(3.4),
+    fontSize: isWeb ? 14 : wp(3.4),
     fontFamily: "poppins_regular",
   },
 });

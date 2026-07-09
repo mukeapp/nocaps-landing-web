@@ -24,8 +24,8 @@ type Props = {
 
 type ListItem = { type: "all" } | ({ type: "friend" } & FriendFilterItem);
 
-const CIRCLE = wp(13);
-const ITEM_W = CIRCLE + wp(4);
+const CIRCLE = 52;
+const ITEM_W = CIRCLE + 20;
 
 const FriendsFilterRow: React.FC<Props> = ({
   friends,
@@ -47,8 +47,8 @@ const FriendsFilterRow: React.FC<Props> = ({
         ? selectedFriendUserId === null
         : selectedFriendUserId === item.userId;
 
-    const marginLeft = isFirst ? wp(4) : wp(3);
-    const marginRight = isLast ? wp(4) : 0;
+    const marginLeft = isFirst ? 16 : 10;
+    const marginRight = isLast ? 16 : 0;
 
     if (item.type === "all") {
       return (
@@ -66,7 +66,7 @@ const FriendsFilterRow: React.FC<Props> = ({
           >
             <MaterialCommunityIcons
               name="account-group-outline"
-              size={wp(6.5)}
+              size={24}
               color={isSelected ? Colors.primary : Colors.text_color}
             />
           </View>
@@ -134,12 +134,12 @@ const s = StyleSheet.create({
     borderBottomColor: Colors.borderline,
   },
   list: {
-    paddingVertical: hp(1.2),
+    paddingVertical: 10,
   },
   item: {
     alignItems: "center",
     width: ITEM_W,
-    height: CIRCLE + hp(4),
+    height: CIRCLE + 30,
   },
   circle: {
     width: CIRCLE,
@@ -172,12 +172,12 @@ const s = StyleSheet.create({
   },
   initialsText: {
     color: Colors.primary,
-    fontSize: wp(5),
+    fontSize: 20,
     fontFamily: "poppins_semibold",
   },
   name: {
-    marginTop: hp(0.6),
-    fontSize: wp(2.7),
+    marginTop: 6,
+    fontSize: 12,
     textAlign: "center",
     width: ITEM_W,
   },

@@ -44,24 +44,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar: {
-    width: wp(6),
-    height: wp(6),
-    borderRadius: wp(3),
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     marginRight: wp(2),
   },
   userName: {
-    ...MainStyles.text12,
+    fontSize: 13,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
     marginRight: wp(2),
-    maxWidth: wp(15),
+    maxWidth: 120,
   },
   rating: {
-    ...MainStyles.text12,
+    fontSize: 12,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
   },
   price: {
-    ...MainStyles.text12,
+    fontSize: 14,
     color: Colors.white,
+    fontFamily: "poppins_semibold",
   },
 });
 

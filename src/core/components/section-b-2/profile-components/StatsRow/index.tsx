@@ -1,12 +1,14 @@
 // src/screens/ProfileScreen/components/StatsRow.tsx
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Platform, View, Text, StyleSheet } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "@/core/utils/responsive";
 import { Colors } from "@/core/constants/Colors";
 import { StatGroup, StatItem, StatsRowProps } from "@/core/models/section-b";
+
+const isWeb = Platform.OS === "web";
 
 // Fallback for when no stats are passed in
 const testStats: { postStats: StatGroup; habitStats: StatGroup } = {
@@ -68,25 +70,26 @@ const styles = StyleSheet.create({
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: hp("2%"),
+    marginTop: 16,
+    paddingHorizontal: 16,
+    gap: 8,
   },
   statBox: {
     flex: 1,
-    backgroundColor: Colors.content_back ?? "#262626", // slightly lighter than root
-    borderRadius: wp("4.5%"),
-    paddingVertical: hp("1.8%"),
+    backgroundColor: Colors.content_back ?? "#262626",
+    borderRadius: isWeb ? 12 : wp("4.5%"),
+    paddingVertical: isWeb ? 16 : hp("1.8%"),
     alignItems: "center",
-    marginHorizontal: wp("1.2%"),
   },
   statValue: {
     color: Colors.white,
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: "semibold",
   },
   statLabel: {
     color: Colors.sub_title,
     fontSize: 13,
-    marginTop: hp("0.4%"),
+    marginTop: 4,
     fontFamily: "regular",
   },
 });

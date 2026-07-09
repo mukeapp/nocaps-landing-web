@@ -1,13 +1,21 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "@/core/redux/store";
 
-const ScreenPage = dynamic(() => import("@/shims/react-navigation/ScreenPage"), { ssr: false });
-const Screen = dynamic(
-  () => import("@/app/src/screens/section-a/section-a-1/Signing/SigninScreen").then((m) => m.default),
+const LoginPageContent = dynamic(
+  () => import("./LoginPageContent"),
   { ssr: false }
 );
 
-export default function Page() {
-  return <ScreenPage name="signin" component={Screen} section="auth" />;
+export default function LoginPage() {
+  return (
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <LoginPageContent />
+      </PersistGate>
+    </Provider>
+  );
 }

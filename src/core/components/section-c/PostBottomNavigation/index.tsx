@@ -1,14 +1,8 @@
 import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
-import Feather from '@expo/vector-icons/Feather';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import AntDesign from  "@expo/vector-icons/AntDesign";
 import Ionic from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Entypo from '@expo/vector-icons/Entypo';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from '@/core/utils/responsive';
 import { useNavigation } from '@react-navigation/native';
 
 const TAB_SCREEN_MAP: Record<string, string> = {
@@ -38,72 +32,57 @@ const PostBottomNavigation = ({ currentTab, onTabPress, userPhoto }: PostBottomN
   };
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingVertical: hp('1.2%'),
-        paddingBottom: hp('3%'),
-        backgroundColor: '#000',
-        borderTopColor: '#222',
-        borderTopWidth: 0.5,
-      }}>
+    <View style={styles.container}>
       <TouchableOpacity
         onPress={() => handleTabPress('home')}
-        style={{ alignItems: 'center', padding: wp('2%') }}>
+        style={styles.tab}>
         <Ionic
           name={currentTab === 'home' ? 'home' : 'home-outline'}
-          style={{ fontSize: wp('6%'), color: getColor('home') }}
+          size={26}
+          color={getColor('home')}
         />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => handleTabPress('search')}
-        style={{ alignItems: 'center', padding: wp('2%') }}>
+        style={styles.tab}>
         <Ionic
           name={currentTab === 'search' ? 'search' : 'search-outline'}
-          style={{ fontSize: wp('6%'), color: getColor('search') }}
+          size={26}
+          color={getColor('search')}
         />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => handleTabPress('create')}
-        style={{ alignItems: 'center', padding: wp('2%') }}>
+        style={styles.tab}>
         <AntDesign
           name="plus-square"
-          style={{ fontSize: wp('6%'), color: getColor('create') }}
+          size={26}
+          color={getColor('create')}
         />
       </TouchableOpacity>
 
-      {/* <TouchableOpacity
-        onPress={() => handleTabPress('reels')}
-        style={{ alignItems: 'center', padding: wp('2%') }}>
-        <Feather
-          name="play-circle"
-          style={{ fontSize: wp('6%'), color: getColor('reels') }}
-        />
-      </TouchableOpacity> */}
-
       <TouchableOpacity
         onPress={() => handleTabPress('friends')}
-        style={{ alignItems: 'center', padding: wp('2%') }}>
+        style={styles.tab}>
           <MaterialCommunityIcons
             name="account-group-outline"
-            style={{ fontSize: wp('6%'), color: getColor('profile') }}
+            size={26}
+            color={getColor('profile')}
           />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => handleTabPress('profile')}
-        style={{ alignItems: 'center', padding: wp('2%') }}>
+        style={styles.tab}>
         {userPhoto ? (
           <Image
             source={{ uri: userPhoto }}
             style={{
-              width: wp('7%'),
-              height: wp('7%'),
-              borderRadius: wp('3.5%'),
+              width: 30,
+              height: 30,
+              borderRadius: 15,
               borderWidth: currentTab === 'profile' ? 2 : 0,
               borderColor: '#fff',
             }}
@@ -111,7 +90,8 @@ const PostBottomNavigation = ({ currentTab, onTabPress, userPhoto }: PostBottomN
         ) : (
           <Ionic
             name={currentTab === 'profile' ? 'person-circle-sharp' : 'person-outline'}
-            style={{ fontSize: wp('6%'), color: getColor('profile') }}
+            size={26}
+            color={getColor('profile')}
           />
         )}
       </TouchableOpacity>
@@ -120,3 +100,21 @@ const PostBottomNavigation = ({ currentTab, onTabPress, userPhoto }: PostBottomN
 };
 
 export default PostBottomNavigation;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingVertical: 10,
+    paddingBottom: 24,
+    backgroundColor: '#000',
+    borderTopColor: '#222',
+    borderTopWidth: 0.5,
+  },
+  tab: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+});

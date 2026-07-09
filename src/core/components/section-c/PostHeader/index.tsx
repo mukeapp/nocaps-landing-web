@@ -1,7 +1,5 @@
 import { Colors } from "@/core/constants/Colors";
 import { Images } from "@/core/constants/Images";
-import Feather from "@expo/vector-icons/Feather";
-import Ionic from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
@@ -14,21 +12,10 @@ const PostHeader = ({
     hideActionButtons = false,
  }) => {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingHorizontal: wp("4%"),
-        paddingVertical: hp("1.2%"),
-        backgroundColor: "#000",
-        borderBottomColor: "#222",
-        borderBottomWidth: 0.5,
-      }}
-    >
+    <View style={styles.container}>
       {/* NoCapLogo & Text */}
       <TouchableOpacity
-        style={{ flexDirection: "row", alignItems: "center" }}
+        style={styles.logoRow}
         onPress={() => navigation?.openDrawer()}
         activeOpacity={0.85}
       >
@@ -44,27 +31,8 @@ const PostHeader = ({
 
       {/* Nocap Action Buttons */}
       {!hideActionButtons && (
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          {/* <TouchableOpacity style={{ marginRight: wp("5%") }}>
-            <Feather
-              name="plus-square"
-              style={{ fontSize: wp("6%"), color: "#fff" }}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={{ marginRight: wp("5%") }}>
-          <Ionic
-            name="heart-outline"
-            style={{ fontSize: wp("6%"), color: "#fff" }}
-          />
-        </TouchableOpacity> */}
-        {/* <TouchableOpacity>
-          <Feather
-            name="send"
-            style={{ fontSize: wp("5.5%"), color: "#fff" }}
-          />
-        </TouchableOpacity> */}
-      </View>
-        )}
+        <View style={{ flexDirection: "row", alignItems: "center" }} />
+      )}
     </View>
   );
 };
@@ -72,21 +40,35 @@ const PostHeader = ({
 export default PostHeader;
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: "#000",
+    borderBottomColor: "#222",
+    borderBottomWidth: 0.5,
+  },
+  logoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   logo: {
-    width: wp(7),
-    height: wp(7),
+    width: 22,
+    height: 22,
   },
   logoBox: {
-    width: wp(12),
-    height: wp(12),
+    width: 38,
+    height: 38,
     backgroundColor: Colors.title_background,
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: wp(3),
-    marginRight: wp(3),
+    borderRadius: 10,
+    marginRight: 10,
   },
   logoText: {
-    fontSize: wp("6.5%"),
+    fontSize: 22,
     fontWeight: "700",
     color: "#fff",
     fontFamily: "Georgia",

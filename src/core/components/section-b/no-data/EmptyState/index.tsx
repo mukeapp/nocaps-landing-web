@@ -1,7 +1,11 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { StyleSheet } from "react-native";
-import { heightPercentageToDP as hp } from "@/core/utils/responsive";
+import { heightPercentageToDP as _hp } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 import { Colors } from "@/core/constants/Colors";
 
 const EmptyState: React.FC = () => {

@@ -69,7 +69,7 @@ const HabitMarketManagerScreen: React.FC<{ navigation: any; route: any }> = ({
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: hp(5) }}
       >
-       <View style={{ height: hp(2) }} />
+       <View style={{ height: hp(1.5) }} />
 
         <ActionsButtons
         actionButtonFilters={form.habitMarketActions}

@@ -1,4 +1,5 @@
 import {MainStyles} from "@/core/constants/styles";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -6,6 +7,7 @@ import {useFocusEffect} from "@react-navigation/native";
 import React, {useCallback, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {
+  Image,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
@@ -13,12 +15,15 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Switch,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+import {Images} from "@/core/constants/Images";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import {AIModelSelector} from "@/core/components/section-b";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {
@@ -27,18 +32,12 @@ import {
   isTablet,
 } from "@/core/utils/responsive";
 
-import {ButtonSignIn, DefaultLoader} from "@/core/components/section-a";
+import {DefaultLoader} from "@/core/components/section-a";
 import {Colors} from "@/core/constants/Colors";
 
 import {
-  BannerSection,
-  BasicsSection,
   HabitListSection,
-  Header,
   ModalsPanel,
-  PersonsFriendsSection,
-  SelectorsSection,
-  VisibilitySection,
 } from "@/core/components/section-b";
 import {
   useHabitStackAddEditForm,
@@ -54,6 +53,8 @@ import {
   selectAICompanies,
   selectDefaultSelection,
 } from "@/core/redux/ai-models-cost-multiplier";
+
+const isWeb = Platform.OS === "web";
 
 interface RBSheetRef {
   open: () => void;
@@ -179,124 +180,224 @@ const MyHabitStacksAddEditScreen = ({
   };
 
   return (
-    <View style={MainStyles.root}>
-      <Header txt="HabitStack" navigation={navigation} />
+    <View style={[MainStyles.root2, { paddingHorizontal: 0, paddingTop: 0 }]}>
+      <WebDashboardHeader title="Habit Stack" onBack={() => navigation.goBack()} />
 
       <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
-        <Text style={[MainStyles.text14, { marginTop: hp(2) }]}>
-          Image Attachment
-        </Text>
+        <div className="px-4 md:px-6 py-6 max-w-3xl mx-auto w-full">
+          {/* Page header */}
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground tracking-tight">
+            New Habit Stack
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Set up your stack, then add habits to it.
+          </p>
 
-        <BannerSection
-          preview={media.preview ?? form.bannerImage}
-          onPick={media.pickImg}
-        />
+          {/* Cover image */}
+          <label className="mt-6 block text-sm font-medium text-foreground">
+            Cover image
+          </label>
+          {media.preview ?? form.bannerImage ? (
+            <div className="relative mt-2 overflow-hidden rounded-2xl">
+              <img
+                src={(media.preview ?? form.bannerImage) as string}
+                alt="Cover"
+                className="w-full aspect-[16/6] object-cover"
+              />
+              <button
+                onClick={media.pickImg}
+                aria-label="Change image"
+                className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-[#27AE60] ring-2 ring-white/80"
+              >
+                <MaterialCommunityIcons name="image-plus-outline" size={18} color={Colors.white} />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={media.pickImg}
+              className="mt-2 flex aspect-[16/6] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 bg-white/[0.03] hover:bg-white/[0.06] transition-colors"
+            >
+              <span className="grid h-14 w-14 place-items-center rounded-xl bg-white/5">
+                <MaterialCommunityIcons name="image-plus-outline" size={26} color={Colors.text_color} />
+              </span>
+              <span className="text-sm text-muted-foreground">
+                Click to upload a cover photo
+              </span>
+            </button>
+          )}
 
-        <BasicsSection
-          stackname={form.stackname}
-          onChangeName={form.setStackname}
-          iconKey={form.iconKey}
-          onOpenIcon={pickers.openIcon}
-          color={form.iconColor}
-          onOpenColor={pickers.openColor}
-        />
-
-        <VisibilitySection
-          isPublic={form.isPublic}
-          onTogglePublic={form.setIsPublic}
-          hideFromFriends={form.hideFromFriends}
-          onToggleHideFromFriends={form.setHideFromFriends}
-        />
-
-        <SelectorsSection
-          sectorVal={form.sectorVal}
-          focusVal={form.focusVal}
-          unitVal={form.unitVal}
-          priorityVal={form.priorityVal}
-          onPickSector={() => pickers.openMain("habitstack")}
-          onPickFocus={() => pickers.openMain("focus")}
-          onPickUnit={() => pickers.openMain("unit")}
-          onPickPriority={() => pickers.openMain("priority")}
-        />
-
-        <PersonsFriendsSection
-          personsCount={form.personsCount}
-          inc={form.incPersons}
-          dec={form.decPersons}
-          friends={form.friends}
-          onAddFriend={form.openFriendPicker}
-          hideParteners={true}
-        />
-
-        <Text style={[MainStyles.text14, { marginTop: hp(2) }]}>
-          Habit Stack Description
-        </Text>
-        {form.DescriptionInput}
-
-        <HabitListSection
-          user={form.userdata.collectdata}
-          username={form.username}
-          habits={form.habits}
-          expandedIds={form.expandedIds}
-          onToggleExpand={form.toggleExpand}
-          menuId={form.menuId}
-          onOpenMenu={form.openMenu}
-          onEdit={form.editHabit}
-          onDelete={form.deleteHabit}
-          onOpenItem={onOpenLinkItem}
-          hideSwap={true}
-        />
-
-        {/* Primary CTAs */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <ButtonSignIn
-            text="Add Habit"
-            wid="43.5"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            top="1"
-            mov={handleAddHabitPress}
+          {/* Name */}
+          <label className="mt-6 block text-sm font-medium text-foreground">
+            Habit stack name
+          </label>
+          <input
+            value={form.stackname}
+            onChange={(e) => form.setStackname(e.target.value)}
+            placeholder="e.g. Morning Routine"
+            className="mt-2 w-full rounded-xl bg-card px-4 py-2.5 text-sm text-foreground ring-1 ring-white/10 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#2D9CDB]"
           />
-          <ButtonSignIn
-            text="Create Habit"
-            wid="43.5"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            top="1"
-            mov={() => form.save(false)}
-          />
-        </View>
 
-        {/* Secondary CTAs */}
-        <View style={[MainStyles.viewtwo, { marginVertical: hp(1) }]}>
-          <ButtonSignIn
-            text="Cancel"
-            wid="43.5"
-            bg={Colors.background_color}
-            bd={Colors.white}
-            ftn={14}
-            mov={form.cancel}
+          {/* Icon + Color */}
+          <div className="mt-6 grid max-w-xs grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground">Icon</label>
+              <button
+                onClick={pickers.openIcon}
+                className="mt-2 grid h-14 w-14 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 hover:bg-white/10 transition-colors"
+              >
+                <Image
+                  source={form.iconKey ? Images[form.iconKey] : Images.dollar}
+                  resizeMode="contain"
+                  style={{ width: 28, height: 28 }}
+                />
+              </button>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-foreground">Color</label>
+              <button
+                onClick={pickers.openColor}
+                aria-label="Pick color"
+                className="mt-2 h-14 w-14 rounded-xl ring-1 ring-white/10 hover:ring-white/25 transition-shadow"
+                style={{ backgroundColor: form.iconColor }}
+              />
+            </div>
+          </div>
+
+          {/* Visibility */}
+          <p className="mt-7 mb-2 text-sm font-medium text-foreground">Visibility</p>
+          <div className="overflow-hidden rounded-2xl bg-card ring-1 ring-white/10 divide-y divide-white/5">
+            <div className="flex items-center justify-between gap-3 px-4 py-3">
+              <div>
+                <p className="text-sm text-foreground">Public</p>
+                <p className="text-xs text-muted-foreground">Visible to everyone</p>
+              </div>
+              <Switch
+                value={form.isPublic}
+                onValueChange={form.setIsPublic}
+                trackColor={{ false: Colors.gray, true: Colors.primary }}
+                thumbColor={Colors.white}
+              />
+            </div>
+            <div className="flex items-center justify-between gap-3 px-4 py-3">
+              <div>
+                <p className="text-sm text-foreground">Hide from friends</p>
+                <p className="text-xs text-muted-foreground">
+                  Friends won&apos;t see this stack
+                </p>
+              </div>
+              <Switch
+                value={form.hideFromFriends}
+                onValueChange={form.setHideFromFriends}
+                trackColor={{ false: Colors.gray, true: Colors.primary }}
+                thumbColor={Colors.white}
+              />
+            </div>
+          </div>
+
+          {/* Selectors */}
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {[
+              { label: "Sector", val: form.sectorVal, onPick: () => pickers.openMain("habitstack") },
+              { label: "Focus", val: form.focusVal, onPick: () => pickers.openMain("focus") },
+              { label: "Unit", val: form.unitVal, onPick: () => pickers.openMain("unit") },
+              { label: "Priority", val: form.priorityVal, onPick: () => pickers.openMain("priority") },
+            ].map((sel) => (
+              <div key={sel.label}>
+                <label className="block text-sm font-medium text-foreground">{sel.label}</label>
+                <button
+                  onClick={sel.onPick}
+                  className="mt-2 flex w-full items-center justify-between rounded-xl bg-card px-4 py-2.5 text-sm ring-1 ring-white/10 hover:bg-white/5 transition-colors"
+                >
+                  <span className={sel.val ? "text-foreground" : "text-muted-foreground"}>
+                    {sel.val || "Select item"}
+                  </span>
+                  <MaterialCommunityIcons name="chevron-down" size={18} color={Colors.text_color} />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* # of persons */}
+          <label className="mt-6 block text-sm font-medium text-foreground"># of persons</label>
+          <div className="mt-2 inline-flex items-center overflow-hidden rounded-xl bg-card ring-1 ring-white/10">
+            <button
+              onClick={form.decPersons}
+              aria-label="Decrease"
+              className="grid h-11 w-12 place-items-center hover:bg-white/5 transition-colors"
+            >
+              <AntDesign name="minus" size={18} color={Colors.white} />
+            </button>
+            <div className="flex h-11 w-20 items-center justify-center gap-2 border-x border-white/10">
+              <MaterialIcons name="person-outline" size={16} color={Colors.white} />
+              <span className="text-sm font-semibold text-foreground">{form.personsCount}</span>
+            </div>
+            <button
+              onClick={form.incPersons}
+              aria-label="Increase"
+              className="grid h-11 w-12 place-items-center hover:bg-white/5 transition-colors"
+            >
+              <AntDesign name="plus" size={18} color={Colors.white} />
+            </button>
+          </div>
+
+          {/* Description */}
+          <label className="mt-6 block text-sm font-medium text-foreground">Description</label>
+          <textarea
+            value={form.description}
+            onChange={(e) => form.setDescription(e.target.value)}
+            placeholder="Write here..."
+            rows={4}
+            className="mt-2 w-full resize-y rounded-xl bg-card px-4 py-3 text-sm text-foreground ring-1 ring-white/10 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#2D9CDB]"
           />
-          <ButtonSignIn
-            text="Save"
-            wid="43.5"
-            bg={Colors.white}
-            bd={Colors.white}
-            txcl={Colors.background_color}
-            ftn={14}
-            mov={() => form.save(true)}
-          />
-        </View>
+
+          {/* Added habits */}
+          <div className="mt-2">
+            <HabitListSection
+              user={form.userdata.collectdata}
+              username={form.username}
+              habits={form.habits}
+              expandedIds={form.expandedIds}
+              onToggleExpand={form.toggleExpand}
+              menuId={form.menuId}
+              onOpenMenu={form.openMenu}
+              onEdit={form.editHabit}
+              onDelete={form.deleteHabit}
+              onOpenItem={onOpenLinkItem}
+              hideSwap={true}
+            />
+          </div>
+
+          {/* Footer actions */}
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5">
+            <button
+              onClick={form.cancel}
+              className="rounded-full px-5 py-2 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground transition-colors"
+            >
+              Cancel
+            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={handleAddHabitPress}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
+              >
+                <MaterialCommunityIcons name="plus" size={16} color={Colors.white} />
+                Add Habit
+              </button>
+              <button
+                onClick={() => form.save(false)}
+                className="rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-medium text-foreground hover:bg-white/10 transition-colors"
+              >
+                Create Habit
+              </button>
+              <button
+                onClick={() => form.save(true)}
+                className="rounded-full bg-[#2D9CDB] px-6 py-2 text-sm font-semibold text-white hover:bg-[#2D9CDB]/85 transition-colors"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
       </ScrollView>
 
       <DefaultLoader status={form.loading || media.loading} />
@@ -325,12 +426,15 @@ const MyHabitStacksAddEditScreen = ({
       <RBSheet
         ref={addHabitSheetRef}
         useNativeDriver={false}
-        height={isTablet ? hp(100) : hp(80)}
+        height={isWeb ? 470 : isTablet ? hp(100) : hp(80)}
         customStyles={{
           container: {
             backgroundColor: "#2C2C2E",
-            borderTopLeftRadius: wp(5),
-            borderTopRightRadius: wp(5),
+            borderTopLeftRadius: isWeb ? 20 : wp(5),
+            borderTopRightRadius: isWeb ? 20 : wp(5),
+            ...(isWeb
+              ? { maxWidth: 480, width: "100%", alignSelf: "center" }
+              : {}),
           },
           wrapper: {
             backgroundColor: "#000000ab",
@@ -541,11 +645,11 @@ const styles = StyleSheet.create({
   optionItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: hp(2),
-    paddingHorizontal: wp(3),
+    paddingVertical: isWeb ? 14 : hp(2),
+    paddingHorizontal: isWeb ? 14 : wp(3),
     backgroundColor: Colors.content_back,
-    borderRadius: wp(3),
-    marginBottom: hp(1.5),
+    borderRadius: isWeb ? 12 : wp(3),
+    marginBottom: isWeb ? 10 : hp(1.5),
   },
   optionText: {
     color: Colors.white,
@@ -556,33 +660,33 @@ const styles = StyleSheet.create({
   // Bottom Sheet Styles
   bottomSheetContent: {
     flex: 1,
-    paddingHorizontal: wp(4),
-    paddingVertical: hp(2),
+    paddingHorizontal: isWeb ? 20 : wp(4),
+    paddingVertical: isWeb ? 20 : hp(2),
   },
   bottomSheetTitle: {
     color: Colors.white,
-    fontSize: wp(5),
+    fontSize: isWeb ? 18 : wp(5),
     fontFamily: "poppins_semibold",
-    marginBottom: hp(2),
+    marginBottom: isWeb ? 16 : hp(2),
   },
   optionsContainer: {
     marginTop: hp(1),
   },
   optionTextContainer: {
-    marginLeft: wp(3),
+    marginLeft: isWeb ? 12 : wp(3),
     flex: 1,
   },
   optionTitle: {
     color: Colors.white,
-    fontSize: wp(4),
+    fontSize: isWeb ? 15 : wp(4),
     fontFamily: "poppins_semibold",
-    marginBottom: hp(0.5),
+    marginBottom: isWeb ? 2 : hp(0.5),
   },
   optionSubtitle: {
     color: Colors.gray,
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 13 : wp(3.5),
     fontFamily: "poppins_regular",
-    lineHeight: wp(4.5),
+    lineHeight: isWeb ? 18 : wp(4.5),
   },
   aiConfirmOverlay: {
     flex: 1,

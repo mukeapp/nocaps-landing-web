@@ -8,11 +8,18 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from "react-native";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
+  widthPercentageToDP as _wp,
+  heightPercentageToDP as _hp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 import { MainStyles } from "@/core/constants/styles";
 import { Images } from "@/core/constants/Images";
@@ -206,7 +213,7 @@ const styles = StyleSheet.create({
     paddingRight: wp(0.5),
   },
   stackCard: {
-    width: wp(90),
+    width: wp(140),
     minHeight: hp(10),
     marginRight: wp(3),
     borderRadius: wp(3),

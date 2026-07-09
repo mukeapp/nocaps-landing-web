@@ -16,11 +16,17 @@ import {fetchUnitsByDocumentId} from "@/core/services/section-b/section-b-0/unit
 import {resolveImageSource, truncateString} from "@/core/utils";
 import {useNavigation} from "@react-navigation/native";
 import React, {useEffect, useState} from "react";
-import {StyleSheet, View} from "react-native";
+import {Platform, StyleSheet, View} from "react-native";
 import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number): number =>
+  isWeb ? +(p * 3.8).toFixed(1) : _hp(p);
 
 type Props = {
   showCopyButton?: boolean;

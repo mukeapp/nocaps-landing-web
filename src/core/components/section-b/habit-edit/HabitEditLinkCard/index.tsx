@@ -12,6 +12,7 @@ import React, {useState} from "react";
 import {
   Image,
   Modal,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -21,6 +22,8 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "@/core/utils/responsive";
+
+const isWeb = Platform.OS === "web";
 
 export default function HabitEditLinkCard({
   costSymbol = "",
@@ -76,25 +79,25 @@ export default function HabitEditLinkCard({
   };
 
   return (
-    <View style={HabitStyles.additem}>
+    <View style={[HabitStyles.additem, isWeb && wstyles.additem]}>
       <View style={HabitStyles.globalmart}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <View style={HabitStyles.iconback}>
+          <View style={[HabitStyles.iconback, isWeb && wstyles.iconback]}>
             <Image
               source={imageKey ? Images[imageKey] : Images.dollar}
               resizeMode="contain"
-              style={HabitStyles.dollar}
+              style={[HabitStyles.dollar, isWeb && wstyles.dollar]}
             />
             {/* Icon Top Right Button */}
             <TouchableOpacity
-              style={HabitStyles.fileview}
+              style={[HabitStyles.fileview, isWeb && wstyles.fileview]}
               onPress={() => onAddItem(item)}
               disabled={!canInteract}
             >
               <Image
                 source={Images.file}
                 resizeMode="contain"
-                style={HabitStyles.file}
+                style={[HabitStyles.file, isWeb && wstyles.file]}
               />
             </TouchableOpacity>
           </View>
@@ -145,7 +148,7 @@ export default function HabitEditLinkCard({
           ]}
         >
           <TouchableOpacity
-            style={HabitStyles.lasticon}
+            style={[HabitStyles.lasticon, isWeb && wstyles.lasticon]}
             onPress={() => setMenuOpen(true)}
           >
             <MaterialCommunityIcons
@@ -156,7 +159,7 @@ export default function HabitEditLinkCard({
           </TouchableOpacity>
           {/* go to HabitLink Screen button */}
           <TouchableOpacity
-            style={HabitStyles.lasticon2}
+            style={[HabitStyles.lasticon2, isWeb && wstyles.lasticon]}
             onPress={() => setShowLinkDetail(true)}
           >
             <MaterialIcons name="dashboard" size={18} color={Colors.white} />
@@ -165,7 +168,7 @@ export default function HabitEditLinkCard({
       </View>
 
       <TouchableOpacity
-        style={HabitStyles.additems}
+        style={[HabitStyles.additems, isWeb && wstyles.additems]}
         onPress={() => onAddItem(item)}
         disabled={!canInteract}
       >
@@ -285,7 +288,7 @@ const styles = StyleSheet.create({
   menuModal: {
     backgroundColor: Colors.content_back,
     borderRadius: 12,
-    width: wp(50),
+    width: isWeb ? 220 : wp(50),
     paddingVertical: 8,
     borderWidth: 1,
     borderColor: Colors.borderline,
@@ -317,8 +320,8 @@ const styles = StyleSheet.create({
   deleteModal: {
     backgroundColor: Colors.content_back,
     borderRadius: 16,
-    width: wp(85),
-    padding: wp(6),
+    width: isWeb ? 360 : wp(85),
+    padding: isWeb ? 24 : wp(6),
     alignItems: "center",
     borderWidth: 2,
     borderColor: Colors.red,
@@ -378,4 +381,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+});
+
+// Web-only size overrides for the shared HabitStyles values (kept scoped to this
+// card instead of editing the shared HabitStyles used across habit components).
+const wstyles = StyleSheet.create({
+  additem: { width: "100%", borderRadius: 12, paddingHorizontal: 14, paddingVertical: 12, marginTop: 12 },
+  additems: { width: "100%", height: 40, borderRadius: 10, marginTop: 12 },
+  iconback: { width: 44, height: 44, borderRadius: 12 },
+  dollar: { width: 26, height: 26 },
+  fileview: { width: 18, height: 18, borderRadius: 9, top: -5, right: -5 },
+  file: { width: 12, height: 12 },
+  lasticon: { width: 30, height: 30, borderRadius: 15, marginLeft: 6 },
 });

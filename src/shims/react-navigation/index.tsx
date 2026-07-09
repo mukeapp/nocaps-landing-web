@@ -68,6 +68,7 @@ export function NavigationProvider({
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const focusListeners = useRef<Set<Listener>>(new Set());
+  const initialFocusDelivered = useRef(false);
 
   const navigate = useCallback(
     (name: string, params?: any) => {
@@ -103,10 +104,21 @@ export function NavigationProvider({
   const addListener = useCallback((event: string, cb: Listener) => {
     if (event === "focus") {
       focusListeners.current.add(cb);
-      // React Navigation fires "focus" when the screen first mounts too.
-      const t = setTimeout(cb, 0);
+      // React Navigation fires "focus" once when the screen first mounts, but NOT on
+      // re-subscription (e.g. when a hook's load callback changes identity). Firing on
+      // every subscribe loops any screen whose load deps are unstable.
+      // Delivered is marked inside the timeout (not at scheduling) so that if an effect
+      // re-subscribes before the timeout fires (cleanup clears it), the next subscribe
+      // schedules again and the initial load is never lost.
+      let t: ReturnType<typeof setTimeout> | undefined;
+      if (!initialFocusDelivered.current) {
+        t = setTimeout(() => {
+          initialFocusDelivered.current = true;
+          cb();
+        }, 0);
+      }
       return () => {
-        clearTimeout(t);
+        if (t !== undefined) clearTimeout(t);
         focusListeners.current.delete(cb);
       };
     }
@@ -159,13 +171,14 @@ export function useIsFocused(): boolean {
   return true;
 }
 
+// React Navigation re-runs the effect whenever the (useCallback-wrapped)
+// callback identity changes while the screen is focused — screens rely on this
+// to refetch when their form.load deps change (e.g. market-manager tab clicks).
 export function useFocusEffect(effect: () => void | (() => void)) {
-  const effectRef = useRef(effect);
-  effectRef.current = effect;
   useEffect(() => {
-    const cleanup = effectRef.current();
+    const cleanup = effect();
     return typeof cleanup === "function" ? cleanup : undefined;
-  }, []);
+  }, [effect]);
 }
 
 export function useDrawerOpen(): boolean {

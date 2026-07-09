@@ -1,25 +1,30 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { wp, hp, fs } from "@/core/utils/responsive";
 import { Colors } from "./Colors";
 import { SIZES } from "./Size";
+
+const isWeb = Platform.OS === "web";
+// On web there's no status bar/notch — the sticky dashboard header should sit
+// flush at the top instead of below the mobile status-bar padding.
+const rootTopPad = isWeb ? 0 : hp(6);
 
 export const MainStyles = StyleSheet.create({
   root: {
     flex: 1,
     paddingHorizontal: wp(4),
-    paddingTop: hp(6),
+    paddingTop: rootTopPad,
     backgroundColor: Colors.background_color,
   },
   root2: {
     flex: 1,
     paddingHorizontal: wp(1),
-    paddingTop: hp(6),
+    paddingTop: rootTopPad,
     backgroundColor: Colors.background_color,
   },
   root3: {
     flex: 1,
     paddingHorizontal: wp(1),
-    paddingTop: hp(6),
+    paddingTop: rootTopPad,
     backgroundColor: Colors.title_background,
   },
   viewone: {

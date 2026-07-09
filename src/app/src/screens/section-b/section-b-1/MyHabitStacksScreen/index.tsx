@@ -23,11 +23,17 @@ import {
 import {AIModelSelector} from "@/core/components/section-b";
 import RBSheet from "react-native-raw-bottom-sheet";
 import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
+  heightPercentageToDP as _hp,
+  widthPercentageToDP as _wp,
   isTablet,
 } from "@/core/utils/responsive";
 import {useDispatch, useSelector} from "react-redux";
+
+const isWeb = Platform.OS === "web";
+const wp = (p: number | string): number =>
+  isWeb ? +(Number(p) * 3.8).toFixed(1) : _wp(p);
+const hp = (p: number | string): number =>
+  isWeb ? +(Number(p) * 3.8).toFixed(1) : _hp(p);
 
 import {
   DeleteHabitStack,
@@ -44,8 +50,8 @@ import {
 } from "@/core/redux/subscription-plan";
 import {ButtonSignIn as Button} from "@/core/components/section-a";
 import {HabitStackCard} from "@/core/components/section-b";
+import WebDashboardHeader from "@/core/components/section-b/header/WebDashboardHeader";
 import {Colors} from "@/core/constants/Colors";
-import {Images} from "@/core/constants/Images";
 import {MainStyles} from "@/core/constants/styles";
 import {
   HabitLinkComponent,
@@ -384,27 +390,8 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
         },
       ]}
     >
-      {/* Sticky top bar — web native */}
-      <div className="sticky top-0 z-40 flex items-center justify-between px-4 h-14 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="flex items-center gap-2.5">
-          <button
-            onClick={() => navigation.openDrawer()}
-            className="grid place-items-center h-9 w-9 rounded-lg hover:bg-accent transition-colors"
-            aria-label="Open menu"
-          >
-            <MaterialCommunityIcons name="menu" size={22} color={Colors.white} />
-          </button>
-          <div className="h-8 w-8 rounded-lg bg-card grid place-items-center overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={(Images.logo as any)?.default ?? Images.logo}
-              alt="NoCaps"
-              className="h-5 w-5 object-contain"
-            />
-          </div>
-          <span className="text-base font-semibold text-foreground">NoCaps</span>
-        </div>
-      </div>
+      {/* Sticky top bar — shared web dashboard header */}
+      <WebDashboardHeader onOpenDrawer={() => navigation.openDrawer()} />
 
       {/* Scrollable content */}
       <div className="px-4 md:px-6 lg:px-8 py-6 max-w-screen-2xl mx-auto w-full">
@@ -415,7 +402,7 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
           </h1>
         </div>
         <p className="text-sm text-muted-foreground mb-4">
-          Let NoCap guide your journey!
+          Let NoCaps guide your journey!
         </p>
 
         {/* Score legend */}
@@ -498,16 +485,17 @@ const MyHabitStacksScreen = ({ navigation }: any) => {
               No Habit Stack Found.
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Create your first habit stack to get started.
+              Add or Create your first habit stack to get started.
+              Or Just click "Next" to skip and explore the app.
             </p>
-            <button
+            {/* <button
               onClick={() =>
                 navigation.navigate("add_edit_habitstack", { habitstackdata: {} })
               }
               className="mt-5 inline-flex items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 text-sm font-medium transition-colors"
             >
               Create Habit Stack
-            </button>
+            </button> */}
           </div>
         )}
 

@@ -32,6 +32,9 @@ import {
   heightPercentageToDP as hp,
   isTablet,
 } from "@/core/utils/responsive";
+import { Platform } from "react-native";
+
+const isWeb = Platform.OS === "web";
 import DayNotesSheet from "@/core/components/section-b/habit-calendar-components/DayNotesSheet";
 
 const today = new Date();
@@ -155,7 +158,9 @@ const HabitCalendar: React.FC<Props> = ({
   ];
 
   const [gridWidth, setGridWidth] = useState(0);
-  const cellSize = gridWidth > 0 ? Math.floor(gridWidth / 7) : wp(11);
+  // Clamp so desktop widths don't balloon the cells (and 7 cells always fit a
+  // row — unclamped, rounding made only 6 fit and days misaligned with headers).
+  const cellSize = gridWidth > 0 ? Math.min(Math.floor(gridWidth / 7), 64) : wp(11);
 
   const [numUnknown, setNumUnknown] = useState(0);
   const [numBad, setNumBad] = useState(0);
@@ -340,18 +345,18 @@ const HabitCalendar: React.FC<Props> = ({
     }
 
     return (
-      <View style={styles.calendarView}>
-        <View style={styles.weekDaysRow}>
+      <View
+        style={styles.calendarView}
+        onLayout={(e) => setGridWidth(e.nativeEvent.layout.width)}
+      >
+        <View style={[styles.weekDaysRow, { width: cellSize * 7 }]}>
           {weekDays.map((wd, i) => (
             <View key={`wd-${i}`} style={[styles.weekDayCell, { width: cellSize }]}>
               <Text style={styles.weekDayText}>{wd}</Text>
             </View>
           ))}
         </View>
-        <View
-          style={styles.daysGrid}
-          onLayout={(e) => setGridWidth(e.nativeEvent.layout.width)}
-        >
+        <View style={[styles.daysGrid, { width: cellSize * 7 }]}>
           {days}
         </View>
       </View>
@@ -373,18 +378,18 @@ const HabitCalendar: React.FC<Props> = ({
     }
 
     return (
-      <View style={styles.calendarView}>
-        <View style={styles.weekDaysRow}>
+      <View
+        style={styles.calendarView}
+        onLayout={(e) => setGridWidth(e.nativeEvent.layout.width)}
+      >
+        <View style={[styles.weekDaysRow, { width: cellSize * 7 }]}>
           {weekDays.map((wd, i) => (
             <View key={`wd-${i}`} style={[styles.weekDayCell, { width: cellSize }]}>
               <Text style={styles.weekDayText}>{wd}</Text>
             </View>
           ))}
         </View>
-        <View
-          style={styles.daysGrid}
-          onLayout={(e) => setGridWidth(e.nativeEvent.layout.width)}
-        >
+        <View style={[styles.daysGrid, { width: cellSize * 7 }]}>
           {emptyDays}
           {selectedWeek.map((d) => {
             const dayData = getDataForDay(selectedYear, selectedMonth, d);
@@ -675,6 +680,7 @@ const styles = StyleSheet.create({
   weekDaysRow: {
     flexDirection: "row",
     marginBottom: hp(2),
+    alignSelf: "center",
   },
   weekDayCell: {
     alignItems: "center",
@@ -687,6 +693,7 @@ const styles = StyleSheet.create({
   daysGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
+    alignSelf: "center",
   },
   dayCell: {
     alignItems: "center",
@@ -722,9 +729,9 @@ const styles = StyleSheet.create({
     gap: wp(2),
   },
   legendCircle: {
-    width: wp(6),
-    height: wp(6),
-    borderRadius: wp(3),
+    width: isWeb ? 14 : wp(6),
+    height: isWeb ? 14 : wp(6),
+    borderRadius: isWeb ? 7 : wp(3),
   },
   legendText: {
     color: "#9ca3af",
@@ -742,25 +749,25 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   toggleButton: {
-    width: isTablet ? wp(8) : wp(11),
-    height: hp(3),
-    borderRadius: wp(3),
+    width: isWeb ? 44 : isTablet ? wp(8) : wp(11),
+    height: isWeb ? 24 : hp(3),
+    borderRadius: isWeb ? 12 : wp(3),
     backgroundColor: "#374151",
-    padding: wp(0.5),
+    padding: isWeb ? 3 : wp(0.5),
     justifyContent: "center",
   },
   toggleButtonActive: {
     backgroundColor: "#ef4444",
   },
   toggleThumb: {
-    width: wp(5),
-    height: wp(5),
-    borderRadius: wp(2.5),
+    width: isWeb ? 18 : wp(5),
+    height: isWeb ? 18 : wp(5),
+    borderRadius: isWeb ? 9 : wp(2.5),
     backgroundColor: "#f9fafb",
     transform: [{ translateX: 0 }],
   },
   toggleThumbActive: {
-    transform: [{ translateX: wp(5) }],
+    transform: [{ translateX: isWeb ? 20 : wp(5) }],
   },
   modalOverlay: {
     flex: 1,
@@ -772,6 +779,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1f2937",
     borderRadius: wp(2),
     width: "80%",
+    maxWidth: 360,
     overflow: "hidden",
   },
   modalItem: {
@@ -787,6 +795,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#1f2937",
     borderRadius: wp(2),
     width: "90%",
+    maxWidth: 480,
     maxHeight: "70%",
     padding: wp(4),
   },

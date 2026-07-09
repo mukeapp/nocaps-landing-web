@@ -4,6 +4,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import React from "react";
 import {
     ActivityIndicator,
+    Platform,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -16,6 +17,8 @@ import {
 
 import {Colors} from "@/core/constants/Colors";
 import {SubscriptionPlan} from "@/core/redux/subscription-plan";
+
+const isWeb = Platform.OS === "web";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -155,9 +158,9 @@ export default SubscriptionPlanCard;
 const styles = StyleSheet.create({
   card: {
     backgroundColor: CARD_BG,
-    borderRadius: wp(4),
-    padding: wp(5),
-    marginBottom: hp(2),
+    borderRadius: isWeb ? 16 : wp(4),
+    padding: isWeb ? 24 : wp(5),
+    marginBottom: isWeb ? 16 : hp(2),
   },
   cardPlus: {
     backgroundColor: PLUS_BG,
@@ -166,21 +169,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: hp(1.5),
+    marginBottom: isWeb ? 12 : hp(1.5),
   },
   planName: {
-    fontSize: wp(6),
+    fontSize: isWeb ? 28 : wp(6),
     fontFamily: "poppins_bold",
     color: Colors.white,
   },
   popularBadge: {
     backgroundColor: POPULAR_BADGE_BG,
-    paddingHorizontal: wp(3),
-    paddingVertical: hp(0.4),
-    borderRadius: wp(2),
+    paddingHorizontal: isWeb ? 10 : wp(3),
+    paddingVertical: isWeb ? 4 : hp(0.4),
+    borderRadius: isWeb ? 6 : wp(2),
   },
   popularBadgeText: {
-    fontSize: wp(2.8),
+    fontSize: isWeb ? 11 : wp(2.8),
     fontFamily: "poppins_semibold",
     color: Colors.white,
     letterSpacing: 0.5,
@@ -188,61 +191,61 @@ const styles = StyleSheet.create({
   priceRow: {
     flexDirection: "row",
     alignItems: "flex-start",
-    marginBottom: hp(0.5),
+    marginBottom: isWeb ? 4 : hp(0.5),
   },
   priceCurrency: {
-    fontSize: wp(5),
+    fontSize: isWeb ? 20 : wp(5),
     fontFamily: "poppins_semibold",
     color: Colors.white,
-    marginTop: hp(0.8),
+    marginTop: isWeb ? 6 : hp(0.8),
   },
   priceAmount: {
-    fontSize: wp(12),
+    fontSize: isWeb ? 48 : wp(12),
     fontFamily: "poppins_bold",
     color: Colors.white,
-    lineHeight: wp(14),
+    lineHeight: isWeb ? 56 : wp(14),
   },
   priceUnit: {
-    marginLeft: wp(1.5),
-    marginTop: hp(1),
+    marginLeft: isWeb ? 6 : wp(1.5),
+    marginTop: isWeb ? 8 : hp(1),
   },
   priceUnitText: {
-    fontSize: wp(3),
+    fontSize: isWeb ? 13 : wp(3),
     fontFamily: "poppins_regular",
     color: Colors.gray,
   },
   tagline: {
-    fontSize: wp(3.8),
+    fontSize: isWeb ? 15 : wp(3.8),
     fontFamily: "poppins_semibold",
     color: Colors.white,
-    marginBottom: hp(1),
+    marginBottom: isWeb ? 8 : hp(1),
   },
   description: {
-    fontSize: wp(3.3),
+    fontSize: isWeb ? 14 : wp(3.3),
     fontFamily: "poppins_regular",
     color: Colors.gray,
-    lineHeight: wp(5),
-    marginBottom: hp(2),
+    lineHeight: isWeb ? 20 : wp(5),
+    marginBottom: isWeb ? 16 : hp(2),
   },
   currentPlanButton: {
     borderWidth: 1,
     borderColor: CURRENT_PLAN_BORDER,
-    borderRadius: wp(8),
-    paddingVertical: hp(1.4),
+    borderRadius: isWeb ? 12 : wp(8),
+    paddingVertical: isWeb ? 12 : hp(1.4),
     alignItems: "center",
-    marginBottom: hp(2.5),
+    marginBottom: isWeb ? 20 : hp(2.5),
   },
   currentPlanButtonText: {
-    fontSize: wp(3.8),
+    fontSize: isWeb ? 15 : wp(3.8),
     fontFamily: "poppins_regular",
     color: Colors.gray,
   },
   upgradeButton: {
     backgroundColor: Colors.white,
-    borderRadius: wp(8),
-    paddingVertical: hp(1.4),
+    borderRadius: isWeb ? 12 : wp(8),
+    paddingVertical: isWeb ? 12 : hp(1.4),
     alignItems: "center",
-    marginBottom: hp(2.5),
+    marginBottom: isWeb ? 20 : hp(2.5),
   },
   upgradeButtonPlus: {
     backgroundColor: PLUS_BUTTON_BG,
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   upgradeButtonText: {
-    fontSize: wp(3.8),
+    fontSize: isWeb ? 15 : wp(3.8),
     fontFamily: "poppins_semibold",
     color: Colors.black,
   },
@@ -259,32 +262,32 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   featureList: {
-    gap: hp(1.2),
+    gap: isWeb ? 10 : hp(1.2),
   },
   everythingInPlus: {
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 14 : wp(3.5),
     fontFamily: "poppins_semibold",
     color: Colors.white,
-    marginBottom: hp(0.5),
+    marginBottom: isWeb ? 4 : hp(0.5),
   },
   featureRow: {
     flexDirection: "row",
     alignItems: "flex-start",
   },
   featureIcon: {
-    marginTop: hp(0.2),
-    marginRight: wp(2.5),
+    marginTop: isWeb ? 2 : hp(0.2),
+    marginRight: isWeb ? 10 : wp(2.5),
   },
   featureText: {
-    fontSize: wp(3.5),
+    fontSize: isWeb ? 14 : wp(3.5),
     fontFamily: "poppins_regular",
     color: Colors.gray2,
     flex: 1,
   },
   footerNote: {
-    fontSize: wp(3),
+    fontSize: isWeb ? 13 : wp(3),
     fontFamily: "poppins_regular",
     color: Colors.gray,
-    marginTop: hp(2),
+    marginTop: isWeb ? 16 : hp(2),
   },
 });

@@ -84,9 +84,9 @@ export default function useHabitMarketSeelAllForm({ navigation, route }: Props) 
 
   const fetchedSectorIdsRef = useRef<Set<string>>(new Set());
 
-  const canEdit = routerData.canEdit ?? canEditScreen(originScreen);
+  const canEdit = routerData?.canEdit ?? canEditScreen(originScreen);
   const showCopyButton = canShowCopyButton(originScreen);
-  let habitCategories: HabitCategory[] = routerData.habitCategories || getHabitCategories(originScreen);
+  let habitCategories: HabitCategory[] = routerData?.habitCategories || getHabitCategories(originScreen);
 
   //////////// Navigation ///////////////
   const navigateToHabitLink = useCallback(
@@ -112,7 +112,7 @@ export default function useHabitMarketSeelAllForm({ navigation, route }: Props) 
 
   //////////// Handlers ///////////////
   const setHabitCategoriesBasedOnOrigin = useCallback(() => {
-    const categories = routerData.habitCategories || getHabitCategories(originScreen);
+    const categories = routerData?.habitCategories || getHabitCategories(originScreen);
     habitCategories = categories;
     setSelectedCategoryId(categories[0]?.id || 1);
     setHabitCategory(categories[0]?.name || "");
@@ -173,7 +173,7 @@ export default function useHabitMarketSeelAllForm({ navigation, route }: Props) 
       []
     );
 
-  const stacksFetcher = useInfiniteListHabitStack<HabitStackComponent>(fetcher, routerData.habitSectorId ?? "", "");
+  const stacksFetcher = useInfiniteListHabitStack<HabitStackComponent>(fetcher, routerData?.habitSectorId ?? "", "");
 
   // const fetchStacksForSectorId = useCallback(async (sectorId?: string) => {
   //   const [finance, healthFitness, lifestyle, personalGrowth, productivity, relationships] =

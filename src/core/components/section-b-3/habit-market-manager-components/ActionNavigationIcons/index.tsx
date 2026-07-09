@@ -48,14 +48,14 @@ const styles = StyleSheet.create({
     marginRight: wp(1),
   },
   iconButton: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.title_background,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "rgba(255,255,255,0.06)",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: Colors.borderline,
+    borderColor: "rgba(255,255,255,0.08)",
   },
 });
 
