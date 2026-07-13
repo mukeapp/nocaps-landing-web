@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { View } from "react-native";
 import { Provider, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -79,13 +79,18 @@ export default function ScreenPage({
       <PersistGate loading={null} persistor={persistor}>
         <NavigationProvider routeName={name}>
           <AuthStackSwitcher section={section} />
-          <View
-            dataSet={{ nocaproot: "true" } as any}
-            style={{ minHeight: "100vh" as any, backgroundColor: "#0D0D0D" }}
-          >
-            <ScreenRenderer component={component} />
-          </View>
-          {section === "app" ? <DashboardDrawer /> : null}
+          {/* ScreenRenderer + DashboardDrawer read the URL query (useSearchParams via
+              the navigation shim's useRoute), which the App Router requires to sit
+              under a Suspense boundary during prerender. */}
+          <Suspense fallback={null}>
+            <View
+              dataSet={{ nocaproot: "true" } as any}
+              style={{ minHeight: "100vh" as any, backgroundColor: "#0D0D0D" }}
+            >
+              <ScreenRenderer component={component} />
+            </View>
+            {section === "app" ? <DashboardDrawer /> : null}
+          </Suspense>
         </NavigationProvider>
       </PersistGate>
     </Provider>

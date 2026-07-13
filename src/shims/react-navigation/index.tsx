@@ -9,28 +9,41 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { ROUTE_NAME_TO_PATH } from "./routes";
 
-// In-memory param store keyed by route name (primary — supports non-serializable
-// params such as callbacks). sessionStorage mirror survives a page refresh for the
-// JSON-serializable subset.
+// In-memory param store keyed by a per-navigation TOKEN (primary — supports
+// non-serializable params such as callbacks). sessionStorage mirror survives a page
+// refresh for the JSON-serializable subset. The token travels in the URL query
+// (`?n=<token>`) so params are URL-driven and reactive: a screen resolves its params
+// from the token in its current URL, never from a stale route-name entry. A navigation
+// with no params carries no token, so it always resolves to the screen's default
+// (e.g. the logged-in user's own profile).
 const paramsStore = new Map<string, any>();
 
-function persistParams(name: string, params: any) {
-  paramsStore.set(name, params);
+// Monotonic, collision-resistant token (no crypto dependency). A fresh token per
+// navigation guarantees the URL changes even when navigating to the same path, so the
+// App Router actually re-renders and screens refetch.
+let tokenSeq = 0;
+function nextToken(): string {
+  tokenSeq += 1;
+  return `${Date.now().toString(36)}-${tokenSeq.toString(36)}`;
+}
+
+function persistParams(token: string, params: any) {
+  paramsStore.set(token, params);
   try {
-    sessionStorage.setItem(`nocap_nav_params:${name}`, JSON.stringify(params));
+    sessionStorage.setItem(`nocap_nav_params:${token}`, JSON.stringify(params));
   } catch {
     // non-serializable params stay in-memory only
   }
 }
 
-export function readParams(name: string): any {
-  if (paramsStore.has(name)) return paramsStore.get(name);
+export function readParams(token: string): any {
+  if (paramsStore.has(token)) return paramsStore.get(token);
   try {
-    const raw = sessionStorage.getItem(`nocap_nav_params:${name}`);
+    const raw = sessionStorage.getItem(`nocap_nav_params:${token}`);
     if (raw != null) return JSON.parse(raw);
   } catch {
     // ignore
@@ -77,9 +90,15 @@ export function NavigationProvider({
         console.warn(`[navigation shim] unknown route name: ${name}`);
         return;
       }
-      if (params !== undefined) persistParams(name, params);
-      else paramsStore.delete(name);
-      router.push(path);
+      if (params !== undefined) {
+        const token = nextToken();
+        persistParams(token, params);
+        router.push(`${path}?n=${encodeURIComponent(token)}`);
+      } else {
+        // No params ⇒ resolve to the screen's default (e.g. self profile). Bare URL,
+        // no token, so a previously-viewed target is never re-read.
+        router.push(path);
+      }
     },
     [router]
   );
@@ -91,8 +110,13 @@ export function NavigationProvider({
         console.warn(`[navigation shim] unknown route name: ${name}`);
         return;
       }
-      if (params !== undefined) persistParams(name, params);
-      router.replace(path);
+      if (params !== undefined) {
+        const token = nextToken();
+        persistParams(token, params);
+        router.replace(`${path}?n=${encodeURIComponent(token)}`);
+      } else {
+        router.replace(path);
+      }
     },
     [router]
   );
@@ -128,13 +152,19 @@ export function NavigationProvider({
   const openDrawer = useCallback(() => setDrawerOpen(true), []);
   const closeDrawer = useCallback(() => setDrawerOpen(false), []);
 
-  const setParams = useCallback(
-    (params: any) => {
-      const prev = readParams(routeName) ?? {};
-      persistParams(routeName, { ...prev, ...params });
-    },
-    [routeName]
-  );
+  const setParams = useCallback((params: any) => {
+    // Merge into the params entry for the token in the current URL (if any). Kept for
+    // API compatibility; no screen currently calls this.
+    let token: string | null = null;
+    try {
+      token = new URLSearchParams(window.location.search).get("n");
+    } catch {
+      // window/URLSearchParams unavailable
+    }
+    if (!token) return;
+    const prev = readParams(token) ?? {};
+    persistParams(token, { ...prev, ...params });
+  }, []);
 
   const navigation = useMemo<NavigationShim>(
     () => ({ navigate, replace, goBack, addListener, openDrawer, closeDrawer, setParams }),
@@ -164,7 +194,12 @@ export function useNavigation(): NavigationShim {
 export function useRoute(): { name: string; params: any } {
   const ctx = useContext(NavigationContext);
   const name = ctx?.routeName ?? "";
-  return { name, params: readParams(name) ?? {} };
+  // Params are resolved from the token in the current URL. `useSearchParams()` is
+  // reactive, so consumers re-render whenever the token changes — including a
+  // same-path navigation to a new target. No token ⇒ default (e.g. self profile).
+  const searchParams = useSearchParams();
+  const token = searchParams?.get("n") ?? null;
+  return { name, params: token ? readParams(token) ?? {} : {} };
 }
 
 export function useIsFocused(): boolean {
