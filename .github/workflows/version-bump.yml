@@ -19,7 +19,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.NOCAP_GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Node.js
@@ -31,7 +31,7 @@ jobs:
         id: tag
         uses: mathieudutour/github-tag-action@v6.2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.NOCAP_GITHUB_TOKEN }}
           default_bump: patch
           release_branches: main
 
@@ -49,7 +49,7 @@ jobs:
 
       - name: Create GitHub Release
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.NOCAP_GITHUB_TOKEN }}
         run: |
           gh release create "${{ steps.tag.outputs.new_tag }}" \
             --title "${{ steps.tag.outputs.new_tag }}" \
