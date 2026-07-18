@@ -1,0 +1,344 @@
+import { HabitComponent } from '@/core/models/section-b/habit';
+
+// ─── Shared score info constants ─────────────────────────────────────────────
+
+const SI_UNKNOWN = { code: 'UNKNOWN',   color: 'GRAY',   rgb: 'rgb(128,128,128)', label: 'UNKNOWN'   };
+const SI_BAD     = { code: 'BAD',       color: 'RED',    rgb: 'rgb(255,0,0)',     label: 'BAD'       };
+const SI_AVERAGE = { code: 'AVERAGE',   color: 'ORANGE', rgb: 'rgb(255,165,0)',   label: 'AVERAGE'   };
+const SI_GOOD    = { code: 'GOOD',      color: 'GREEN',  rgb: 'rgb(0,128,0)',     label: 'GOOD'      };
+const SI_EXCL    = { code: 'EXCELLENT', color: 'GOLD',   rgb: 'rgb(255,215,0)',   label: 'EXCELLENT' };
+
+// ─── Shared banner placeholder ────────────────────────────────────────────────
+
+const BANNER =
+  'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2F554B2774-4935-405B-AC95-10B6D2490902.jpg?alt=media&token=c48dd018-986f-4ff8-899e-9d40a83cc202';
+
+// ─── MOCK_CURRENT_HABIT — "American food" ─────────────────────────────────────
+
+export const MOCK_CURRENT_HABIT: HabitComponent = {
+  id: 'habit-american-food',
+  name: 'American food',
+  interest: 'Food',
+  iconColor: 'rgba(45,156,219,1)',
+  bannerImage: BANNER,
+  scoreComponent: { score: 0, cost: 82.72, scoreInfo: SI_UNKNOWN },
+  habitLinkData: [
+    {
+      id: 'link-hamburger',
+      name: 'Hamburger',
+      bannerImage: BANNER,
+      location: 'Georgia, USA',
+      scoreComponent: { score: 0, cost: 37.02, scoreInfo: SI_UNKNOWN },
+      habitLinkItemComponentsData: [
+        {
+          documentId: 'h-i1', id: 'h-i1', habitLinkId: 'link-hamburger', originId: 'h-i1',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Onion', description: 'Onion', companyName: '', location: '',
+          price: 3.54, cost: 3.54, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: 'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2FF9CEEC38-3F0A-440C-A779-0C18EFD3843B.jpg?alt=media&token=4d0cf23a-caa1-435b-ae74-72004e9f23ca',
+          scoreObject: { habitLinkId: 'link-hamburger', habitLinkItemId: 'h-i1', cost: 3.54, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'h-i2', id: 'h-i2', habitLinkId: 'link-hamburger', originId: 'h-i2',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Brioche Bun', description: 'Buns', companyName: '', location: '',
+          price: 7.68, cost: 7.68, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: 'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2F7EC9DB60-4DD9-48C7-AB53-DA43E278EF00.jpg?alt=media&token=94959c46-29a9-4a5e-84d1-03dbcac68918',
+          scoreObject: { habitLinkId: 'link-hamburger', habitLinkItemId: 'h-i2', cost: 7.68, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'h-i3', id: 'h-i3', habitLinkId: 'link-hamburger', originId: 'h-i3',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'American Cheese', description: 'Cheese', companyName: '', location: '',
+          price: 1.88, cost: 1.88, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: 'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2F882FAC3A-EB0B-44E2-B798-15E4AE7D4E43.png?alt=media&token=3bc211d5-1ca6-4afb-92d7-01aecfd4b3b9',
+          scoreObject: { habitLinkId: 'link-hamburger', habitLinkItemId: 'h-i3', cost: 1.88, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'h-i4', id: 'h-i4', habitLinkId: 'link-hamburger', originId: 'h-i4',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Ground Beef (bulk pack)', description: 'Ground beef', companyName: '', location: '',
+          price: 17.93, cost: 17.93, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: 'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2FC66F7581-2B9E-4A2C-AEC9-B435759E6A23.jpg?alt=media&token=73f94a74-8380-4e19-aabc-da236d5a41ca',
+          scoreObject: { habitLinkId: 'link-hamburger', habitLinkItemId: 'h-i4', cost: 17.93, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'h-i5', id: 'h-i5', habitLinkId: 'link-hamburger', originId: 'h-i5',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Lettuce', description: 'Lettuce', companyName: '', location: '',
+          price: 2.00, cost: 2.00, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: 'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2F9A3CBAE6-42FD-4589-92DE-9FB161EF3236.jpg?alt=media&token=34c201c9-adb6-46c7-9f5f-43dfe70d3f5b',
+          scoreObject: { habitLinkId: 'link-hamburger', habitLinkItemId: 'h-i5', cost: 2.00, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'h-i6', id: 'h-i6', habitLinkId: 'link-hamburger', originId: 'h-i6',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Pickle Jar', description: 'Pickle', companyName: '', location: '',
+          price: 5.99, cost: 5.99, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: 'https://firebasestorage.googleapis.com/v0/b/muke-shop-pipes.appspot.com/o/food-explorer%2F8AFCC53D-476F-4EE5-83B8-14EFC3152166.jpg?alt=media&token=1b71a147-b28e-4509-b3a4-9ad486b466dc',
+          scoreObject: { habitLinkId: 'link-hamburger', habitLinkItemId: 'h-i6', cost: 5.99, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+      ],
+    },
+    {
+      id: 'link-ribs',
+      name: 'Ribs',
+      bannerImage: BANNER,
+      location: 'Georgia, USA',
+      scoreComponent: { score: 0, cost: 45.70, scoreInfo: SI_UNKNOWN },
+      habitLinkItemComponentsData: [
+        {
+          documentId: 'r-i1', id: 'r-i1', habitLinkId: 'link-ribs', originId: 'r-i1',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Pork Spare Ribs', description: 'Pork ribs', companyName: '', location: '',
+          price: 22.49, cost: 22.49, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i1', cost: 22.49, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'r-i2', id: 'r-i2', habitLinkId: 'link-ribs', originId: 'r-i2',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'BBQ Sauce', description: 'Sauce', companyName: '', location: '',
+          price: 4.29, cost: 4.29, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i2', cost: 4.29, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'r-i3', id: 'r-i3', habitLinkId: 'link-ribs', originId: 'r-i3',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Coleslaw Mix', description: 'Side', companyName: '', location: '',
+          price: 3.49, cost: 3.49, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i3', cost: 3.49, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'r-i4', id: 'r-i4', habitLinkId: 'link-ribs', originId: 'r-i4',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Corn on the Cob', description: 'Side', companyName: '', location: '',
+          price: 3.99, cost: 3.99, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i4', cost: 3.99, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'r-i5', id: 'r-i5', habitLinkId: 'link-ribs', originId: 'r-i5',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Garlic Bread', description: 'Bread', companyName: '', location: '',
+          price: 3.79, cost: 3.79, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i5', cost: 3.79, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'r-i6', id: 'r-i6', habitLinkId: 'link-ribs', originId: 'r-i6',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Sweet Tea', description: 'Drink', companyName: '', location: '',
+          price: 3.65, cost: 3.65, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i6', cost: 3.65, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+        {
+          documentId: 'r-i7', id: 'r-i7', habitLinkId: 'link-ribs', originId: 'r-i7',
+          yearActivated: 2025, monthActivated: 1, dayActivated: 1,
+          isConstant: true, isActive: true, canUpdate: false,
+          name: 'Aluminum Foil', description: 'Supplies', companyName: '', location: '',
+          price: 4.00, cost: 4.00, quantity: 1, score: 0, scoreCode: 'UNKNOWN',
+          imageUrl: BANNER,
+          scoreObject: { habitLinkId: 'link-ribs', habitLinkItemId: 'r-i7', cost: 4.00, score: 0, scoreInfo: SI_UNKNOWN },
+          habitLinkItemLikes: [],
+        },
+      ],
+    },
+  ],
+};
+
+// ─── MOCK_SWAP_HABITS — 3 alternative HabitComponents ────────────────────────
+
+const SWAP_HAMBURGER_LINK = {
+  id: 'sl-hamburger',
+  name: 'Hamburger',
+  bannerImage: BANNER,
+  location: 'Atlanta, GA',
+  scoreComponent: { score: 85, cost: 14.99, scoreInfo: SI_GOOD },
+  habitLinkItemComponentsData: [
+    { documentId: 'sj1', id: 'sj1', habitLinkId: 'sl-hamburger', originId: 'sj1', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Quarter Pounder', description: 'Burger', companyName: "McDonald's", location: 'Atlanta, GA', price: 5.99, cost: 5.99, quantity: 1, score: 85, scoreCode: 'GOOD', scoreObject: { habitLinkId: 'sl-hamburger', habitLinkItemId: 'sj1', cost: 5.99, score: 85, scoreInfo: SI_GOOD }, habitLinkItemLikes: [] },
+    { documentId: 'sj2', id: 'sj2', habitLinkId: 'sl-hamburger', originId: 'sj2', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Large Fries',    description: 'Fries',  companyName: "McDonald's", location: 'Atlanta, GA', price: 3.79, cost: 3.79, quantity: 1, score: 85, scoreCode: 'GOOD', scoreObject: { habitLinkId: 'sl-hamburger', habitLinkItemId: 'sj2', cost: 3.79, score: 85, scoreInfo: SI_GOOD }, habitLinkItemLikes: [] },
+    { documentId: 'sj3', id: 'sj3', habitLinkId: 'sl-hamburger', originId: 'sj3', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Large Drink',    description: 'Drink',  companyName: "McDonald's", location: 'Atlanta, GA', price: 2.19, cost: 2.19, quantity: 1, score: 85, scoreCode: 'GOOD', scoreObject: { habitLinkId: 'sl-hamburger', habitLinkItemId: 'sj3', cost: 2.19, score: 85, scoreInfo: SI_GOOD }, habitLinkItemLikes: [] },
+    { documentId: 'sj4', id: 'sj4', habitLinkId: 'sl-hamburger', originId: 'sj4', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Apple Pie',      description: 'Dessert',companyName: "McDonald's", location: 'Atlanta, GA', price: 1.69, cost: 1.69, quantity: 1, score: 85, scoreCode: 'GOOD', scoreObject: { habitLinkId: 'sl-hamburger', habitLinkItemId: 'sj4', cost: 1.69, score: 85, scoreInfo: SI_GOOD }, habitLinkItemLikes: [] },
+    { documentId: 'sj5', id: 'sj5', habitLinkId: 'sl-hamburger', originId: 'sj5', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'McFlurry',       description: 'Dessert',companyName: "McDonald's", location: 'Atlanta, GA', price: 1.33, cost: 1.33, quantity: 1, score: 15,  scoreCode: 'BAD',  scoreObject: { habitLinkId: 'sl-hamburger', habitLinkItemId: 'sj5', cost: 1.33, score: 15,  scoreInfo: SI_BAD  }, habitLinkItemLikes: [] },
+  ],
+};
+
+const SWAP_RIBS_LINK = {
+  id: 'sl-ribs',
+  name: 'Ribs',
+  bannerImage: BANNER,
+  location: 'Atlanta, GA',
+  scoreComponent: { score: 90, cost: 28.00, scoreInfo: SI_EXCL },
+  habitLinkItemComponentsData: [
+    { documentId: 'sk1', id: 'sk1', habitLinkId: 'sl-ribs', originId: 'sk1', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'BBQ Ribs Plate',  description: 'Main',   companyName: 'City BBQ', location: 'Atlanta, GA', price: 14.99, cost: 14.99, quantity: 1, score: 90, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-ribs', habitLinkItemId: 'sk1', cost: 14.99, score: 90, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+    { documentId: 'sk2', id: 'sk2', habitLinkId: 'sl-ribs', originId: 'sk2', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Mac & Cheese',    description: 'Side',   companyName: 'City BBQ', location: 'Atlanta, GA', price: 5.49, cost: 5.49, quantity: 1, score: 90, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-ribs', habitLinkItemId: 'sk2', cost: 5.49, score: 90, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+    { documentId: 'sk3', id: 'sk3', habitLinkId: 'sl-ribs', originId: 'sk3', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Sweet Tea',       description: 'Drink',  companyName: 'City BBQ', location: 'Atlanta, GA', price: 3.29, cost: 3.29, quantity: 1, score: 90, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-ribs', habitLinkItemId: 'sk3', cost: 3.29, score: 90, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+    { documentId: 'sk4', id: 'sk4', habitLinkId: 'sl-ribs', originId: 'sk4', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Banana Pudding', description: 'Dessert',companyName: 'City BBQ', location: 'Atlanta, GA', price: 4.23, cost: 4.23, quantity: 1, score: 90, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-ribs', habitLinkItemId: 'sk4', cost: 4.23, score: 90, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+  ],
+};
+
+export const MOCK_SWAP_HABITS: HabitComponent[] = [
+  {
+    id: 'habit-swap-001',
+    name: 'Fast Food Combo',
+    interest: 'Food',
+    iconColor: 'rgba(230,57,70,1)',
+    bannerImage: BANNER,
+    scoreComponent: { score: 85, cost: 43.00, scoreInfo: SI_GOOD },
+    habitLinkData: [SWAP_HAMBURGER_LINK, SWAP_RIBS_LINK],
+    comparisonHabit: {
+      currentItem: MOCK_CURRENT_HABIT,
+      swapItem: { id: 'habit-swap-001', name: 'Fast Food Combo', interest: 'Food', scoreComponent: { score: 85, cost: 43.00, scoreInfo: SI_GOOD } },
+      score: 0.85, scoreCode: 'GOOD', save: 40,
+      comparisonHabitLinks: [
+        {
+          currentItem: { id: 'link-hamburger', name: 'Hamburger', scoreComponent: { score: 0, cost: 37.02, scoreInfo: SI_UNKNOWN } },
+          swapItem: SWAP_HAMBURGER_LINK,
+          score: 0.85, scoreCode: 'GOOD', save: 22,
+        },
+        {
+          currentItem: { id: 'link-ribs', name: 'Ribs', scoreComponent: { score: 0, cost: 45.70, scoreInfo: SI_UNKNOWN } },
+          swapItem: SWAP_RIBS_LINK,
+          score: 0.90, scoreCode: 'EXCELLENT', save: 18,
+        },
+      ],
+    },
+  },
+  {
+    id: 'habit-swap-002',
+    name: 'Healthy Southern',
+    interest: 'Food',
+    iconColor: 'rgba(34,197,94,1)',
+    bannerImage: BANNER,
+    scoreComponent: { score: 92, cost: 55.00, scoreInfo: SI_EXCL },
+    habitLinkData: [
+      {
+        id: 'sl-grilled-chicken',
+        name: 'Grilled Chicken',
+        bannerImage: BANNER,
+        location: 'Decatur, GA',
+        scoreComponent: { score: 92, cost: 27.00, scoreInfo: SI_EXCL },
+        habitLinkItemComponentsData: [
+          { documentId: 'sg1', id: 'sg1', habitLinkId: 'sl-grilled-chicken', originId: 'sg1', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Grilled Chicken',  description: 'Main',  companyName: 'Chick-fil-A', location: 'Decatur, GA', price: 9.49, cost: 9.49, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-grilled-chicken', habitLinkItemId: 'sg1', cost: 9.49, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'sg2', id: 'sg2', habitLinkId: 'sl-grilled-chicken', originId: 'sg2', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Side Salad',      description: 'Side',  companyName: 'Chick-fil-A', location: 'Decatur, GA', price: 5.09, cost: 5.09, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-grilled-chicken', habitLinkItemId: 'sg2', cost: 5.09, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'sg3', id: 'sg3', habitLinkId: 'sl-grilled-chicken', originId: 'sg3', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Lemonade',        description: 'Drink', companyName: 'Chick-fil-A', location: 'Decatur, GA', price: 3.09, cost: 3.09, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-grilled-chicken', habitLinkItemId: 'sg3', cost: 3.09, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'sg4', id: 'sg4', habitLinkId: 'sl-grilled-chicken', originId: 'sg4', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Fruit Cup',       description: 'Side',  companyName: 'Chick-fil-A', location: 'Decatur, GA', price: 3.29, cost: 3.29, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-grilled-chicken', habitLinkItemId: 'sg4', cost: 3.29, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'sg5', id: 'sg5', habitLinkId: 'sl-grilled-chicken', originId: 'sg5', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Greek Yogurt',    description: 'Side',  companyName: 'Chick-fil-A', location: 'Decatur, GA', price: 3.59, cost: 3.59, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-grilled-chicken', habitLinkItemId: 'sg5', cost: 3.59, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'sg6', id: 'sg6', habitLinkId: 'sl-grilled-chicken', originId: 'sg6', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Waffle Fries',    description: 'Side',  companyName: 'Chick-fil-A', location: 'Decatur, GA', price: 2.45, cost: 2.45, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-grilled-chicken', habitLinkItemId: 'sg6', cost: 2.45, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+        ],
+      },
+      {
+        id: 'sl-smoked-ribs',
+        name: 'Smoked Ribs',
+        bannerImage: BANNER,
+        location: 'Decatur, GA',
+        scoreComponent: { score: 92, cost: 28.00, scoreInfo: SI_EXCL },
+        habitLinkItemComponentsData: [
+          { documentId: 'ss1', id: 'ss1', habitLinkId: 'sl-smoked-ribs', originId: 'ss1', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Smoked Ribs',    description: 'Main',   companyName: 'Smoke & Barrel', location: 'Decatur, GA', price: 16.99, cost: 16.99, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-smoked-ribs', habitLinkItemId: 'ss1', cost: 16.99, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'ss2', id: 'ss2', habitLinkId: 'sl-smoked-ribs', originId: 'ss2', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Collard Greens', description: 'Side',   companyName: 'Smoke & Barrel', location: 'Decatur, GA', price: 5.49, cost: 5.49, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-smoked-ribs', habitLinkItemId: 'ss2', cost: 5.49, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'ss3', id: 'ss3', habitLinkId: 'sl-smoked-ribs', originId: 'ss3', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Sweet Tea',      description: 'Drink',  companyName: 'Smoke & Barrel', location: 'Decatur, GA', price: 2.99, cost: 2.99, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-smoked-ribs', habitLinkItemId: 'ss3', cost: 2.99, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+          { documentId: 'ss4', id: 'ss4', habitLinkId: 'sl-smoked-ribs', originId: 'ss4', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Cornbread',     description: 'Bread',  companyName: 'Smoke & Barrel', location: 'Decatur, GA', price: 2.53, cost: 2.53, quantity: 1, score: 92, scoreCode: 'EXCELLENT', scoreObject: { habitLinkId: 'sl-smoked-ribs', habitLinkItemId: 'ss4', cost: 2.53, score: 92, scoreInfo: SI_EXCL }, habitLinkItemLikes: [] },
+        ],
+      },
+    ],
+    comparisonHabit: {
+      currentItem: MOCK_CURRENT_HABIT,
+      swapItem: { id: 'habit-swap-002', name: 'Healthy Southern', interest: 'Food', scoreComponent: { score: 92, cost: 55.00, scoreInfo: SI_EXCL } },
+      score: 0.92, scoreCode: 'EXCELLENT', save: 28,
+      comparisonHabitLinks: [
+        {
+          currentItem: { id: 'link-hamburger', name: 'Hamburger', scoreComponent: { score: 0, cost: 37.02, scoreInfo: SI_UNKNOWN } },
+          swapItem: { id: 'sl-grilled-chicken', name: 'Grilled Chicken', scoreComponent: { score: 92, cost: 27.00, scoreInfo: SI_EXCL } },
+          score: 0.92, scoreCode: 'EXCELLENT', save: 10,
+        },
+        {
+          currentItem: { id: 'link-ribs', name: 'Ribs', scoreComponent: { score: 0, cost: 45.70, scoreInfo: SI_UNKNOWN } },
+          swapItem: { id: 'sl-smoked-ribs', name: 'Smoked Ribs', scoreComponent: { score: 92, cost: 28.00, scoreInfo: SI_EXCL } },
+          score: 0.92, scoreCode: 'EXCELLENT', save: 18,
+        },
+      ],
+    },
+  },
+  {
+    id: 'habit-swap-003',
+    name: 'Budget Bites',
+    interest: 'Food',
+    iconColor: 'rgba(218,242,74,1)',
+    bannerImage: BANNER,
+    scoreComponent: { score: 55, cost: 95.00, scoreInfo: SI_AVERAGE },
+    habitLinkData: [
+      {
+        id: 'sl-bk',
+        name: 'Hamburger',
+        bannerImage: BANNER,
+        location: 'Morrow, GA',
+        scoreComponent: { score: 45, cost: 44.00, scoreInfo: SI_BAD },
+        habitLinkItemComponentsData: [
+          { documentId: 'bl1', id: 'bl1', habitLinkId: 'sl-bk', originId: 'bl1', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Whopper',      description: 'Burger', companyName: 'Burger King', location: 'Morrow, GA', price: 6.99, cost: 6.99, quantity: 1, score: 45, scoreCode: 'BAD', scoreObject: { habitLinkId: 'sl-bk', habitLinkItemId: 'bl1', cost: 6.99, score: 45, scoreInfo: SI_BAD }, habitLinkItemLikes: [] },
+          { documentId: 'bl2', id: 'bl2', habitLinkId: 'sl-bk', originId: 'bl2', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Onion Rings',  description: 'Side',   companyName: 'Burger King', location: 'Morrow, GA', price: 3.99, cost: 3.99, quantity: 1, score: 45, scoreCode: 'BAD', scoreObject: { habitLinkId: 'sl-bk', habitLinkItemId: 'bl2', cost: 3.99, score: 45, scoreInfo: SI_BAD }, habitLinkItemLikes: [] },
+          { documentId: 'bl3', id: 'bl3', habitLinkId: 'sl-bk', originId: 'bl3', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Large Drink',  description: 'Drink',  companyName: 'Burger King', location: 'Morrow, GA', price: 2.19, cost: 2.19, quantity: 1, score: 45, scoreCode: 'BAD', scoreObject: { habitLinkId: 'sl-bk', habitLinkItemId: 'bl3', cost: 2.19, score: 45, scoreInfo: SI_BAD }, habitLinkItemLikes: [] },
+        ],
+      },
+      {
+        id: 'sl-cookout-ribs',
+        name: 'Ribs',
+        bannerImage: BANNER,
+        location: 'Morrow, GA',
+        scoreComponent: { score: 62, cost: 51.00, scoreInfo: SI_AVERAGE },
+        habitLinkItemComponentsData: [
+          { documentId: 'cr1', id: 'cr1', habitLinkId: 'sl-cookout-ribs', originId: 'cr1', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Ribs Basket',   description: 'Main',   companyName: 'Cook Out', location: 'Morrow, GA', price: 11.49, cost: 11.49, quantity: 1, score: 62, scoreCode: 'AVERAGE', scoreObject: { habitLinkId: 'sl-cookout-ribs', habitLinkItemId: 'cr1', cost: 11.49, score: 62, scoreInfo: SI_AVERAGE }, habitLinkItemLikes: [] },
+          { documentId: 'cr2', id: 'cr2', habitLinkId: 'sl-cookout-ribs', originId: 'cr2', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Hush Puppies',  description: 'Side',   companyName: 'Cook Out', location: 'Morrow, GA', price: 2.49, cost: 2.49, quantity: 1, score: 62, scoreCode: 'AVERAGE', scoreObject: { habitLinkId: 'sl-cookout-ribs', habitLinkItemId: 'cr2', cost: 2.49, score: 62, scoreInfo: SI_AVERAGE }, habitLinkItemLikes: [] },
+          { documentId: 'cr3', id: 'cr3', habitLinkId: 'sl-cookout-ribs', originId: 'cr3', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Milkshake',    description: 'Dessert',companyName: 'Cook Out', location: 'Morrow, GA', price: 4.99, cost: 4.99, quantity: 1, score: 62, scoreCode: 'AVERAGE', scoreObject: { habitLinkId: 'sl-cookout-ribs', habitLinkItemId: 'cr3', cost: 4.99, score: 62, scoreInfo: SI_AVERAGE }, habitLinkItemLikes: [] },
+          { documentId: 'cr4', id: 'cr4', habitLinkId: 'sl-cookout-ribs', originId: 'cr4', yearActivated: 2025, monthActivated: 1, dayActivated: 1, isConstant: true, isActive: true, canUpdate: false, name: 'Corn Dog',      description: 'Side',   companyName: 'Cook Out', location: 'Morrow, GA', price: 1.49, cost: 1.49, quantity: 1, score: 62, scoreCode: 'AVERAGE', scoreObject: { habitLinkId: 'sl-cookout-ribs', habitLinkItemId: 'cr4', cost: 1.49, score: 62, scoreInfo: SI_AVERAGE }, habitLinkItemLikes: [] },
+        ],
+      },
+    ],
+    comparisonHabit: {
+      currentItem: MOCK_CURRENT_HABIT,
+      swapItem: { id: 'habit-swap-003', name: 'Budget Bites', interest: 'Food', scoreComponent: { score: 55, cost: 95.00, scoreInfo: SI_AVERAGE } },
+      score: 0.55, scoreCode: 'AVERAGE', save: -12,
+      comparisonHabitLinks: [
+        {
+          currentItem: { id: 'link-hamburger', name: 'Hamburger', scoreComponent: { score: 0, cost: 37.02, scoreInfo: SI_UNKNOWN } },
+          swapItem: { id: 'sl-bk', name: 'Hamburger (BK)', scoreComponent: { score: 45, cost: 44.00, scoreInfo: SI_BAD } },
+          score: 0.45, scoreCode: 'BAD', save: -7,
+        },
+        {
+          currentItem: { id: 'link-ribs', name: 'Ribs', scoreComponent: { score: 0, cost: 45.70, scoreInfo: SI_UNKNOWN } },
+          swapItem: { id: 'sl-cookout-ribs', name: 'Ribs (Cook Out)', scoreComponent: { score: 62, cost: 51.00, scoreInfo: SI_AVERAGE } },
+          score: 0.62, scoreCode: 'AVERAGE', save: -5,
+        },
+      ],
+    },
+  },
+];
+
+export default {};

@@ -1,0 +1,11 @@
+/* UI Settings (approved web addition): Light/Dark toggle in SettingScreen.
+   Light mode inverts the ported dark UI; images/videos are counter-inverted
+   so photos stay natural. Core mobile color constants stay untouched. */
+[data-nocap-theme="light"] [data-nocaproot] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+[data-nocap-theme="light"] [data-nocaproot] img,
+[data-nocap-theme="light"] [data-nocaproot] video {
+  filter: invert(1) hue-rotate(180deg);
+}

@@ -1,0 +1,1230 @@
+{
+  "current": {
+    "webCheckoutUrl": null,
+    "identifier": "NOCAP-GO",
+    "threeMonth": null,
+    "twoMonth": null,
+    "annual": null,
+    "serverDescription": "NoCap Go",
+    "lifetime": null,
+    "weekly": null,
+    "metadata": {},
+    "monthly": {
+      "webCheckoutUrl": null,
+      "identifier": "$rc_monthly",
+      "offeringIdentifier": "NOCAP-GO",
+      "product": {
+        "presentedOfferingIdentifier": "NOCAP-GO",
+        "subscriptionOptions": [
+          {
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-GO"
+            },
+            "introPhase": null,
+            "freePhase": null,
+            "isPrepaid": false,
+            "presentedOfferingIdentifier": "NOCAP-GO",
+            "fullPricePhase": {
+              "offerPaymentMode": null,
+              "billingCycleCount": 0,
+              "price": {
+                "currencyCode": "USD",
+                "amountMicros": 9990000,
+                "formatted": "$9.99"
+              },
+              "recurrenceMode": 1,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              }
+            },
+            "isBasePlan": true,
+            "billingPeriod": {
+              "iso8601": "P1M",
+              "value": 1,
+              "unit": "MONTH"
+            },
+            "installmentsInfo": null,
+            "productId": "go",
+            "tags": [],
+            "pricingPhases": [
+              {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 9990000,
+                  "formatted": "$9.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              }
+            ],
+            "storeProductId": "go:free",
+            "id": "free"
+          }
+        ],
+        "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+        "productCategory": "SUBSCRIPTION",
+        "subscriptionPeriod": "P1M",
+        "pricePerWeekString": "$2.29",
+        "priceString": "$9.99",
+        "pricePerMonth": 9.99,
+        "currencyCode": "USD",
+        "introPrice": null,
+        "pricePerWeek": 2.299068,
+        "pricePerYear": 119.88,
+        "price": 9.99,
+        "pricePerMonthString": "$9.99",
+        "title": "NoCap Go (com.mukapps.nocap (unreviewed))",
+        "discounts": null,
+        "presentedOfferingContext": {
+          "placementIdentifier": null,
+          "targetingContext": null,
+          "offeringIdentifier": "NOCAP-GO"
+        },
+        "defaultOption": {
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-GO"
+          },
+          "introPhase": null,
+          "freePhase": null,
+          "isPrepaid": false,
+          "presentedOfferingIdentifier": "NOCAP-GO",
+          "fullPricePhase": {
+            "offerPaymentMode": null,
+            "billingCycleCount": 0,
+            "price": {
+              "currencyCode": "USD",
+              "amountMicros": 9990000,
+              "formatted": "$9.99"
+            },
+            "recurrenceMode": 1,
+            "billingPeriod": {
+              "iso8601": "P1M",
+              "value": 1,
+              "unit": "MONTH"
+            }
+          },
+          "isBasePlan": true,
+          "billingPeriod": {
+            "iso8601": "P1M",
+            "value": 1,
+            "unit": "MONTH"
+          },
+          "installmentsInfo": null,
+          "productId": "go",
+          "tags": [],
+          "pricingPhases": [
+            {
+              "offerPaymentMode": null,
+              "billingCycleCount": 0,
+              "price": {
+                "currencyCode": "USD",
+                "amountMicros": 9990000,
+                "formatted": "$9.99"
+              },
+              "recurrenceMode": 1,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              }
+            }
+          ],
+          "storeProductId": "go:free",
+          "id": "free"
+        },
+        "pricePerYearString": "$119.88",
+        "description": "Step up your habit game with 1,000 AI credits per month. Score your habits, \nswap under performing ones, generate new Habit Stacks with AI, and chat \nwith your personal AI habit assistant.",
+        "identifier": "go:free"
+      },
+      "packageType": "MONTHLY",
+      "presentedOfferingContext": {
+        "placementIdentifier": null,
+        "targetingContext": null,
+        "offeringIdentifier": "NOCAP-GO"
+      }
+    },
+    "sixMonth": null,
+    "availablePackages": [
+      {
+        "webCheckoutUrl": null,
+        "identifier": "$rc_monthly",
+        "offeringIdentifier": "NOCAP-GO",
+        "product": {
+          "presentedOfferingIdentifier": "NOCAP-GO",
+          "subscriptionOptions": [
+            {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-GO"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-GO",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 9990000,
+                  "formatted": "$9.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "go",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 9990000,
+                    "formatted": "$9.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "go:free",
+              "id": "free"
+            }
+          ],
+          "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+          "productCategory": "SUBSCRIPTION",
+          "subscriptionPeriod": "P1M",
+          "pricePerWeekString": "$2.29",
+          "priceString": "$9.99",
+          "pricePerMonth": 9.99,
+          "currencyCode": "USD",
+          "introPrice": null,
+          "pricePerWeek": 2.299068,
+          "pricePerYear": 119.88,
+          "price": 9.99,
+          "pricePerMonthString": "$9.99",
+          "title": "NoCap Go (com.mukapps.nocap (unreviewed))",
+          "discounts": null,
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-GO"
+          },
+          "defaultOption": {
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-GO"
+            },
+
+            "introPhase": null,
+            "freePhase": null,
+            "isPrepaid": false,
+            "presentedOfferingIdentifier": "NOCAP-GO",
+            "fullPricePhase": {
+              "offerPaymentMode": null,
+              "billingCycleCount": 0,
+              "price": {
+                "currencyCode": "USD",
+                "amountMicros": 9990000,
+                "formatted": "$9.99"
+              },
+              "recurrenceMode": 1,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              }
+            },
+            "isBasePlan": true,
+            "billingPeriod": {
+              "iso8601": "P1M",
+              "value": 1,
+              "unit": "MONTH"
+            },
+            "installmentsInfo": null,
+            "productId": "go",
+            "tags": [],
+            "pricingPhases": [
+              {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 9990000,
+                  "formatted": "$9.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              }
+            ],
+            "storeProductId": "go:free",
+            "id": "free"
+          },
+          "pricePerYearString": "$119.88",
+          "description": "Step up your habit game with 1,000 AI credits per month. Score your habits, \nswap under performing ones, generate new Habit Stacks with AI, and chat \nwith your personal AI habit assistant.",
+          "identifier": "go:free"
+        },
+        "packageType": "MONTHLY",
+        "presentedOfferingContext": {
+          "placementIdentifier": null,
+          "targetingContext": null,
+          "offeringIdentifier": "NOCAP-GO"
+        }
+      }
+    ]
+  },
+  "all": {
+    "NOCAP-PRO": {
+      "webCheckoutUrl": null,
+      "identifier": "NOCAP-PRO",
+      "threeMonth": null,
+      "twoMonth": null,
+      "annual": null,
+      "serverDescription": "NoCap Pro",
+      "lifetime": null,
+      "weekly": null,
+      "metadata": {},
+      "monthly": {
+        "webCheckoutUrl": null,
+        "identifier": "$rc_monthly",
+        "offeringIdentifier": "NOCAP-PRO",
+        "product": {
+          "presentedOfferingIdentifier": "NOCAP-PRO",
+          "subscriptionOptions": [
+            {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-PRO"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-PRO",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 99990000,
+                  "formatted": "$99.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "pro",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 99990000,
+                    "formatted": "$99.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "pro:free",
+              "id": "free"
+            }
+          ],
+          "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+          "productCategory": "SUBSCRIPTION",
+          "subscriptionPeriod": "P1M",
+          "pricePerWeekString": "$23.01",
+          "priceString": "$99.99",
+          "pricePerMonth": 99.99,
+          "currencyCode": "USD",
+          "introPrice": null,
+          "pricePerWeek": 23.011397,
+          "pricePerYear": 1199.88,
+          "price": 99.99,
+          "pricePerMonthString": "$99.99",
+          "title": "NoCap Pro (com.mukapps.nocap (unreviewed))",
+          "discounts": null,
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-PRO"
+          },
+          "defaultOption": {
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-PRO"
+            },
+            "introPhase": null,
+            "freePhase": null,
+            "isPrepaid": false,
+            "presentedOfferingIdentifier": "NOCAP-PRO",
+            "fullPricePhase": {
+              "offerPaymentMode": null,
+              "billingCycleCount": 0,
+              "price": {
+                "currencyCode": "USD",
+                "amountMicros": 99990000,
+                "formatted": "$99.99"
+              },
+              "recurrenceMode": 1,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              }
+            },
+            "isBasePlan": true,
+            "billingPeriod": {
+              "iso8601": "P1M",
+              "value": 1,
+              "unit": "MONTH"
+            },
+            "installmentsInfo": null,
+            "productId": "pro",
+            "tags": [],
+            "pricingPhases": [
+              {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 99990000,
+                  "formatted": "$99.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              }
+            ],
+            "storeProductId": "pro:free",
+            "id": "free"
+          },
+          "pricePerYearString": "$1,199.88",
+          "description": "For serious habit builders. 10,000 AI credits per month plus live AI \nHabitStack portfolio tracking, giving you a real-time view of your progress \nacross every stack.",
+          "identifier": "pro:free"
+        },
+        "packageType": "MONTHLY",
+        "presentedOfferingContext": {
+          "placementIdentifier": null,
+          "targetingContext": null,
+          "offeringIdentifier": "NOCAP-PRO"
+        }
+      },
+      "sixMonth": null,
+      "availablePackages": [
+        {
+          "webCheckoutUrl": null,
+          "identifier": "$rc_monthly",
+          "offeringIdentifier": "NOCAP-PRO",
+          "product": {
+            "presentedOfferingIdentifier": "NOCAP-PRO",
+            "subscriptionOptions": [
+              {
+                "presentedOfferingContext": {
+                  "placementIdentifier": null,
+                  "targetingContext": null,
+                  "offeringIdentifier": "NOCAP-PRO"
+                },
+                "introPhase": null,
+                "freePhase": null,
+                "isPrepaid": false,
+                "presentedOfferingIdentifier": "NOCAP-PRO",
+                "fullPricePhase": {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 99990000,
+                    "formatted": "$99.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                },
+                "isBasePlan": true,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                },
+                "installmentsInfo": null,
+                "productId": "pro",
+                "tags": [],
+                "pricingPhases": [
+                  {
+                    "offerPaymentMode": null,
+                    "billingCycleCount": 0,
+                    "price": {
+                      "currencyCode": "USD",
+                      "amountMicros": 99990000,
+                      "formatted": "$99.99"
+                    },
+                    "recurrenceMode": 1,
+                    "billingPeriod": {
+                      "iso8601": "P1M",
+                      "value": 1,
+                      "unit": "MONTH"
+                    }
+                  }
+                ],
+                "storeProductId": "pro:free",
+                "id": "free"
+              }
+            ],
+            "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+            "productCategory": "SUBSCRIPTION",
+            "subscriptionPeriod": "P1M",
+            "pricePerWeekString": "$23.01",
+            "priceString": "$99.99",
+            "pricePerMonth": 99.99,
+            "currencyCode": "USD",
+            "introPrice": null,
+            "pricePerWeek": 23.011397,
+            "pricePerYear": 1199.88,
+            "price": 99.99,
+            "pricePerMonthString": "$99.99",
+            "title": "NoCap Pro (com.mukapps.nocap (unreviewed))",
+            "discounts": null,
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-PRO"
+            },
+            "defaultOption": {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-PRO"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-PRO",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 99990000,
+                  "formatted": "$99.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "pro",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 99990000,
+                    "formatted": "$99.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "pro:free",
+              "id": "free"
+            },
+            "pricePerYearString": "$1,199.88",
+            "description": "For serious habit builders. 10,000 AI credits per month plus live AI \nHabitStack portfolio tracking, giving you a real-time view of your progress \nacross every stack.",
+            "identifier": "pro:free"
+          },
+          "packageType": "MONTHLY",
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-PRO"
+          }
+        }
+      ]
+    },
+    "NOCAP-PLUS": {
+      "webCheckoutUrl": null,
+      "identifier": "NOCAP-PLUS",
+      "threeMonth": null,
+      "twoMonth": null,
+      "annual": null,
+      "serverDescription": "NoCap Plus",
+      "lifetime": null,
+      "weekly": null,
+      "metadata": {},
+      "monthly": {
+        "webCheckoutUrl": null,
+        "identifier": "$rc_monthly",
+        "offeringIdentifier": "NOCAP-PLUS",
+        "product": {
+          "presentedOfferingIdentifier": "NOCAP-PLUS",
+          "subscriptionOptions": [
+            {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-PLUS"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-PLUS",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 19990000,
+                  "formatted": "$19.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "plus",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 19990000,
+                    "formatted": "$19.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "plus:free",
+              "id": "free"
+            }
+          ],
+          "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+          "productCategory": "SUBSCRIPTION",
+          "subscriptionPeriod": "P1M",
+          "pricePerWeekString": "$4.60",
+          "priceString": "$19.99",
+          "pricePerMonth": 19.99,
+          "currencyCode": "USD",
+          "introPrice": null,
+          "pricePerWeek": 4.600438,
+          "pricePerYear": 239.88,
+          "price": 19.99,
+          "pricePerMonthString": "$19.98",
+          "title": "NoCap Plus (com.mukapps.nocap (unreviewed))",
+          "discounts": null,
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-PLUS"
+          },
+          "defaultOption": {
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-PLUS"
+            },
+            "introPhase": null,
+            "freePhase": null,
+            "isPrepaid": false,
+            "presentedOfferingIdentifier": "NOCAP-PLUS",
+            "fullPricePhase": {
+              "offerPaymentMode": null,
+              "billingCycleCount": 0,
+              "price": {
+                "currencyCode": "USD",
+                "amountMicros": 19990000,
+                "formatted": "$19.99"
+              },
+              "recurrenceMode": 1,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              }
+            },
+            "isBasePlan": true,
+            "billingPeriod": {
+              "iso8601": "P1M",
+              "value": 1,
+              "unit": "MONTH"
+            },
+            "installmentsInfo": null,
+            "productId": "plus",
+            "tags": [],
+            "pricingPhases": [
+              {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 19990000,
+                  "formatted": "$19.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              }
+            ],
+            "storeProductId": "plus:free",
+            "id": "free"
+          },
+          "pricePerYearString": "$239.88",
+          "description": "The most popular choice. Double the AI credits of Go — 2,000 per month — \nfor power users who want to build, score, and refine habits faster with \nfull AI access.",
+          "identifier": "plus:free"
+        },
+        "packageType": "MONTHLY",
+        "presentedOfferingContext": {
+          "placementIdentifier": null,
+          "targetingContext": null,
+          "offeringIdentifier": "NOCAP-PLUS"
+        }
+      },
+      "sixMonth": null,
+      "availablePackages": [
+        {
+          "webCheckoutUrl": null,
+          "identifier": "$rc_monthly",
+          "offeringIdentifier": "NOCAP-PLUS",
+          "product": {
+            "presentedOfferingIdentifier": "NOCAP-PLUS",
+            "subscriptionOptions": [
+              {
+                "presentedOfferingContext": {
+                  "placementIdentifier": null,
+                  "targetingContext": null,
+                  "offeringIdentifier": "NOCAP-PLUS"
+                },
+                "introPhase": null,
+                "freePhase": null,
+                "isPrepaid": false,
+                "presentedOfferingIdentifier": "NOCAP-PLUS",
+                "fullPricePhase": {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 19990000,
+                    "formatted": "$19.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                },
+                "isBasePlan": true,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                },
+                "installmentsInfo": null,
+                "productId": "plus",
+                "tags": [],
+                "pricingPhases": [
+                  {
+                    "offerPaymentMode": null,
+                    "billingCycleCount": 0,
+                    "price": {
+                      "currencyCode": "USD",
+                      "amountMicros": 19990000,
+                      "formatted": "$19.99"
+                    },
+                    "recurrenceMode": 1,
+                    "billingPeriod": {
+                      "iso8601": "P1M",
+                      "value": 1,
+                      "unit": "MONTH"
+                    }
+                  }
+                ],
+                "storeProductId": "plus:free",
+                "id": "free"
+              }
+            ],
+            "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+            "productCategory": "SUBSCRIPTION",
+            "subscriptionPeriod": "P1M",
+            "pricePerWeekString": "$4.60",
+            "priceString": "$19.99",
+            "pricePerMonth": 19.99,
+            "currencyCode": "USD",
+            "introPrice": null,
+            "pricePerWeek": 4.600438,
+            "pricePerYear": 239.88,
+            "price": 19.99,
+            "pricePerMonthString": "$19.98",
+            "title": "NoCap Plus (com.mukapps.nocap (unreviewed))",
+            "discounts": null,
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-PLUS"
+            },
+            "defaultOption": {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-PLUS"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-PLUS",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 19990000,
+                  "formatted": "$19.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "plus",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 19990000,
+                    "formatted": "$19.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "plus:free",
+              "id": "free"
+            },
+            "pricePerYearString": "$239.88",
+            "description": "The most popular choice. Double the AI credits of Go — 2,000 per month — \nfor power users who want to build, score, and refine habits faster with \nfull AI access.",
+            "identifier": "plus:free"
+          },
+          "packageType": "MONTHLY",
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-PLUS"
+          }
+        }
+      ]
+    },
+    "NOCAP-GO": {
+      "webCheckoutUrl": null,
+      "identifier": "NOCAP-GO",
+      "threeMonth": null,
+      "twoMonth": null,
+      "annual": null,
+      "serverDescription": "NoCap Go",
+      "lifetime": null,
+      "weekly": null,
+      "metadata": {},
+      "monthly": {
+        "webCheckoutUrl": null,
+        "identifier": "$rc_monthly",
+        "offeringIdentifier": "NOCAP-GO",
+        "product": {
+          "presentedOfferingIdentifier": "NOCAP-GO",
+          "subscriptionOptions": [
+            {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-GO"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-GO",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 9990000,
+                  "formatted": "$9.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "go",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+
+                    "currencyCode": "USD",
+                    "amountMicros": 9990000,
+                    "formatted": "$9.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "go:free",
+              "id": "free"
+            }
+          ],
+          "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+          "productCategory": "SUBSCRIPTION",
+          "subscriptionPeriod": "P1M",
+          "pricePerWeekString": "$2.29",
+          "priceString": "$9.99",
+          "pricePerMonth": 9.99,
+          "currencyCode": "USD",
+          "introPrice": null,
+          "pricePerWeek": 2.299068,
+          "pricePerYear": 119.88,
+          "price": 9.99,
+          "pricePerMonthString": "$9.99",
+          "title": "NoCap Go (com.mukapps.nocap (unreviewed))",
+          "discounts": null,
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-GO"
+          },
+          "defaultOption": {
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-GO"
+            },
+            "introPhase": null,
+            "freePhase": null,
+            "isPrepaid": false,
+            "presentedOfferingIdentifier": "NOCAP-GO",
+            "fullPricePhase": {
+              "offerPaymentMode": null,
+              "billingCycleCount": 0,
+              "price": {
+                "currencyCode": "USD",
+                "amountMicros": 9990000,
+                "formatted": "$9.99"
+              },
+              "recurrenceMode": 1,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              }
+            },
+            "isBasePlan": true,
+            "billingPeriod": {
+              "iso8601": "P1M",
+              "value": 1,
+              "unit": "MONTH"
+            },
+            "installmentsInfo": null,
+            "productId": "go",
+            "tags": [],
+            "pricingPhases": [
+              {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 9990000,
+                  "formatted": "$9.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              }
+            ],
+            "storeProductId": "go:free",
+            "id": "free"
+          },
+          "pricePerYearString": "$119.88",
+          "description": "Step up your habit game with 1,000 AI credits per month. Score your habits, \nswap under performing ones, generate new Habit Stacks with AI, and chat \nwith your personal AI habit assistant.",
+          "identifier": "go:free"
+        },
+        "packageType": "MONTHLY",
+        "presentedOfferingContext": {
+          "placementIdentifier": null,
+          "targetingContext": null,
+          "offeringIdentifier": "NOCAP-GO"
+        }
+      },
+      "sixMonth": null,
+      "availablePackages": [
+        {
+          "webCheckoutUrl": null,
+          "identifier": "$rc_monthly",
+          "offeringIdentifier": "NOCAP-GO",
+          "product": {
+            "presentedOfferingIdentifier": "NOCAP-GO",
+            "subscriptionOptions": [
+              {
+                "presentedOfferingContext": {
+                  "placementIdentifier": null,
+                  "targetingContext": null,
+                  "offeringIdentifier": "NOCAP-GO"
+                },
+                "introPhase": null,
+                "freePhase": null,
+                "isPrepaid": false,
+                "presentedOfferingIdentifier": "NOCAP-GO",
+                "fullPricePhase": {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 9990000,
+                    "formatted": "$9.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                },
+                "isBasePlan": true,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                },
+                "installmentsInfo": null,
+                "productId": "go",
+                "tags": [],
+                "pricingPhases": [
+                  {
+                    "offerPaymentMode": null,
+                    "billingCycleCount": 0,
+                    "price": {
+                      "currencyCode": "USD",
+                      "amountMicros": 9990000,
+                      "formatted": "$9.99"
+                    },
+                    "recurrenceMode": 1,
+                    "billingPeriod": {
+                      "iso8601": "P1M",
+                      "value": 1,
+                      "unit": "MONTH"
+                    }
+                  }
+                ],
+                "storeProductId": "go:free",
+                "id": "free"
+              }
+            ],
+            "productType": "AUTO_RENEWABLE_SUBSCRIPTION",
+            "productCategory": "SUBSCRIPTION",
+            "subscriptionPeriod": "P1M",
+            "pricePerWeekString": "$2.29",
+            "priceString": "$9.99",
+            "pricePerMonth": 9.99,
+            "currencyCode": "USD",
+            "introPrice": null,
+            "pricePerWeek": 2.299068,
+            "pricePerYear": 119.88,
+            "price": 9.99,
+            "pricePerMonthString": "$9.99",
+            "title": "NoCap Go (com.mukapps.nocap (unreviewed))",
+            "discounts": null,
+            "presentedOfferingContext": {
+              "placementIdentifier": null,
+              "targetingContext": null,
+              "offeringIdentifier": "NOCAP-GO"
+            },
+            "defaultOption": {
+              "presentedOfferingContext": {
+                "placementIdentifier": null,
+                "targetingContext": null,
+                "offeringIdentifier": "NOCAP-GO"
+              },
+              "introPhase": null,
+              "freePhase": null,
+              "isPrepaid": false,
+              "presentedOfferingIdentifier": "NOCAP-GO",
+              "fullPricePhase": {
+                "offerPaymentMode": null,
+                "billingCycleCount": 0,
+                "price": {
+                  "currencyCode": "USD",
+                  "amountMicros": 9990000,
+                  "formatted": "$9.99"
+                },
+                "recurrenceMode": 1,
+                "billingPeriod": {
+                  "iso8601": "P1M",
+                  "value": 1,
+                  "unit": "MONTH"
+                }
+              },
+              "isBasePlan": true,
+              "billingPeriod": {
+                "iso8601": "P1M",
+                "value": 1,
+                "unit": "MONTH"
+              },
+              "installmentsInfo": null,
+              "productId": "go",
+              "tags": [],
+              "pricingPhases": [
+                {
+                  "offerPaymentMode": null,
+                  "billingCycleCount": 0,
+                  "price": {
+                    "currencyCode": "USD",
+                    "amountMicros": 9990000,
+                    "formatted": "$9.99"
+                  },
+                  "recurrenceMode": 1,
+                  "billingPeriod": {
+                    "iso8601": "P1M",
+                    "value": 1,
+                    "unit": "MONTH"
+                  }
+                }
+              ],
+              "storeProductId": "go:free",
+              "id": "free"
+            },
+            "pricePerYearString": "$119.88",
+            "description": "Step up your habit game with 1,000 AI credits per month. Score your habits, \nswap under performing ones, generate new Habit Stacks with AI, and chat \nwith your personal AI habit assistant.",
+            "identifier": "go:free"
+          },
+          "packageType": "MONTHLY",
+          "presentedOfferingContext": {
+            "placementIdentifier": null,
+            "targetingContext": null,
+            "offeringIdentifier": "NOCAP-GO"
+          }
+        }
+      ]
+    }
+  }
+}

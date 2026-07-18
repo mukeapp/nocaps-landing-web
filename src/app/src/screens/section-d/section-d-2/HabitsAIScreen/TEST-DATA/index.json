@@ -1,0 +1,249 @@
+{
+  "summary": "AI generated 3 personalized habits based on your HabitStack goals and spending patterns.",
+  "generatedList": [
+    {
+      "documentId": "gen001",
+      "id": "gen001",
+      "name": "Morning Fitness Routine",
+      "description": "A structured morning workout habit combining cardio and strength training to boost energy and metabolism.",
+      "focus": "Health",
+      "unit": "Sessions",
+      "priority": "High",
+      "scoreComponent": {
+        "documentId": "score001",
+        "id": "score001",
+        "score": 0.85,
+        "cost": 42.0
+      },
+      "habitLinkData": [
+        {
+          "documentId": "link001",
+          "id": "link001",
+          "name": "Planet Fitness",
+          "location": "Downtown",
+          "bannerImage": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Planet_Fitness_Logo.svg/1200px-Planet_Fitness_Logo.svg.png",
+          "scoreComponent": {
+            "score": 0.87,
+            "cost": 22.0
+          },
+          "habitLinkItemComponentsData": [
+            {
+              "documentId": "item001",
+              "id": "item001",
+              "name": "Monthly Membership",
+              "cost": 10.0,
+              "quantity": 1,
+              "companyName": "Planet Fitness"
+            },
+            {
+              "documentId": "item002",
+              "id": "item002",
+              "name": "Protein Shake",
+              "cost": 5.0,
+              "quantity": 2,
+              "companyName": "Planet Fitness Cafe"
+            },
+            {
+              "documentId": "item003",
+              "id": "item003",
+              "name": "Resistance Bands",
+              "cost": 7.0,
+              "quantity": 1,
+              "companyName": "Planet Fitness Shop"
+            }
+          ]
+        },
+        {
+          "documentId": "link002",
+          "id": "link002",
+          "name": "Home Workout",
+          "location": "Home",
+          "scoreComponent": {
+            "score": 0.82,
+            "cost": 20.0
+          },
+          "habitLinkItemComponentsData": [
+            {
+              "documentId": "item004",
+              "id": "item004",
+              "name": "Yoga Mat",
+              "cost": 12.0,
+              "quantity": 1,
+              "companyName": "Amazon"
+            },
+            {
+              "documentId": "item005",
+              "id": "item005",
+              "name": "Jump Rope",
+              "cost": 8.0,
+              "quantity": 1,
+              "companyName": "Amazon"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "documentId": "gen002",
+      "id": "gen002",
+      "name": "Healthy Meal Prep",
+      "description": "Weekly meal preparation habit focused on nutritious, budget-friendly meals to support fitness goals.",
+      "focus": "Nutrition",
+      "unit": "Meals",
+      "priority": "High",
+      "scoreComponent": {
+        "documentId": "score002",
+        "id": "score002",
+        "score": 0.72,
+        "cost": 75.0
+      },
+      "habitLinkData": [
+        {
+          "documentId": "link003",
+          "id": "link003",
+          "name": "Trader Joe's",
+          "location": "Midtown",
+          "scoreComponent": {
+            "score": 0.78,
+            "cost": 45.0
+          },
+          "habitLinkItemComponentsData": [
+            {
+              "documentId": "item006",
+              "id": "item006",
+              "name": "Chicken Breast (2 lbs)",
+              "cost": 9.0,
+              "quantity": 2,
+              "companyName": "Trader Joe's"
+            },
+            {
+              "documentId": "item007",
+              "id": "item007",
+              "name": "Mixed Vegetables",
+              "cost": 5.0,
+              "quantity": 3,
+              "companyName": "Trader Joe's"
+            },
+            {
+              "documentId": "item008",
+              "id": "item008",
+              "name": "Brown Rice (5 lbs)",
+              "cost": 7.0,
+              "quantity": 1,
+              "companyName": "Trader Joe's"
+            },
+            {
+              "documentId": "item009",
+              "id": "item009",
+              "name": "Greek Yogurt Pack",
+              "cost": 6.0,
+              "quantity": 2,
+              "companyName": "Trader Joe's"
+            },
+            {
+              "documentId": "item010",
+              "id": "item010",
+              "name": "Olive Oil",
+              "cost": 8.0,
+              "quantity": 1,
+              "companyName": "Trader Joe's"
+            }
+          ]
+        },
+        {
+          "documentId": "link004",
+          "id": "link004",
+          "name": "Whole Foods Market",
+          "location": "Uptown",
+          "scoreComponent": {
+            "score": 0.65,
+            "cost": 30.0
+          },
+          "habitLinkItemComponentsData": [
+            {
+              "documentId": "item011",
+              "id": "item011",
+              "name": "Organic Greens Mix",
+              "cost": 8.0,
+              "quantity": 2,
+              "companyName": "Whole Foods"
+            },
+            {
+              "documentId": "item012",
+              "id": "item012",
+              "name": "Quinoa (2 lbs)",
+              "cost": 10.0,
+              "quantity": 1,
+              "companyName": "Whole Foods"
+            },
+            {
+              "documentId": "item013",
+              "id": "item013",
+              "name": "Almond Butter",
+              "cost": 12.0,
+              "quantity": 1,
+              "companyName": "Whole Foods"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "documentId": "gen003",
+      "id": "gen003",
+      "name": "Evening Mindfulness",
+      "description": "Daily mindfulness and meditation practice to reduce stress and improve sleep quality.",
+      "focus": "Mental Wellness",
+      "unit": "Sessions",
+      "priority": "Medium",
+      "scoreComponent": {
+        "documentId": "score003",
+        "id": "score003",
+        "score": 0.91,
+        "cost": 15.0
+      },
+      "habitLinkData": [
+        {
+          "documentId": "link005",
+          "id": "link005",
+          "name": "Calm App",
+          "location": "Online",
+          "scoreComponent": {
+            "score": 0.93,
+            "cost": 8.99
+          },
+          "habitLinkItemComponentsData": [
+            {
+              "documentId": "item014",
+              "id": "item014",
+              "name": "Monthly Subscription",
+              "cost": 8.99,
+              "quantity": 1,
+              "companyName": "Calm"
+            }
+          ]
+        },
+        {
+          "documentId": "link006",
+          "id": "link006",
+          "name": "Local Meditation Studio",
+          "location": "Downtown",
+          "scoreComponent": {
+            "score": 0.88,
+            "cost": 6.01
+          },
+          "habitLinkItemComponentsData": [
+            {
+              "documentId": "item015",
+              "id": "item015",
+              "name": "Drop-in Class",
+              "cost": 6.0,
+              "quantity": 1,
+              "companyName": "Serenity Studio"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

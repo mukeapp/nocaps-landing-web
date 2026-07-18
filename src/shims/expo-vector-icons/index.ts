@@ -1,0 +1,13 @@
+export { default as AntDesign } from "./AntDesign";
+export { default as Entypo } from "./Entypo";
+export { default as Feather } from "./Feather";
+export { default as FontAwesome } from "./FontAwesome";
+export { default as FontAwesome5 } from "./FontAwesome5";
+export { default as FontAwesome6 } from "./FontAwesome6";
+export { default as Fontisto } from "./Fontisto";
+export { default as Ionicons } from "./Ionicons";
+export { default as MaterialCommunityIcons } from "./MaterialCommunityIcons";
+export { default as MaterialIcons } from "./MaterialIcons";
+export { default as SimpleLineIcons } from "./SimpleLineIcons";
+export { default as createIconSet } from "./createIconSet";
+export { default as Octicons } from "./Octicons";
