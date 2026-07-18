@@ -11,6 +11,7 @@ import {
 import { useDrawerOpen, useNavigation, useRoute } from "@/shims/react-navigation";
 import { UserDataAction } from "@/core/redux/user-data";
 import { setUserRevenuCatLogOut } from "@/core/redux/user-revenue-cat";
+import { setWebBetaAccessLogOut } from "@/core/redux/web-beta-access";
 import { auth } from "@/core/firebase";
 import { Images } from "@/core/constants/Images";
 import {
@@ -72,6 +73,7 @@ export default function DashboardDrawer() {
     dispatch(UserDataAction.setUserData({}));
     dispatch(UserDataAction.setUserAuth(""));
     dispatch(setUserRevenuCatLogOut());
+    dispatch(setWebBetaAccessLogOut());
     navigation.closeDrawer();
   };
 

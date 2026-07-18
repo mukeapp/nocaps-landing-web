@@ -3,6 +3,7 @@ import { GetUserByEmail } from "./user";
 import { GetInterestAndSector, SaveUserInterest } from "./interest";
 import { SaveUserLocationFirestore } from "./location";
 import { GetAllSector } from "./sector";
+import { CheckWebBetaAccess } from "./web-beta-access";
 
 export {
   SaveUserInFirestore,
@@ -14,4 +15,5 @@ export {
   GetFirestoreUserPaginated,
   GetUserByUserId,
   UpdateFirestoreUser,
+  CheckWebBetaAccess,
 };

@@ -7,6 +7,7 @@ import HabitIntelligenceCost from "../habit-intelligence-cost";
 import SubscriptionPlan from "../subscription-plan";
 import UserData from "../user-data";
 import UserRevenueCat from "../user-revenue-cat";
+import WebBetaAccess from "../web-beta-access";
 
 const UserDataReducer = persistReducer(
   { key: "root", storage },
@@ -38,6 +39,11 @@ const AIModelsCostMultiplierReducer = persistReducer(
   AIModelsCostMultiplier.reducer,
 );
 
+const WebBetaAccessReducer = persistReducer(
+  { key: "webBetaAccess", storage },
+  WebBetaAccess.reducer,
+);
+
 const store = configureStore({
   reducer: {
     user: UserDataReducer,
@@ -46,6 +52,7 @@ const store = configureStore({
     subscriptionPlan: SubscriptionPlanReducer,
     creditPresets: CreditPresetsReducer,
     aiModelsCostMultiplier: AIModelsCostMultiplierReducer,
+    webBetaAccess: WebBetaAccessReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

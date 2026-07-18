@@ -19,6 +19,7 @@ import {Images} from "@/core/constants/Images";
 import {MainStyles} from "@/core/constants/styles";
 import {UserDataAction} from "@/core/redux/user-data";
 import {setUserRevenuCatLogOut} from "@/core/redux/user-revenue-cat";
+import {setWebBetaAccessLogOut} from "@/core/redux/web-beta-access";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { auth } from "@/core/firebase";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -36,6 +37,7 @@ const CustomDrawerContent = ({ navigation, ...props }) => {
     dispatch(UserDataAction.setUserData({}));
     dispatch(UserDataAction.setUserAuth(""));
     dispatch(setUserRevenuCatLogOut());
+    dispatch(setWebBetaAccessLogOut());
   };
   return (
     <DrawerContentScrollView
