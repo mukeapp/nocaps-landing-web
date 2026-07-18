@@ -641,7 +641,7 @@ const FeaturesPage = () => {
                             Join the NoCaps alpha — track, score, swap, and share habits with AI guiding every step.
                         </p>
                         <Button asChild size="lg">
-                            <Link href="/sign-in">
+                            <Link href="/dashboard/sign-in">
                                 Get Beta Access Now
                                 <ArrowRight className="w-4 h-4 ml-2" />
                             </Link>

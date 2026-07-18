@@ -85,7 +85,7 @@ const NavAuth = () => {
                 <Link href="/login" className={buttonVariants({ size: "sm", variant: "ghost" })}>
                     Login
                 </Link>
-                <Link href="/signup" className={buttonVariants({ size: "sm", className: "hidden md:flex" })}>
+                <Link href="/dashboard/sign-in" className={buttonVariants({ size: "sm", className: "hidden md:flex" })}>
                     Get Beta Access Now
                 </Link>
             </>
