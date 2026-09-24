@@ -131,8 +131,9 @@ const TermsAndConditionsPage = () => {
                                 <li>Child trafficking or the promotion or facilitation of it</li>
                             </ul>
                             <p>
-                                <strong className="text-foreground">Age requirement.</strong> The Service is not
-                                intended for anyone under 13 years of age.
+                                <strong className="text-foreground">Age requirement.</strong> You must be at least
+                                13 years old to use the Service. If we learn that a user is under 13, we will
+                                delete their account.
                             </p>
                             <p>
                                 <strong className="text-foreground">Reporting.</strong> You can report suspected CSAE
