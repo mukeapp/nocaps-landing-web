@@ -12,7 +12,7 @@ const TermsAndConditionsPage = () => {
                             Terms &amp; Conditions
                         </h1>
                         <p className="text-muted-foreground mt-4">
-                            Last updated: April 21, 2026
+                            Last updated: September 24, 2026
                         </p>
                     </div>
                 </Container>
@@ -37,6 +37,7 @@ const TermsAndConditionsPage = () => {
                                 <li>Attempt to gain unauthorized access to any part of the Service</li>
                                 <li>Interfere with or disrupt the integrity or performance of the Service</li>
                                 <li>Transmit any harmful, offensive, or disruptive content</li>
+                                <li>Post, share, or solicit sexually explicit content or any content that sexualizes minors (see Sections 8 and 9)</li>
                                 <li>Reverse engineer, decompile, or disassemble any part of the Service</li>
                             </ul>
                         </div>
@@ -97,7 +98,70 @@ const TermsAndConditionsPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">8. Disclaimer of Warranties</h2>
+                            <h2 className="text-xl font-semibold text-foreground">8. Sexual Content</h2>
+                            <p>
+                                NoCaps prohibits sexually explicit content. You may not post, share, send, or link to:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 pl-2">
+                                <li>Pornography or any sexually explicit images, videos, audio, or text</li>
+                                <li>Nudity or depictions of sexual acts</li>
+                                <li>Sexually suggestive content intended to arouse</li>
+                                <li>Sexual solicitation, including offering or requesting sexual services</li>
+                                <li>Links to websites or services that host such material</li>
+                            </ul>
+                            <p>
+                                Content that violates this policy will be removed, and the responsible account may be
+                                warned, suspended, or permanently banned. You can report sexual content using the
+                                in-app <strong className="text-foreground">Report</strong> option on any profile, or by
+                                emailing us at the address listed in Section 15.
+                            </p>
+                        </div>
+
+                        <div className="space-y-3">
+                            <h2 className="text-xl font-semibold text-foreground">9. Child Safety Standards</h2>
+                            <p>
+                                NoCaps has zero tolerance for child sexual abuse and exploitation (CSAE). The
+                                following is strictly prohibited on the Service:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 pl-2">
+                                <li>Child sexual abuse material (CSAM) of any kind, including drawn, animated, or AI-generated content</li>
+                                <li>Grooming, or any attempt to contact a minor for sexual purposes</li>
+                                <li>Sextortion or coercion of minors</li>
+                                <li>Any content that sexualizes minors</li>
+                                <li>Child trafficking or the promotion or facilitation of it</li>
+                            </ul>
+                            <p>
+                                <strong className="text-foreground">Age requirement.</strong> You must be at least
+                                13 years old to use the Service. If we learn that a user is under 13, we will
+                                delete their account.
+                            </p>
+                            <p>
+                                <strong className="text-foreground">Reporting.</strong> You can report suspected CSAE
+                                using the in-app <strong className="text-foreground">Report</strong> option on any
+                                profile, or by emailing our child safety contact below. If a child is in immediate
+                                danger, contact your local law enforcement first.
+                            </p>
+                            <p>
+                                <strong className="text-foreground">Enforcement.</strong> When we become aware of CSAE,
+                                we remove the content immediately, permanently ban the responsible account, and report
+                                it to the National Center for Missing &amp; Exploited Children (NCMEC) through its
+                                CyberTipline and to law enforcement as required by law. We preserve relevant data as
+                                required by law to support investigations.
+                            </p>
+                            <p>
+                                <strong className="text-foreground">Legal compliance.</strong> NoCaps complies with
+                                applicable child safety laws and regulations, including reporting obligations under
+                                18 U.S.C. &sect; 2258A.
+                            </p>
+                            <p>
+                                <strong className="text-foreground">Child safety contact.</strong> Questions or reports
+                                about child safety on NoCaps can be sent to:
+                            </p>
+                            <p className="text-foreground font-medium">franck@donocap.com</p>
+                        </div>
+
+                        <div className="space-y-3">
+                            <h2 className="text-xl font-semibold text-foreground">10. Disclaimer of Warranties</h2>
                             <p>
                                 The Service is provided &quot;as is&quot; and &quot;as available&quot; without warranties of any kind,
                                 express or implied. MUKEAPPS LLC does not warrant that the Service will be uninterrupted,
@@ -106,7 +170,7 @@ const TermsAndConditionsPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">9. Limitation of Liability</h2>
+                            <h2 className="text-xl font-semibold text-foreground">11. Limitation of Liability</h2>
                             <p>
                                 To the fullest extent permitted by law, MUKEAPPS LLC shall not be liable for any indirect,
                                 incidental, special, consequential, or punitive damages arising from your use of
@@ -115,7 +179,7 @@ const TermsAndConditionsPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">10. Termination</h2>
+                            <h2 className="text-xl font-semibold text-foreground">12. Termination</h2>
                             <p>
                                 We reserve the right to suspend or terminate your access to the Service at our
                                 sole discretion, without notice, for conduct that we believe violates these Terms
@@ -124,7 +188,7 @@ const TermsAndConditionsPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">11. Changes to Terms</h2>
+                            <h2 className="text-xl font-semibold text-foreground">13. Changes to Terms</h2>
                             <p>
                                 We may update these Terms from time to time. We will notify you of material changes
                                 by updating the date at the top of this page. Continued use of the Service after
@@ -133,7 +197,7 @@ const TermsAndConditionsPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">12. Governing Law</h2>
+                            <h2 className="text-xl font-semibold text-foreground">14. Governing Law</h2>
                             <p>
                                 These Terms shall be governed by and construed in accordance with applicable law.
                                 Any disputes arising under these Terms shall be subject to the exclusive jurisdiction
@@ -142,7 +206,7 @@ const TermsAndConditionsPage = () => {
                         </div>
 
                         <div className="space-y-3">
-                            <h2 className="text-xl font-semibold text-foreground">13. Contact Us</h2>
+                            <h2 className="text-xl font-semibold text-foreground">15. Contact Us</h2>
                             <p>
                                 If you have any questions about these Terms &amp; Conditions, please contact us at:
                             </p>
